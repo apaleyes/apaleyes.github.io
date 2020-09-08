@@ -81,14 +81,14 @@ analytics:
 # Site Author
 author:
   name             : "Andrei Paleyes"
-  avatar           : "profile.png"
-  bio              : "Your biography for the left-hand sidebar"
-  location         : "Location"
-  employer         :
+  avatar           : "paleyes-high-res-current-photo.jpeg"
+  bio              : "machine learning and software"
+  location         : "Cambridge, UK"
+  employer         : "University of Cambridge"
   pubmed           : 
   googlescholar    : 
   email            :
-  researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
+  researchgate     :
   uri              :
   bitbucket        :
   codepen          :
@@ -100,13 +100,13 @@ author:
   google_plus      :
   keybase          :
   instagram        :
-  impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
+  impactstory      :
   lastfm           :
   linkedin         : "https://www.linkedin.com/in/andreipaleyes"
-  orcid            : "http://orcid.org/yourorcidurl"
+  orcid            : "http://orcid.org/0000-0002-3703-8163"
   pinterest        :
   soundcloud       :
-  stackoverflow    : "https://stackoverflow.com/users/728795/andrei"
+  stackoverflow    : "728795/andrei"
   steam            :
   tumblr           :
   twitter          :
@@ -255,7 +255,7 @@ sass:
 permalink: /:categories/:title/
 # paginate: 5 # amount of posts to show
 # paginate_path: /page:num/
-timezone: America/Los_Angeles # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Europe/London # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins
