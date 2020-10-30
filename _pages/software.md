@@ -7,7 +7,7 @@ author_profile: true
 
 ## Emukit
 
-[GitHub](https://github.com/amzn/emukit)
+[GitHub](https://github.com/emukit/emukit)
 
 I am a designer and lead developer of Emukit, Python library for uncertainty quatification in Bayesian framework: optimization, quadrature, experimental design.
 
