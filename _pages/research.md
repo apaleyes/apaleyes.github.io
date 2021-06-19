@@ -14,6 +14,8 @@ See my [Google Scholar profile](https://scholar.google.com/citations?user=kHd55I
 
 ## Talks
 
+__"Data Oriented Architectures for Deploying Machine Learning"__, DSAIL Research Day, DeKUT, _June 19, 2021_
+
 __"Random tips for aspiring scientific open sources"__, Gaussian Processes meetup, _January 21, 2021_. [Event page](https://www.meetup.com/gaussian-processes-cambridge/events/274362655/)
 
 __"Simulating Contact Tracing in the Pandemic: TTI Explorer"__ (together with [Bryn Elesedy](https://bryn.ai/)), ML and the Physical World course at the University of Cambridge, _November 12, 2020_. [Video](https://www.youtube.com/watch?v=Ghcs4O_aH44), [Event page](https://mlatcl.github.io/mlphysical/special_topics/06-01-tti-explorer.html)
