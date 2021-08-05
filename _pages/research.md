@@ -16,7 +16,7 @@ See my [Google Scholar profile](https://scholar.google.com/citations?user=kHd55I
 
 __"Challenges in Deploying Machine Learning, or What is rarely talked about at ML conferences"__, RSE Lunch Bytes, University of Sheffield, _July 05, 2021_. [Event page](https://rse.shef.ac.uk/events/lunchbytes-2021-07-05.html)
 
-__"Data Oriented Architectures for Deploying Machine Learning"__, DSAIL Research Day, DeKUT, _June 19, 2021_
+__"Data Oriented Architectures for Deploying Machine Learning"__, DSAIL Research Day, DeKUT, _June 19, 2021_. [Event page](https://dekut-dsail.github.io/news.html)
 
 __"Random tips for aspiring scientific open sources"__, Gaussian Processes meetup, _January 21, 2021_. [Event page](https://www.meetup.com/gaussian-processes-cambridge/events/274362655/)
 
