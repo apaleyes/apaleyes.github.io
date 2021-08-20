@@ -14,11 +14,13 @@ See my [Google Scholar profile](https://scholar.google.com/citations?user=kHd55I
 
 ## Talks
 
-__"Challenges in Deploying Machine Learning, or What is rarely talked about at ML conferences"__, RSE Lunch Bytes, University of Sheffield, _July 05, 2021_. [Event page](https://rse.shef.ac.uk/events/lunchbytes-2021-07-05.html)
+__"Challenges in Deploying Machine Learning"__, Industry Expert Insights, Cambridge Spark, _August 19, 2021_.
+
+__"Challenges in Deploying Machine Learning, or What is rarely talked about at ML conferences"__, RSE Lunch Bytes, University of Sheffield, _July 05, 2021_. [Video](https://digitalmedia.sheffield.ac.uk/media/Lunch+bytes+8A+Challenges+in+Deploying+Machine+Learning/1_1q0mq7do), [Event page](https://rse.shef.ac.uk/events/lunchbytes-2021-07-05.html)
 
 __"Data Oriented Architectures for Deploying Machine Learning"__, DSAIL Research Day, DeKUT, _June 19, 2021_. [Event page](https://dekut-dsail.github.io/news.html)
 
-__"Random tips for aspiring scientific open sources"__, Gaussian Processes meetup, _January 21, 2021_. [Event page](https://www.meetup.com/gaussian-processes-cambridge/events/274362655/)
+__"Random tips for aspiring scientific open sourcers"__, Gaussian Processes meetup, _January 21, 2021_. [Event page](https://www.meetup.com/gaussian-processes-cambridge/events/274362655/)
 
 __"Simulating Contact Tracing in the Pandemic: TTI Explorer"__ (together with [Bryn Elesedy](https://bryn.ai/)), ML and the Physical World course at the University of Cambridge, _November 12, 2020_. [Video](https://www.youtube.com/watch?v=Ghcs4O_aH44), [Event page](https://mlatcl.github.io/mlphysical/special_topics/06-01-tti-explorer.html)
 
