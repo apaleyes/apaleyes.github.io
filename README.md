@@ -1,1 +1,1 @@
-Personal website. Forked from [academic pages](https://github.com/academicpages/academicpages.github.io).
+Personal website

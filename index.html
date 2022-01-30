@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Andrei Paleyes</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<link href="./files/styles.css" rel="stylesheet" type="text/css" media="all">
+<link href="./files/fonts.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<a name="about"></a>
+<!-- menu, if needed -->
+<div id="headerwrap" class="sticky">
+    <header id="mainheader" class="bodywidth clear">
+        <nav>
+        <ul>
+            <li><a href="#about"><font size='4'>about</font></a></li>
+            <li><a href="#software"><font size='4'>software</font></a></li>
+            <li><a href="#papers"><font size='4'>papers</font></a></li>
+            <li><a href="#talks"><font size='4'>talks</font></a></li>
+            <li><a href="#misc"><font size='4'>misc</font></a></li>
+        </ul>
+        </nav>
+    </header>
+</div>
+
+<aside id="introduction" class="bodywidth clear">
+  <div id="introleft">
+    <h2>andrei <span class="blue">paleyes</span></h2>
+    <br><br>
+    <p>
+    <a href="https://github.com/apaleyes"><img src="./files/GitHub-Mark-32px.png" height="30" id="ghicon"></a>
+    <a href="https://scholar.google.com/citations?user=kHd55IQAAAAJ&hl=en"><img src="./files/google-scholar-24.png" height="30" id="gsicon"></a>
+    <a href="https://www.linkedin.com/in/andreipaleyes"><img src="./files/linkedin-logo.png" height="30" id="lnicon"></a>
+    <a href="https://stackoverflow.com/users/728795/andrei"><img src="./files/logo-stackoverflow.png" height="30" id="soicon"></a> 
+    <br/>
+    email:
+        <span class="mail">ap2169</span>
+        <span class="dot">/at/</span>
+        <span class="mail">cam</span>
+        <span class="dot">/dot/</span>
+        <span class="mail">ac</span>
+        <span class="dot">/dot/</span>
+        <span class="mail">uk</span>
+    </p>
+  </div>
+  <blockquote id="introquote">
+    <div align="right">
+    <img src="./files/andrei.jpg" height="250" class="rotate_photo">
+    </div>
+  </blockquote>
+
+</aside>
+<div id="maincontent" class="bodywidth clear">
+  <div id="aboutleft">
+    <p>
+        I am a PhD candidate at the University of Cambridge, working in <a href="https://mlatcl.github.io/" target="_blank">ML@CL group</a> lead by <a href="https://inverseprobability.com/" target="_blank">Neil Lawrence</a>. My research lies somewhere between machine learning and software systems, leaning towards the latter. I also like to dabble into Bayesian optimization sometimes. Before jumping into the world of academia I have spent more than a decade as a software engineer, developing everything from small webapps to data center network software.
+    </p>
+
+    <br>
+
+    <h3 id="software">software</h3>
+    <p>
+        <pubtitle>Emukit</pubtitle><br/>
+        Emukit is the Python package for all kinds of sequential decision making methods under uncertainty: optimization, quadrature, experiment design, sensitivity analysis. It was developed and released by our research group in Amazon Cambridge, but now lives in a neutral territory. I am the lead developer and main maintainer of Emukit.<br/>
+        [<a href="https://emukit.github.io/" target="_blank">website</a>]
+        [<a href="https://github.com/EmuKit/emukit" target="_blank">github</a>]
+    </p>
+    <p>
+        <pubtitle>TTI Explorer</pubtitle><br/>
+        TTI Explorer is the simulation package we developed in <a href="https://rs-delve.github.io/" target="_blank">DELVE</a> to study effects of "test-trace-isolate" strategies on spread of COVID-19. Our report on it was released shortly before TTI was deployed in the UK, and <a href="https://www.standard.co.uk/news/health/test-trace-isolate-tti-coronavirus-delve-a4452021.html" target="_blank">received</a> <a href="https://www.theguardian.com/world/2020/may/27/government-unveils-covid-19-test-and-trace-strategy-for-england" target="_blank">wide</a> <a href="https://www.researchprofessionalnews.com/rr-news-uk-politics-2020-5-royal-society-data-group-backs-test-trace-and-isolate-plans/" target="_blank">press</a> <a href="https://www.dailymail.co.uk/news/article-8361527/UKs-test-trace-isolate-scheme-cut-infections-5-scientists-warn.html" target="_blank">coverage</a>.<br/>
+        [<a href="https://github.com/rs-delve/tti-explorer" target="_blank">github</a>]
+    </p>
+    <p>
+        <pubtitle>GPyOpt</pubtitle><br/>
+        GPyOpt is one of the first Python packages for Bayesian optimization. GPyOpt was initially developed mostly by <a href="http://javiergonzalezh.github.io/" target="_blank">Javier González</a> while he was with Neil Lawrence's group at the University of Sheffield. I took over ownership of GPyOpt from Javier, and lead the package development for few years. GPyOpt is now archived.<br/>
+        [<a href="https://sheffieldml.github.io/GPyOpt/" target="_blank">website</a>]
+        [<a href="https://emukit.github.io/" target="_blank">github</a>]
+    </p>
+    <p>
+        <pubtitle>Trieste</pubtitle><br/>
+        Trieste is a Bayesian optimization package built on Tensorflow. I became involved in Trieste during my placement at Secondmind, added several major features and became one of the main overall contributors to the codebase and discussions around it.<br/>
+        [<a href="https://secondmind-labs.github.io/trieste/" target="_blank">website</a>]
+        [<a href="https://github.com/secondmind-labs/trieste" target="_blank">github</a>]
+    </p>
+    <p>
+        <pubtitle>Amazon</pubtitle><br/>
+        I was fortunate enough to contribute to many different parts of Amazon. Some highlights:<br />
+        <a href="https://aws.amazon.com/compliance/data-center/data-centers/" target="_blank">Data center network</a> (my code likely powers your internet!) <br />
+        <a href="https://aws.amazon.com/cloudwatch/" target="_blank">AWS CloudWatch</a> <br />
+        <a href="https://aws.amazon.com/sagemaker/" target="_blank">AWS SageMaker</a> <br />
+        <a href="https://www.amazon.science/tag/supply-chain-optimization-technologies" target="_blank">Supply chain optimization technologies</a> <br />
+        <a href="https://www.amazon.com/Amazon-Prime-Air/b?ie=UTF8&node=8037720011" target="_blank">Prime Air</a>
+    </p>
+
+    <h3 id="papers">papers</h3>
+
+    <p>
+        Selected papers are mentioned here. For a complete list please check out the <a href="https://scholar.google.com/citations?user=kHd55IQAAAAJ&hl=en" target="_blank">Google Scholar profile</a>.
+    </p>
+
+    <p>
+      <pubtitle> Emulation of physical processes with Emukit </pubtitle> <br/>
+      Andrei Paleyes, Mark Pullin, Maren Mahsereci, Cliff McCollum, Neil D. Lawrence, Javier González<br/>
+      <i>Second workshop on machine learning and the physical sciences, NeurIPS, 2019</i><br/>
+      [<a href="https://arxiv.org/abs/2110.13293" target="_blank">paper</a>]
+    </p>
+
+    <p>
+      <pubtitle> Automatic Discovery of Privacy-Utility Pareto Fronts </pubtitle> <br>
+      Brendan Avent, Javier González, Tom Diethe, Andrei Paleyes, Borja Balle <br>
+      <i> Proceedings on Privacy Enhancing Technologies, 2020</i> (<small><b>Andreas Pfitzmann Best Student Paper Award</b></small>)<br>
+      <i>Privacy Preserving Machine Learning Workshop, 2019</i><br>
+      [<a href="https://www.youtube.com/watch?v=7OA59vff7Z4" target="_blank">video</a>]
+      [<a href="https://github.com/amzn/differential-privacy-bayesian-optimization" target="_blank">code</a>]
+      [<a href="https://arxiv.org/abs/1905.10862" target="_blank">paper</a>]<br>
+    </p>
+
+    <p>
+      <pubtitle> Challenges in deploying machine learning: a survey of case studies </pubtitle> <br>
+      Andrei Paleyes, Raoul-Gabriel Urma, Neil D. Lawrence <br>
+      <i> The ML-Retrospectives, Surveys & Meta-Analyses Workshop, NeurIPS, 2020</i><br>
+      [<a href="https://arxiv.org/abs/2011.09926" target="_blank">paper</a>]
+    </p>
+
+    <p>
+        <pubtitle> Causal Bayesian Optimization </pubtitle> <br>
+        Virginia Aglietti, Xiaoyu Lu, Andrei Paleyes, Javier González <br>
+        <i> International Conference on Artificial Intelligence and Statistics, 2020</i><br>
+        [<a href="http://proceedings.mlr.press/v108/aglietti20a" target="_blank">paper</a>]
+    </p>
+
+    <p>
+        <pubtitle> Effectiveness and resource requirements of test, trace and isolate strategies for COVID in the UK </pubtitle> <br>
+        Bobby He, Sheheryar Zaidi, Bryn Elesedy, Michael Hutchinson, Andrei Paleyes, Guy Harling, Anne M. Johnson, Yee Whye Teh, Royal Society's DELVE group <br>
+        <i> Royal Society open science 8 (3), 2021</i><br>
+        [<a href="https://royalsocietypublishing.org/doi/full/10.1098/rsos.201491" target="_blank">paper</a>]
+        [<a href="https://github.com/rs-delve/tti-explorer" target="_blank">code</a>]
+    </p>
+
+    <br><br>
+
+    <h3 id="talks">talks</h3>
+
+    <p>
+        <pubtitle> Challenges in Deploying Machine Learning </pubtitle> <br>
+        <i>Industry Expert Insights, Cambridge Spark, August 19, 2021</i>
+    </p>
+
+    <p>
+        <pubtitle> Challenges in Deploying Machine Learning, or What is rarely talked about at ML conferences </pubtitle> <br>
+        <i>RSE Lunch Bytes, University of Sheffield, July 05, 2021</i><br>
+        [<a href="https://digitalmedia.sheffield.ac.uk/media/Lunch+bytes+8A+Challenges+in+Deploying+Machine+Learning/1_1q0mq7do" target="_blank">video</a>]
+        [<a href="https://rse.shef.ac.uk/events/lunchbytes-2021-07-05.html" target="_blank">event</a>]
+    </p>
+
+    <p>
+        <pubtitle> Data Oriented Architectures for Deploying Machine Learning </pubtitle> <br>
+        <i>DSAIL Research Day, DeKUT, June 19, 2021</i><br>
+        [<a href="https://dekut-dsail.github.io/news.html" target="_blank">event</a>]
+    </p>
+
+    <p>
+        <pubtitle> Random tips for aspiring scientific open sources </pubtitle> <br>
+        <i>Gaussian Processes meetup, January 21, 2021</i><br>
+        [<a href="https://www.meetup.com/gaussian-processes-cambridge/events/274362655/" target="_blank">event</a>]
+    </p>
+
+    <p>
+        <pubtitle> Simulating Contact Tracing in the Pandemic: TTI Explorer </pubtitle> <br>
+        Together with <a href="https://bryn.ai/" target="_blank">Bryn Elesedy</a><br>
+        <i>ML and the Physical World course at the University of Cambridge, November 12, 2020</i><br>
+        [<a href="https://www.youtube.com/watch?v=Ghcs4O_aH44" target="_blank">video</a>]
+        [<a href="https://mlatcl.github.io/mlphysical/special_topics/06-01-tti-explorer.html" target="_blank">event</a>]
+    </p>
+
+    <p>
+        <pubtitle> Exploring lockdown exit strategies </pubtitle> <br>
+        <i>Data Science Africa COVID-19 Webinar, April 8, 2020</i><br>
+        [<a href="http://www.datascienceafrica.org/covid19/" target="_blank">event</a>]
+    </p>
+
+    <p>
+        <pubtitle> Как использовать Hadoop on Windows Azure для анализа больших объемов данных </pubtitle> (<small>in Russian</small>) <br>
+        <i>ITShare: High load проекты на .Net, December 8, 2012</i><br>
+        [<a href="https://events.dev.by/it_share-only-net-only-hardcore" target="_blank">event</a>]
+    </p>
+
+
+    <br><br>
+
+    <h3 id="misc">misc</h3>
+    <p>
+        <pubtitle>Royal Society DELVE</pubtitle><br/>
+        During the initial phase of the COVID-19 pandemic I became a member of the action team of the DELVE group (thanks to my supervisor Neil Lawrence for inviting!). DELVE (Data Evaluation and Learning for Viral Epidemics) is a multi-disciplinary group, convened by the Royal Society, to support a data-driven approach to learning from the different approaches countries are taking to managing the pandemic. Over the course of 2020 we produced a number of reports, software and datasets, and provided advice to SAGE and ultimately the UK Government.<br/>
+        [<a href="https://rs-delve.github.io/" target="_blank">website</a>]
+    </p>
+    <p>
+        <pubtitle>Challenges in Deploying and Monitoring Machine Learning Systems, ICML workshop</pubtitle><br/>
+        I was involved in two installments of this workshop (led by <a href="https://www.robots.ox.ac.uk/~atosi/index.html" target="_blank">Alessandra Tosi</a>): as reviewer in 2020 and as organizer in 2021.<br/>
+        [<a href="https://sites.google.com/view/deploymonitormlsystems" target="_blank">website 2020</a>]
+        [<a href="https://sites.google.com/view/deploymonitormlsystems2021" target="_blank">website 2021</a>]
+    </p>
+    <p>
+        <pubtitle>Data Science Africa</pubtitle><br/>
+        Together with <a href="https://www.linkedin.com/in/meissnereric" target="_blank">Eric Meissner</a> and Neil Lawrence we delivered a lecture on ML deployment at the 2020 summer school. It was also repeated in smaller form in 2021 summer school.<br/>
+        [<a href="http://www.datascienceafrica.org/dsa2020kampala/" target="_blank">website 2020</a>]
+        [<a href="https://www.datascienceafrica.org/dsa2021kimberley/" target="_blank">website 2021</a></a>]
+    </p>
+    <br>
+    <br>
+
+  </div>
+</div>
+
+
+</body></html>
