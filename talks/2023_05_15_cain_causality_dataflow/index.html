@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Dataflow graphs as complete causal graphs</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			/* .full {
+				height: 100%;
+				width: 100%;
+			} */
+			.credit {
+				bottom: 0px;
+				left: 0px;
+				position: absolute;
+			}
+			.highlight-red {
+				color: #ff2c2d;
+			}
+			.highlight-green {
+				color: #3CB043;
+			}
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>Dataflow graphs as complete causal graphs</h3>
+					<p>
+						<small>Andrei Paleyes</small><br/>
+						<small>Computer Lab</small><br/>
+						<small>University of Cambridge</small>
+					</p>
+					<p>CAIN 2023</p>
+					<aside class="notes">
+						Hello! My name is Andrei, I am PhD student at the Computer Lab of the University of Cambridge, and I am very excited to be a part of CAIN 2023.
+					</aside>
+				</section>
+				<section>
+					<h3>Dataflow graphs as complete causal graphs</h3>
+					<table>
+						<tr>
+							<td><img src="images/andrei.JPG" style="width: 150px; height: 150px;" /></td>
+							<td><img src="images/neil.jpg" style="width: 150px; height: 150px;" /></td>
+							<td><img src="images/siyuan.jpg" style="width: 150px; height: 150px;" /></td>
+							<td><img src="images/bernhard.jpg" style="width: 150px; height: 150px;" /></td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><small>Andrei <br/>Paleyes</small></td>
+							<td style="text-align: center;"><small>Neil <br/>Lawrence</small></td>
+							<td style="text-align: center;"><small>Siyuan <br/>Guo</small></td>
+							<td style="text-align: center;"><small>Bernhard <br/>Schölkopf</small></td>
+						</tr>
+					</table>
+					<aside class="notes">
+						The work I am presenting is titled "Dataflow graphs as complete causal graphs", and is done together with my supervisor Neil Lawrence, as well as Siyuan Guo and Bernhard Shoelkopf from Max Plank Institute in Tuebingen.
+					</aside>
+				</section>
+				<section>
+					<h4>Bridging areas</h4>
+					<blockquote style="font-size: xx-large;">
+						&ldquo;The main obstacle that we see for the application of statistical causal inference methods is to obtain a causal graphical model and the corresponding observational data.&rdquo;
+					</blockquote>
+					<p style="font-size: x-large;">
+						<i>"Applications of statistical causal inference in software engineering"</i>, Siebert, 2022
+					</p>
+					<br/>
+					<blockquote style="font-size: xx-large;">
+						&ldquo;The enterprise of “causal discovery” aims to extract causal conclusions from observationally inferred conditional independencies. However it can not do so without making (explicitly or, more often, implicitly) strong causal assumptions—which may rest unjustified, so invalidating the process.&rdquo;
+					</blockquote>
+					<p style="font-size: x-large;">
+						<i>"Beware of the DAG!"</i>, Dawid, 2008
+					</p>
+					<aside class="notes">
+						This is a vision, forward looking work in which we point out possible connection between dataflow architecture and causal inference. If this vision is to be realized, it should make not one but two communities happy. Software engineers shall benefit from software that is better understood. Causality enthusiasts shall like the fact that there is no need to discover the underlying DAG. Let's dive deeper.
+					</aside>
+				</section>
+				<section>
+					<h4>What is dataflow architecture?</h4>
+					<img src="images/dennis_dataflow.png" height="600px"/>
+					<br/>
+					<br/>
+					<p class="credit" style="font-size: large;">
+						<i>Data flow schemas</i>, Dennis, J. B., Fosseen, J. B., & Linderman, J. P., International Symposium on Theoretical Programming (pp. 187-216), 1974
+					</p>
+					<aside class="notes">
+						We shall start by briefly explaining necessary background. Our work is centered around dataflow software architecture. Dataflow originated in 1970s with the works of Jack Dennis, Arvind and Paul Morrison. Perhaps the earliest famous example of dataflow is Map Reduce algorithm proposed for big data processing in 2008. Nowadays its a bit better known thanks to such projects as Tensorflow and Node-RED. Nevertheless, dataflow still remains relatively niche.
+					</aside>
+				</section>
+				<section>
+					<h4>Dataflow vs control flow</h4>
+					Image? What image?
+					<aside class="notes">
+						The original purpose was to create a paradigm more suitable for parallel processing than the classic control flow aka von Neumann architecture. Perhaps the best way to explain these paradigms is by contrasting them. In control flow, aka von Neumann architecture, instructions are executed one by one in a specific order. In dataflow instructions are executed as soon as all their inputs are available. We can also say that dataflow is concerned with data, its routes and transformations, while control flow is concerned with the possible order of operations.
+					</aside>
+				</section>
+				<section>
+					<h4>Dataflow features</h4>
+					<div class="container">
+
+						<div class="col">
+							<p class="fragment">Data coupling</p>
+							<img src="" />
+						</div>
+						
+						<div class="col">
+							<p class="fragment">Dataflow graph</p>
+							<img src="images/fbp.png" />
+						</div>
+						
+					</div>
+					<aside class="notes">
+						There are two features of dataflow that are of utmost importance for modern systems. First is data coupling, thanks to which this paradigm is strongly data oriented, as the name suggests. Which is great, because as we all know, ML models are impossible to build without access to data. Second is the dataflow graph. Crucially, in this paradigm dataflow graph is produced as a natural part of the software design process, which means this graph is complete by design. There are no hidden data sources or processing side effects.
+					</aside>
+				</section>
+				<section>
+					<h4>Causality</h4>
+					<aside class="notes">
+						Causality if an area of science that aims to characterize causal relationships from observational data. Current statistical methods exploit associative relationships, but correlation between two features does not imply causation. Discovery and estimation of causal relationship is what causality aims to address. Lately it became one of the mainstream parts of the modern machine learning research agenda.
+					</aside>
+				</section>
+				<section>
+					<h4>Causal language</h4>
+					<div class="container">
+
+						<div class="col">
+							<p class="fragment">Structured causal model</p>
+						</div>
+						
+						<div class="col">
+							<p class="fragment">Intervention</p>
+						</div>
+						
+					</div>
+					<aside class="notes">
+						We shall highlight two key notions in the causal language. First is the structured causal model - a set of parent-child assignments with direct causes. You can immediatelly see analogies with a dataflow graph. Second is the intervention - act of affecting the system to change its outcome. In software engineering context this can be a software update, input data shift, or a bug.
+					</aside>
+				</section>
+				<section>
+					<h4>Dataflow graph = causal graph</h4>
+					<img src="images/fbp.png" height="400px" />
+					<img src="images/dataflow-causal-conditionals.png" height="200px" />
+					<aside class="notes">
+						One of key bottlenecks of causal reasoning methods is their reliance on a causal graph for inference tasks. In our work we put forth an observation that the dataflow graph generated as a part of the dataflow architectured software design process can be seen and used as complete causal graph of the entire software system. "complete" is the key, as it eliminates the main problem of using causal inference. In the paper we propose an algorthim that models software components as causal conditionals and measures their downstream causal effects.
+					</aside>
+				</section>
+				<section>
+					<h4>Applications</h4>
+					<div class="container">
+
+						<div class="col">
+							<p class="fragment">Fault localisation</p>
+						</div>
+						
+						<div class="col">
+							<p class="fragment">Business analysis</p>
+						</div>
+
+						<div class="col">
+							<p class="fragment">Experimentation</p>
+						</div>
+						
+					</div>
+					<aside class="notes">
+						And this opens up all sorts of possibilities. 
+
+						We can use causal inference to track down fauls and bugs in a dataflow system.
+
+						We can track data shifts back to the input data nodes of the dataflow system, and measure their influence on the change in the business metrics. 
+
+						We can use causal inference to estimate possible influence of the proposed update of a software component in a dataflow system, reducing the need for expensive live experiments, such as A/B testing. 
+
+						We can automate these processes, as we can manipulate, traverse and inspect the complete graph at any node or link. Simple examples of some of these applications are provided in the paper.
+					</aside>
+				</section>
+				<section>
+					<h4>Open questions</h4>
+					<ul>
+						<li>Scalability</li>
+						<li>Costs</li>
+						<li>Tech stack</li>
+						<li>Ops</li>
+					</ul>
+					<aside class="notes">
+						Of course there are many open questions and unknowns, such as scalability of causal methods, data storage demands and costs, technology stacks, operational maintenance practices. Nevertheless, they are certainly solvable, just as the community was able to figure this out for service-oriented architecture.
+					</aside>
+				</section>
+				<section>
+					<h4>Intellectual debt</h4>
+					<img src="images/intellectual-debt.png" height="600px"/>
+					<br />
+					<br />
+					<p class="credit" style="font-size: large;">
+						<i>Intellectual Debt: With Great Power Comes Great Ignorance.</i> Zittrain, Jonathan. 2019. Medium: Berkman Klein Center Collection
+					</p>
+					<aside class="notes">
+						I'd like to close with the following note. As software engineers, we are all aware of a notion of technical debt. Those of us how had to support old production systems are painfully aware of it. But as our software becomes more complex, and includes more sophisticated components such as ML models, a notion of intellectual debt arises. This notion, proposed by Jonathan Zittrain, suggests that the more complex our systems become, the less we are able to explain and understand what they are doing. That is disturbing, and we shall be seeking ways to build AI systems that are more, not less, understandable. We believe that building systems with dataflow paradigm and applying causal inference to them gives us an excellent opprotunity to create software that is explainable by design. As a result we shall be able to build more interpretable and transparent systems, including those powered by AI. 
+					</aside>
+				</section>
+				<section>
+					<h4>Summary</h4>
+					<ul>
+						<li>Dataflow is a tested but niche paradigm</li>
+						<li>Causality benefits from complete DAG</li>
+						<li><b>Dataflow graphs can be used as complete causal graphs</b></li>
+						<li>Applications in fault localisation, business analysis, experiments</li>
+						<li>There are open questions</li>
+					</ul>
+					<hr/>
+					<p>Paper: <a href="https://arxiv.org/abs/2304.11987">https://arxiv.org/abs/2304.11987</a></p>
+					<p>Code: <a href="https://github.com/apaleyes/causality-fbp">https://github.com/apaleyes/causality-fbp</a></p>
+					<p>Group: <a href="https://mlatcl.github.io">ML@CL</a></p>
+					<p>&#9993; <a href="mailto:ap2169@cam.ac.uk">ap2169@cam.ac.uk</a></p>
+					<aside class="notes">
+						Thank you for your attention, I'd be happy to answer any questions.
+					</aside>
+				</section>
+				<section>
+					<h4>Thank you!</h4>
+					<p>Paper: <a href="https://arxiv.org/abs/2304.11987">https://arxiv.org/abs/2304.11987</a></p>
+					<p>Code: <a href="https://github.com/apaleyes/causality-fbp">https://github.com/apaleyes/causality-fbp</a></p>
+					<br />
+					<p>Questions?</p>
+					<a href="https://mlatcl.github.io/">https://mlatcl.github.io</a>
+					<br/>
+					&#9993; ap2169@cam.ac.uk
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: "100%",
+				height:"100%",
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

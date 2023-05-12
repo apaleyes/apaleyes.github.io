@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Dataflow graphs as complete causal graphs</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			/* .full {
+				height: 100%;
+				width: 100%;
+			} */
+			.credit {
+				bottom: 0px;
+				left: 0px;
+				position: absolute;
+			}
+			.highlight-red {
+				color: #ff2c2d;
+			}
+			.highlight-green {
+				color: #3CB043;
+			}
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>Dataflow graphs as complete causal graphs</h3>
+					<p>
+						<small>Andrei Paleyes, Siyuan Guo, Bernhard Schoelkopf, Neil Lawrence</small><br/>
+						<small>University of Cambridge</small>
+					</p>
+					<p>CAIN 2023</p>
+					<aside class="notes">
+						Hello! My name is Andrei, I am PhD student at the Computer Lab of the University of Cambridge. I am delighted to present our work on causality for dataflow graphs here at CAIN 2023. This is a joint project with Siyuan Guo, Bernhard Schoelkopf and Neil Lawrence. Let's begin!
+					</aside>
+				</section>
+				<section>
+					<h4>What is dataflow architecture?</h4>
+					<img src="images/dennis_dataflow.png" height="600px"/>
+					<br/>
+					<br/>
+					<p class="credit" style="font-size: large;">
+						<i>Data flow schemas</i>, Dennis, J. B., Fosseen, J. B., & Linderman, J. P., International Symposium on Theoretical Programming (pp. 187-216), 1974
+					</p>
+					<aside class="notes">
+						Our work is centered around dataflow. Dataflow is a software architecture paradigm that originated in 1970s with the works of Jack Dennis, Arvind and Paul Morrison. It is best explained in contrast with the control flow. In control flow, aka von Neumann architecture, instructions are executed one by one in a specific order. In dataflow instructions are executed as soon as all their inputs are available. We can also say that dataflow is concerned with data, its routes and transformations, while control flow is concerned with the possible order of operations.
+					</aside>
+				</section>
+				<section style="min-height: 100%;">
+					<blockquote>
+						&ldquo;Dataflow graph can be used as complete causal graph, with implications for debugging, business analysis and experimentation.&rdquo;
+					</blockquote>
+					<p style="font-size: large;">
+						<i>"Dataflow graphs as complete causal graphs"</i>, Paleyes et al., CAIN 2023
+					</p>
+					<aside class="notes">
+						If the system is developed following the dataflow approach, developers automatically build the dataflow graph of the entire system as a natural part of the design process. It was recently suggested that this graph might be used as a complete causal graph of the system. This opens opportunities to use causal inference on software system components for such things as debugging, business analysis and experimentation.
+					</aside>
+				</section>
+				<!-- <section>
+					<blockquote>
+						&ldquo;The main obstacle that we see for the application of statistical causal inference methods is to obtain a causal graphical model and the corresponding observational data.&rdquo;
+					</blockquote>
+					<p style="font-size: x-large;">
+						<i>"Applications of statistical causal inference in software engineering"</i>, Siebert, 2022
+					</p>
+					<br/>
+					<blockquote>
+						&ldquo;The enterprise of “causal discovery” aims to extract causal conclusions from observationally inferred conditional independencies. However it can not do so without making (explicitly or, more often, implicitly) strong causal assumptions—which may rest unjustified, so invalidating the process.&rdquo;
+					</blockquote>
+					<p style="font-size: x-large;">
+						<i>"Beware of the DAG!"</i>, Dawid, 2008
+					</p>
+					<aside class="notes">
+						This observation can, in theory, be of interest for two separate areas. First the system engineering community. As was pointed out recently, discovery of the causal graph is one of the 
+					</aside>
+				</section> -->
+				<section>
+					<h4>Our goal</h4>
+					<img src="images/scv2-insurance-claims.png">
+					<aside class="notes">
+						That is a great and potentially useful observation. But the original paper offered no validation of this idea besides a toy example. Therefore in this work our goal was to validate it with a bit more realistic demonstrations. Specifically, we decided to focus on using causal inference for fault localisation in dataflow systems.
+					</aside>
+				</section>
+				<section>
+					<h4>Demos and experiments</h4>
+					<div class="container">
+
+						<div class="col">
+							<img src="images/node-red-logo.png">
+						</div>
+						
+						<div class="col">
+							<img src="images/scipipe-logo.png">
+						</div>
+
+						<div class="col">
+							<img src="images/seldon-core-logo.png" />
+						</div>
+						
+					</div>
+					<aside class="notes">
+						We have built 3 demonstration projects, each using a different modern dataflow framework: Node-RED, SciPipe and Seldon Core. Each project implements some sort of a data processing task with a given framework.
+					</aside>
+				</section>
+				<section>
+					<h4>Demos and experiments</h4>
+					<img src="images/distribution_shift.png"  height="600px">
+					<aside class="notes">
+						We then designed a total of 5 experiments using two types of interventions that model typical faults in software: either a bug or a input data shift. An intervention like this causes a shift in the system's output distribution, and the goal of causal procedure is to compute an attribution score that measures how much each node in the dataflow graph contibutes to the output shift. We use functions of selected frameworks to collect data before and after the intervention, and use causal inference to identify the faulty node.
+					</aside>
+				</section>
+				<section>
+					<h4>Demos and experiments</h4>
+					<img src="images/experiment_example.png"  height="600px">
+					<aside class="notes">
+						In all experiments the causal inference procedure correctly identified the faulty node by assigning it the highest score. Exapmle of an experiment outcome is shown here. We repeated each experiment 20 times for statistical robustness, and this plot shows mean attribution score of each node in a graph, as well as confidence intervals. As we can see, one node clearly has the highest attribution score, and indeed this is the node at which we intervened in this particular experiment.
+					</aside>
+				</section>
+				<section>
+					<h4>Future work</h4>
+					<ul>
+						<li>Scale up graph size</li>
+						<li>Estimate data storage costs</li>
+						<li>Develop fully automated plugins</li>
+						<li>Demos for business analysis and experimentation</li>
+					</ul>
+					<aside class="notes">
+						Hopefully our work serves as a good illustration of what causal fault localisation might look and feel like.
+						But of course this work is far from over, and we cannot claim that causal inference on dataflow systems is a production-ready tool. We merely hope to have provided the first important step. There are many potential follow ups, such as scaling up the dataflow graph in terms of number of nodes, corresponding scalability of the inference methods, similar demonstrations for other applications, development of fully automated plugins for the frameworks we used, and so forth.
+					</aside>
+				</section>
+				<section>
+					<h4>Thank you!</h4>
+					<p>Paper: <a href="https://arxiv.org/abs/2304.11987">https://arxiv.org/abs/2304.11987</a></p>
+					<p>Code: <a href="https://github.com/apaleyes/causality-fbp">https://github.com/apaleyes/causality-fbp</a></p>
+					<br />
+					<p>Questions?</p>
+					<a href="https://mlatcl.github.io/">https://mlatcl.github.io</a>
+					<br/>
+					&#9993; ap2169@cam.ac.uk
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: "100%",
+				height:"100%",
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
