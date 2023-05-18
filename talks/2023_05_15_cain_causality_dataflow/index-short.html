@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Dataflow graphs as complete causal graphs</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			/* .full {
+				height: 100%;
+				width: 100%;
+			} */
+			.credit {
+				bottom: 0px;
+				left: 0px;
+				position: absolute;
+			}
+			.highlight-red {
+				color: #ff2c2d;
+			}
+			.highlight-green {
+				color: #3CB043;
+			}
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>Dataflow graphs as complete causal graphs</h3>
+					<p>
+						<small><b>Andrei Paleyes</b>, Siyuan Guo, Bernhard Schölkopf, Neil Lawrence</small><br/>
+					</p>
+					<p>CAIN 2023</p>
+				</section>
+				<section>
+					<h4>Dataflow architecture</h4>
+					<img src="images/dennis_dataflow.png" height="600px"/>
+					<br/>
+					<br/>
+					<p class="credit" style="font-size: large;">
+						<i>Data flow schemas</i>, Dennis, J. B., Fosseen, J. B., & Linderman, J. P., International Symposium on Theoretical Programming (pp. 187-216), 1974
+					</p>
+				</section>
+				<section>
+					<h4>Causality</h4>
+					<img src="images/pearl_causality.jpg" height="600px" />
+				</section>
+				<section>
+					<h4>Causal language for dataflow</h4>
+					<div class="container">
+
+						<div class="col">
+							<div class="fragment">
+								<div>Structured causal model</div>
+								<div style="font-style: italic; font-size: x-large;">(think dataflow graph)</div>
+                                <img src="images/scm.png" />                                
+							</div>
+						</div>
+						
+						<div class="col">
+							<div class="fragment">
+								<div>Intervention</div>
+                                <div style="font-style: italic; font-size: x-large;">(think input data shift, software update, bug)</div>
+								<img src="images/intervention.png" />
+							</div>
+						</div>
+						
+					</div>
+				</section>
+				<section>
+					<h4>Dataflow graph = causal graph</h4>
+					<img src="images/fbp.png" height="400px" />
+					<img src="images/dataflow-causal-conditionals.png" height="200px" />
+				</section>
+				<section>
+					<h4>Applications</h4>
+					<div class="container">
+
+						<div class="col">
+							<!-- <div class="fragment"><div>&#129714;</div><div></div></div> -->
+							<div class="fragment">
+								<img src="images/bug.png" />
+								<div>Fault localisation</div>
+							</div>
+						</div>
+						
+						<div class="col">
+							<!-- <div class="fragment"><div>&#128269;</div><div></div></div> -->
+							<div class="fragment">
+								<img src="images/glass.png" />
+								<div>Business analysis</div>
+							</div>
+						</div>
+
+						<div class="col">
+							<!-- <div class="fragment"><div>&#129514;</div><div>Experimentation</div></div> -->
+							<div class="fragment">
+								<img src="images/experiment.png" />
+								<div>Experimentation</div>
+							</div>
+						</div>
+						
+					</div>
+				</section>
+				<section>
+					<h4>Open questions</h4>
+					<ul>
+						<li>Scalability</li>
+						<li>Costs</li>
+						<li>Tech stack</li>
+						<li>Ops</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Intellectual debt</h4>
+					<img src="images/intellectual-debt.png" height="600px"/>
+					<br />
+					<br />
+					<p class="credit" style="font-size: large;">
+						<i>Intellectual Debt: With Great Power Comes Great Ignorance.</i> Zittrain, Jonathan. 2019. Medium: Berkman Klein Center Collection
+					</p>
+				</section>
+				<section>
+					<h4>Summary</h4>
+					<ul>
+						<li>Dataflow is a tested but niche paradigm</li>
+						<li>Causality benefits from complete DAG</li>
+						<li><b>Dataflow graphs can be used as complete causal graphs</b></li>
+						<li>Applications in fault localisation, business analysis, experiments</li>
+						<li>There are open questions</li>
+					</ul>
+					<hr/>
+					<p>Paper: <a href="https://arxiv.org/abs/2304.11987">https://arxiv.org/abs/2304.11987</a></p>
+					<p>Code: <a href="https://github.com/apaleyes/causality-fbp">https://github.com/apaleyes/causality-fbp</a></p>
+					<p>Group: <a href="https://mlatcl.github.io">ML@CL</a></p>
+					<p>&#9993; <a href="mailto:ap2169@cam.ac.uk">ap2169@cam.ac.uk</a></p>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: "100%",
+				height:"100%",
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
