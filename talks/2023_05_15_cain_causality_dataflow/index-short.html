@@ -45,6 +45,9 @@
 						<small><b>Andrei Paleyes</b>, Siyuan Guo, Bernhard Schölkopf, Neil Lawrence</small><br/>
 					</p>
 					<p>CAIN 2023</p>
+                    <aside class="notes">
+                        Hello! My name is Andrei, and I would like to quickly present our paper titled "Dataflow graphs as complete causal graphs". This will be a shorter version of the talk I have presented online.
+                    </aside>
 				</section>
 				<section>
 					<h4>Dataflow architecture</h4>
@@ -54,10 +57,16 @@
 					<p class="credit" style="font-size: large;">
 						<i>Data flow schemas</i>, Dennis, J. B., Fosseen, J. B., & Linderman, J. P., International Symposium on Theoretical Programming (pp. 187-216), 1974
 					</p>
+                    <aside class="notes">
+                        We point out a connection between two areas of research. On one side we have dataflow architecture for software systems. Dataflow is not a new paradigm by any means, it was introduced in the 1970s, but still remains relatively niche. Some famous examples of dataflow in action include MapReduce, Tensorflow, Node-RED. Depending on your background you may have come across other frameworks or examples.
+                    </aside>
 				</section>
 				<section>
 					<h4>Causality</h4>
 					<img src="images/pearl_causality.jpg" height="600px" />
+                    <aside class="notes">
+                        On the other side we have causality. Causality has lately become a mainstream area in ML research, as it aims to characterize causal relatioships from observational data. Current statistical methods exploit associative relationships, but correlation does not always imply causation. Discovery and estimation of causal relationship is what causality aims to address.
+                    </aside>
 				</section>
 				<section>
 					<h4>Causal language for dataflow</h4>
@@ -80,18 +89,23 @@
 						</div>
 						
 					</div>
+                    <aside class="notes">
+                        Let's briefly cover two important elements of causal reasoning, and their connection to dataflow software.First is the structured causal model - a set of parent-child assignments with direct causes. You can immediatelly see analogies with a dataflow graph. Second is the intervention - act of affecting the system to change its outcome, often denoted using a do operator. In software engineering context this can be a software update, input data shift, or a bug.
+                    </aside>
 				</section>
 				<section>
 					<h4>Dataflow graph = causal graph</h4>
 					<img src="images/fbp.png" height="400px" />
 					<img src="images/dataflow-causal-conditionals.png" height="200px" />
+                    <aside class="notes">
+						In our work we put forth an observation that the dataflow graph generated as a part of the dataflow architectured software design process can be seen and used as complete causal graph of the entire software system. "complete" is the key, as it eliminates the main problem of using causal inference, and that is incomplete underlying DAG. In the paper we propose an algorthim that models software components as causal conditionals and measures their downstream causal effects.
+					</aside>
 				</section>
 				<section>
 					<h4>Applications</h4>
 					<div class="container">
 
 						<div class="col">
-							<!-- <div class="fragment"><div>&#129714;</div><div></div></div> -->
 							<div class="fragment">
 								<img src="images/bug.png" />
 								<div>Fault localisation</div>
@@ -99,7 +113,6 @@
 						</div>
 						
 						<div class="col">
-							<!-- <div class="fragment"><div>&#128269;</div><div></div></div> -->
 							<div class="fragment">
 								<img src="images/glass.png" />
 								<div>Business analysis</div>
@@ -107,7 +120,6 @@
 						</div>
 
 						<div class="col">
-							<!-- <div class="fragment"><div>&#129514;</div><div>Experimentation</div></div> -->
 							<div class="fragment">
 								<img src="images/experiment.png" />
 								<div>Experimentation</div>
@@ -115,6 +127,17 @@
 						</div>
 						
 					</div>
+					<aside class="notes">
+						And this opens up all sorts of possibilities. 
+
+						We can use causal inference to track down fauls and bugs in a dataflow system.
+
+						We can track data shifts back to the input data nodes of the dataflow system, and measure their influence on the change in the business metrics. 
+
+						We can use causal inference to estimate possible influence of the proposed update of a software component in a dataflow system, reducing the need for expensive live experiments, such as A/B testing. 
+
+						We can automate these processes, as we can manipulate, traverse and inspect the complete graph at any node or link. Simple examples of some of these applications are provided in the paper.
+					</aside>
 				</section>
 				<section>
 					<h4>Open questions</h4>
@@ -124,6 +147,9 @@
 						<li>Tech stack</li>
 						<li>Ops</li>
 					</ul>
+					<aside class="notes">
+						Of course there are many open questions and unknowns. But none of them seems unsolvable.
+					</aside>
 				</section>
 				<section>
 					<h4>Intellectual debt</h4>
@@ -133,6 +159,9 @@
 					<p class="credit" style="font-size: large;">
 						<i>Intellectual Debt: With Great Power Comes Great Ignorance.</i> Zittrain, Jonathan. 2019. Medium: Berkman Klein Center Collection
 					</p>
+					<aside class="notes">
+						I'd like to close with the following note. As software engineers, we are all aware of a notion of technical debt. Those of us how had to support old production systems are painfully aware of it. But as our software becomes more complex, and includes more sophisticated components such as ML models, a notion of intellectual debt arises. This notion, proposed by Jonathan Zittrain, suggests that the more complex our systems become, the less we are able to explain and understand what they are doing. That is disturbing, and we shall be seeking ways to build AI systems that are more, not less, understandable. We believe that building systems with dataflow paradigm and applying causal inference to them gives us an excellent opprotunity to create software that is explainable by design. As a result we shall be able to build more interpretable and transparent systems, including those powered by AI. 
+					</aside>
 				</section>
 				<section>
 					<h4>Summary</h4>
@@ -148,6 +177,9 @@
 					<p>Code: <a href="https://github.com/apaleyes/causality-fbp">https://github.com/apaleyes/causality-fbp</a></p>
 					<p>Group: <a href="https://mlatcl.github.io">ML@CL</a></p>
 					<p>&#9993; <a href="mailto:ap2169@cam.ac.uk">ap2169@cam.ac.uk</a></p>
+                    <aside class="notes">
+						Thank you for your attention.
+					</aside>
 				</section>
 			</div>
 		</div>
