@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Dataflow Architecture: Revisiting the Classic Software Architecture Paradigm
+		<title>Emukit: Decision making under uncertainty
 		</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
@@ -39,77 +39,308 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
-					<h3>Emukit: Decision making under uncertainty</h3>
-					<p>
-						<small>Andrei Paleyes</small>
-					</p>
-					<p>
-						SciPy 2023
-					</p>
-				</section>
-				<section>
-					<div style="height: 99vh">
-						<img src="images/emukit_web.jpeg" />
-					</div>
-				</section>
-				<section>
-					<h3>But what does "decision making under uncertainty" mean?</h3>
-				</section>
-				<section>
-					Expensive functions: NN training, lab experiment, manufacturing tool, daily workout, baking cookies
-				</section>
-				<section>
-					ultimately, just f(x) = y. and you want to do something about it: optimise, learn, integrate
-					but it's expensive, so you can't do too much of it, and need to be smarter
-				</section>
-				<section>
-					One way to be smarter is to be Bayesian:
-					1. make initial assumption
-					2. Guess where a good point is
-					3. try this one input point
-					4. adjust your beliefs
-					5. go to 2
-				</section>
-				<section>
-					Bayesian optimisation
-					Bayesian experiment design
-					Bayesian quadrature
-				</section>
-				<section>
-					Same high level algorithm
-				</section>
-				<section>
-					GPyOpt, limits of design, Javier
-				</section>
-				<section>
-					some concrete reasons:
-					 bloated inferfaces
-					 lack of flexibility
-					 hard to extend
-				</section>
-				<section>
-					models -> methods -> tasks
-					unique for all three methods, and potential for more
-				</section>
-				<section>
-					pieces, lego
-				</section>
-				<section>
-					how do you make these pieces? SOLID, interfaces, numpy arrays for data
-				</section>
-				<section>
-					model backend independent: use numpy, TF, Torch, etc.
-				</section>
-				<section>
-					again: numpy... model backend independent...
-				</section>
-				<section>
-					performance!
-				</section>
-				<section>
-					most direct competition are BoTorch and Trieste. both use backends that can be GPU accelerated. emukit does not, although there are ideas
-				</section>
+<section>
+	<h3>Emukit: Decision making under uncertainty</h3>
+	<p>
+		<small>Andrei Paleyes</small>
+	</p>
+	<p>
+		SciPy 2023
+	</p>
+	<aside class="notes">
+		Hi everyone! My name is Andrei, very happy to be a part of SciPy 2023, at least virtually.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<img src="images/emukit_web.jpeg" />
+	</div>
+	<aside class="notes">
+		Today I will be presenting Emukit. Emukit is a Python library for methods of decision making under uncertainty. So before we talk about the package itself let's discuss what does "decision making under uncertainty" even mean.
+	</aside>
+</section>
+<section>
+	<div class="container">
+		<div class="col">
+			<img src="images/training_model.png" />
+		</div>
+		<div class="col">
+			<img src="images/lab.png" />
+		</div>
+		<div class="col">
+			<img src="images/workout.png" />
+		</div>
+		<div class="col">
+			<img src="images/cookie.png" />
+		</div>
+	</div>
+	<aside class="notes">
+		Our life is surrounded with complex processes, ranging from training deep neural nets, doing an experiment in a chemical lab, to getting your daily workout in or even baking cookies. No doubt all of these are non-trivial processes that depend on many factors.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<div style="font-size: 10vh; margin-bottom: 20vh;">
+			f(x) = y
+		</div>
+	</div>
+	<aside class="notes">
+		Ultimately, we can say that each of these processes is a function, f(x)=y. It takes some input, e.g. hyperparameters of the model or amouts of ingridients in the recipe. And it produces an output that we can measure, for example accuracy of the model or number of cookies we sell in a day. The function is black-box, meaning we don't know exactly how it all works, even if we have some intuition.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<div style="font-size: 10vh; margin-bottom: 20vh;">
+			f(x) = y
+		</div>
+		<div><img src="images/optimise.png"  style="height: 11vh"/></div>
+		<div><img src="images/integrate.png"  style="height: 17vh"/></div>
+		<div><img src="images/learn.png" style="height: 8vh" /></div>
+	</div>
+	<aside class="notes">
+		And we often want to do something with this process and with this function: learn it, optimise it, integrate it, etc. But the thing is, f(x) is very expensive - maybe due to actual money, or time involved, or wear-and-tear. So we just cannot afford to run this function on the all possible inputs. What to do?
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<img src="images/BayesianLearningCycle.jpg" alt="Image source: https://bookdown.org/johnnydoorn/bayesbookdown/" />
+	</div>
+	<aside class="notes">
+		One way to be smarter is to be Bayesian:
+		1. make initial assumption
+		2. Guess where a good point is
+		3. try this one input point
+		4. adjust your beliefs
+		5. go to 2
+		Repeating until we achieve our goal.
+	</aside>
+</section>
+<section>
+	Revisiting "Decision making under unceratinty"
+	<br /><br />
+	<div class="fragment">"Decision making"?</div>
+	<br />
+	<div class="fragment">"Under unceratinty"?</div>
+	<aside class="notes">
+		So we did we say "decision making"? As f(x) is expensive, choosing where to try or evaluate the function next is an important decision. Why "under uncertainty"? First, noise-free observations of real life processes almost never exist. Secondly, our own beliefs aren't exact or precise. If we see f(x) in one point, it only gives us some idea of how f(x) may behave around this point. Hopefully this gives you some intuition about methods Emukit deals with.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<div style="margin-bottom: 6vh;">Bayesian optimisation: <br/><img src="images/optimise.png"  style="height: 11vh"/></div>
+		<div style="margin-bottom: 6vh;">Bayesian quadrature: <br/><img src="images/integrate.png"  style="height: 17vh"/></div>
+		<div>Experiment design: <br/><img src="images/learn.png" style="height: 8vh" /></div>
+	</div>
+	<aside class="notes">
+		Depending on what you'd like to do, there are specific flavors of this general process. If you'd like to find an optimum, you are doing Bayesian optimisation. If you'd like to learn the function better in some part of the input domain, that's experimental design or active learning. Finally, Bayesian quadrature is how you integrate f(x).
+	</aside>
+</section>
+<section>
+	<pre><code data-trim data-noescape>
+		while not stop:
+			use model to select next point
+			observe function at this point
+			update model
+	</code></pre>
+	<aside class="notes">
+		But the key thing is that all these methods, despite ahving different names, different goals and separate communities working on them, all conform to the same high level algorithm. And that's the realisation upon which Emukit is built.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<img src="images/models-methods-tasks.png" />
+	</div>
+	<aside class="notes">
+		We like to contextualise Emukit in the following way, The decision making process we just discussed can be seen as going from models to methods to tasks.
+	</aside>
+</section>
+<section>
+	<h3>Models</h3>
+	<ul>
+		<li>Gaussian process</li>
+		<li>Bayesian neural network</li>
+		<li>Random forest</li>
+		<li><b>Multi-fidelity</b></li>
+	</ul>
+	<aside class="notes">
+		Model is the belief we talked about. It is a data-driven representation of whatever data we have about the objective function, and our unceratinty about it. Usually a special type of models, known as Gaussian process, is used, but sometimes you can also see random forests, BNNs etc. Emukit is not a modeling framework, so we expect users to define the model in a framework of their choice, and plug it into Emukit. 
+	</aside>
+</section>
+<section>
+	<h3>Methods</h3>
+	<ul>
+		<li>Bayesian optimisation</li>
+		<li>Bayesian quadrature</li>
+		<li>Experimental design</li>
+	</ul>
+	<aside class="notes">
+		Methods are the bread and butter of Emukit, the main focus of the library, so we'll talk about them more later.
+	</aside>
+</section>
+<section>
+	<h3>Tasks</h3>
+	<ul>
+		<li>Hyperparameter optimisation</li>
+		<li>Data efficient learning</li>
+		<li>Benchmarking</li>
+	</ul>
+	<aside class="notes">
+		Finally, there are tasks. These are meaningful things you are looking to do. Unless you are a student working on an assignment, you never really want to find an integral of a function or its maximum. You normally do that because you want to get better results from your experiments, reduce costs, etc. There is really no limit to applications of these decisoin making methods, so the library only provides tutorial and examples of things that could be done.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<img src="images/lego.jpeg" />
+	</div>
+	<aside class="notes">
+		Diving deeper into Emukit, all the methods we mentioned consist of the same set of components. To begin, there is an objective function. As we said, there is a model, our internal representation of data we have on objective function. Then there is an acquisition function, which is a mechanism to use the model to decide where to evaluate the function next. It also balances exploration and exploitation of the process. Finally, there is a stopping criterion telling us when to stop. With Emukit we wanted to give our users a lot of flexibility as to what implementations of these components they use, make it easy to swap and compare. Basic idea was "it would be nice to just replace an acquisition function leaving everything else intact"
+	</aside>
+</section>
+<section>
+	<pre><code data-trim data-noescape>
+        while not stopping_condition.should_stop(self.loop_state):
+            self._update_models()
+            new_x = self.candidate_point_calculator.compute_next_points(self.loop_state, context)
+
+            results = user_function.evaluate(new_x)
+  
+            self.loop_state.update(results)
+	</code></pre>
+	<aside class="notes">
+		And we achieved this sort of flexibility by simply following good engineering practices. We use SOLID principles a lot, and some parts of code may remind you of certain gang of four patterns. For instance, we have a common abstract loop, where we can plug things in if they implement an interface required by the loop.
+	</aside>
+</section>
+<section>
+	<pre><code data-trim data-noescape>
+	class IPriorHyperparameters:
+		def generate_hyperparameters_samples(...
+		
+		def fix_model_hyperparameters(...
+
+
+	class IntegratedHyperParameterAcquisition(Acquisition):
+		def __init__(
+			self,
+			model: Union[IModel, IPriorHyperparameters],
+		...
+	</code></pre>
+	<aside class="notes">
+		Similarly, if a component needs to interact with another component, they can also do that through interfaces. For example here an acquisition expects certain functionality from the model. The functionality is declared via an interface that has a couple of functions returning numpy arrays. This approach completley decouples acquistion functions and models. It also means the models can be developed based on any framework of choice. TensorFlow, PyTorch - no matter, as long as it implements the given interface.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<img src="images/solid_principles.png" alt="Image source: https://blog.knoldus.com/why-we-need-solid-principles-and-its-types/" style="background-color: whitesmoke;" />
+	</div>
+	<aside class="notes">
+		Even from these two examples we can tell that there is no rocket science and crazy engineering trick here. Just applying basic principles allowed us to build an intuitive and flexible library.
+	</aside>
+</section>
+<section>
+	Wait!
+	<br /><br />
+	<div class="fragment">Numpy arrays...</div>
+	<br />
+	<div class="fragment">Model framework agnostic...</div>
+	<aside class="notes">
+		But hold on a second, let's consider what I just said. Numpy arrays... Backend agnostic... From the biggest virtues of Emukit also comes its biggest drawback - performance!
+	</aside>
+</section>
+<section>
+	<div class="container">
+		<div class="col"><img src="images/botorch.png" style="background-color: whitesmoke;"/></div>
+		<div class="col"><img src="images/trieste.png"/></div>
+	</div>
+	<div class="container fragment">
+		<div class="col"><img src="images/pytorch.png" ></div>
+		<div class="col"><img src="images/TensorFlow.png" style="background-color: whitesmoke;"/></div>
+	</div>
+	<aside class="notes">
+		The main packages we consider direct competition to Emukit are BoTorch and Trieste. Of course there are many more, but let's focus on these two as probably the strongest of the bunch. They are built on PyTorch and Tensorflow respectively, very tightly coupled with these backends. And thus enjoy all the features of these monsters, including GPU acceleration! Being backend agnostic Emukit simply doesn't have access to the GPU acceleration, as we cannot make any assumptions about how the underlying math is done. So if you require good speed, please take this into consideration.
+	</aside>
+</section>
+<section>
+	But why use Emukit then?
+	<aside class="notes">
+		But if performance is not Emukit's forte, then what is? Let's talk about it.
+	</aside>
+</section>
+<section>
+	<aside class="notes">
+		First of all, rapid prototyping. Emukit's original goal was to support researchers in developing new methods for decision making under uncertainty. Hence all the thought put into flexibility. Quickly trying things out is the intended purpose of Emukit, and we have had lots of good feedback from resaerchers about it.
+	</aside>
+</section>
+<section>
+	<div class="container">
+		<div class="col"><img src="images/gpss.png"/></div>
+		<div class="col"><img src="images/uni-freiburg-logo.jpeg"/></div>
+		<div class="col"><img src="images/university-of-cambridge-logo.png" style="background-color: whitesmoke;"/></div>
+	</div>
+	<aside class="notes">
+		Emukit also turned out to be pretty intuitive and expressive. Makes it great for teaching. We know that Emukit was and is used for multiple university courses and summer schools.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<img src="images/emukit_web_features.jpeg" />
+	</div>
+	<aside class="notes">
+		Amazingly, given the size of the scientific Python community and the speed at which it grows, there are some features that were unique to the package back when it was developed and still are now. Most notably, Emukit remains the only general purpose package for BQ and MF.
+	</aside>
+</section>
+<section>
+	<h3>Future plans</h3>
+	<ul>
+		<li class="fragment">Friendly to beginners</li>
+		<li class="fragment">Feature completeness for UQ</li>
+		<li class="fragment">Integrations</li>
+		<li class="fragment">Ideas?</li>
+	</ul>
+	<aside class="notes">
+		So this is where the package is now. What does the future hold? There are multiple possible directions. First, Emukit could be more friendly to absolute beginners. I'd love to be able to say "optimise your models with Emukit in 3 lines of code", but I simply cannot, because the package wasn't built that way. Second, there are functionalities, like sensitivity analysis and Bayesian calibration, that were always planned but never really implemented. These would make the package more complete as far as uncertainty quantification methods go. Third, integration with other tools. For example create custom optimisers with Emukit for Scipy, Ray Tune or Optuna. Finally, one of the reasons I am here (well, kind of here) today is to gather feedback from this amazing community. And maybe through some conversations and comments a new interesting direction for Emukit emerges.
+	</aside>
+</section>
+<section>
+	Credit to the Emukit team (current team in <b style="color: #90EE90;">bold green</b>)
+	<div class="container">
+		<div class="col"><img src="images/andrei.jpg"/> <br/> <b style="color: #90EE90;">Andrei Paleyes</b></div>
+		<div class="col"><img src="images/maren.jpg"/> <br/> <b style="color: #90EE90;">Maren Mahsereci</b></div>
+		<div class="col"><img src="images/neil.jpg"/> <br/> <b style="color: #90EE90;">Neil Lawrence</b></div>
+		<div class="col"><img src="images/mark.jpg"/> <br/> Mark Pullin</div>
+		<div class="col"><img src="images/cliff.jpg"/> <br/> Cliff McCollum</div>
+		<div class="col"><img src="images/javi.jpg"/> <br/> Javier Gonzalez</div>
+	</div>
+	<aside class="notes">Emukit was originally developed by this team of awesome people, back when we were all a part of Amazon Cambridge. Emukit was since transferred to a neutral territory. And three of us are still actively involved in running the package.</aside>
+</section>
+<section>
+	<h4>Thanks!</h4>
+	<p>Website: <a href="https://emukit.github.io/">https://emukit.github.io/</a></p>
+	<p>Code: <a href="https://github.com/EmuKit/emukit">https://github.com/EmuKit/emukit</a></p>
+	<p>Speaker (and this talk's slides): <a href="https://paleyes.info/">https://paleyes.info/</a></p>
+	<p>&#9993; <a href="mailto:ap2169@cam.ac.uk">ap2169@cam.ac.uk</a></p>
+	<aside class="notes">
+		Thank you for your attention.
+	</aside>
+</section>
+<section>
+	Credit to the Emukit team (current team in <b style="color: #90EE90;">bold green</b>)
+	<div class="container">
+		<div class="col"><img src="images/andrei.jpg"/> <br/> <b style="color: #90EE90;">Andrei Paleyes</b></div>
+		<div class="col"><img src="images/maren.jpg"/> <br/> <b style="color: #90EE90;">Maren Mahsereci</b></div>
+		<div class="col"><img src="images/neil.jpg"/> <br/> <b style="color: #90EE90;">Neil Lawrence</b></div>
+		<div class="col"><img src="images/mark.jpg"/> <br/> Mark Pullin</div>
+		<div class="col"><img src="images/cliff.jpg"/> <br/> Cliff McCollum</div>
+		<div class="col"><img src="images/javi.jpg"/> <br/> Javier Gonzalez</div>
+	</div>
+	<aside class="notes">
+		That's all from me. Here are some credits for people actively involved in the package development, original dev team. Also some contact details. Questions here, on Slack or email are all welcome.
+	</aside>
+</section>
+
+
+<section>
+	most direct competition are BoTorch and Trieste. both use backends that can be GPU accelerated. emukit does not, although there are ideas
+</section>
 				<section>
 					
 				</section>
