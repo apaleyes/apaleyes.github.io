@@ -48,7 +48,7 @@
 		SciPy 2023
 	</p>
 	<aside class="notes">
-		Hi everyone! My name is Andrei, very happy to be a part of SciPy 2023, at least virtually.
+		Hi everyone! My name is Andrei, very happy to be a part of SciPy 2023, at least virtually. Before I even begin, huge thanks to all the organizers that accomodated me doing this talk virtually. I know such things are hard to organize, and truly appreciate their effort.
 	</aside>
 </section>
 <section>
@@ -161,7 +161,7 @@
 		<li><b>Multi-fidelity</b></li>
 	</ul>
 	<aside class="notes">
-		Model is the belief we talked about. It is a data-driven representation of whatever data we have about the objective function, and our uncertainty about it. Usually a special type of models, known as Gaussian process, is used, but sometimes you can also see random forests, BNNs etc. Emukit is not a modeling framework, so we expect users to define the model in a framework of their choice, and plug it into Emukit.
+		Model is the belief we talked about. It is a data-driven representation of whatever data we have about the objective function, and our uncertainty about it. It is often referred to as "statistical emulator". Usually a special type of models, known as Gaussian process, is used, but sometimes you can also see random forests, BNNs etc. Emukit is not a modeling framework, as there are so many great probabilistic programming tools around we didn't feel the need to build one more. So we expect users to define the model in a framework of their choice, and plug it into Emukit. With one exception being multi-fidelity modeling with GPs. We had a lot of interest in the topic, and there were no packages for it at the time, so we've built it into Emukit. But generally spreaking, we expect users to come with their own model definitions.
 	</aside>
 </section>
 <section>
@@ -267,6 +267,8 @@
 	<div class="fragment">Numpy arrays ...</div>
 	<br />
 	<div class="fragment">Agnostic of modeling framework ...</div>
+	<br />
+	<div class="fragment">Performance!</div>
 	<aside class="notes">
 		But hold on a second, let's consider what I just said. Numpy arrays... Agnostic to modeling framework... From the biggest virtues of Emukit also comes its biggest drawback - performance!
 	</aside>
@@ -281,7 +283,7 @@
 		<div class="col"><img src="images/TensorFlow.png" style="background-color: whitesmoke;"/></div>
 	</div>
 	<aside class="notes">
-		The main packages we consider direct competition to Emukit are BoTorch and Trieste. Of course there are many more, but let's focus on these two as probably the strongest of the bunch. They are built on PyTorch and Tensorflow respectively, very tightly coupled with these backends. And thus enjoy all the features of these monsters, including GPU acceleration! Being backend agnostic Emukit simply doesn't have access to the GPU acceleration, as we cannot make any assumptions about how the underlying math is done. So if you require good speed, please take this into consideration.
+		The packages most similar to Emukit in Python ecosystem are BoTorch and Trieste. They are built on PyTorch and Tensorflow respectively, very tightly coupled with these backends. And thus enjoy all the features of these monsters, including GPU acceleration! Being backend agnostic Emukit simply doesn't have access to the GPU acceleration, as we cannot make any assumptions about how the underlying math is done. And passing data around in Numpy arrays means we are constantly breaking the computation graph. Thus, if you require speed, please take this into consideration.
 	</aside>
 </section>
 <section>
@@ -305,7 +307,7 @@
 		<div class="col"><img src="images/university-of-cambridge-logo.png" style="background-color: whitesmoke;"/></div>
 	</div>
 	<aside class="notes">
-		Emukit also turned out to be pretty intuitive and expressive. Makes it great for teaching. We know that Emukit was and is used for multiple university courses and summer schools.
+		Emukit also turned out to be pretty intuitive and expressive. Makes it great for teaching. We know that Emukit was and is used for multiple university courses and summer schools on Gaussian processes, statistical emulation and uncertainty quantification.
 	</aside>
 </section>
 <section>
