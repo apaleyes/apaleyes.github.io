@@ -56,7 +56,13 @@
 		<img src="images/emukit_web.jpeg" />
 	</div>
 	<aside class="notes">
-		Today I will be presenting Emukit. Emukit is a Python library for methods of decision making under uncertainty. So before we talk about the package itself let's discuss what does "decision making under uncertainty" even mean.
+		Today I will be presenting Emukit. This will be a relatively lightweight talk, as my main goal is to make sure all of you have a good intuitive understanding of the package, and hopefully feel motivated to check it out further. Don't expect crazy engineering tricks or complex math.
+	</aside>
+</section>
+<section>
+	<h2>Part 1: Intuition</h3>
+	<aside class="notes">
+		Emukit is a Python library for methods of decision making under uncertainty. So before we talk about the package itself let's discuss what does "decision making under uncertainty" even mean.
 	</aside>
 </section>
 <section>
@@ -68,14 +74,11 @@
 			<img src="images/lab.png" />
 		</div>
 		<div class="col">
-			<img src="images/workout.png" />
-		</div>
-		<div class="col">
 			<img src="images/cookie.png" />
 		</div>
 	</div>
 	<aside class="notes">
-		Our life is surrounded with complex processes, ranging from training deep neural nets, doing an experiment in a chemical lab, to getting your daily workout in or even baking cookies. No doubt all of these are non-trivial processes that depend on many factors.
+		Our life is surrounded with complex processes, ranging from training deep neural nets, doing an experiment in a chemical lab, or even baking cookies. No doubt all of these are non-trivial processes that depend on many factors.
 	</aside>
 </section>
 <section>
@@ -85,7 +88,7 @@
 		</div>
 	</div>
 	<aside class="notes">
-		Ultimately, we can say that each of these processes is a function, f(x)=y. It takes some input, e.g. hyperparameters of the model or amouts of ingridients in the recipe. And it produces an output that we can measure, for example accuracy of the model or number of cookies we sell in a day. The function is black-box, meaning we don't know exactly how it all works, even if we have some intuition.
+		Ultimately, we can say that each of these processes is a function, f(x)=y. It takes some input, e.g. hyperparameters of the model or amouts of ingridients in the recipe. And it produces an output that we can measure, for example accuracy of the model or number of cookies we sell in a day. The function is black-box, meaning we don't know exactly how it all works, even if we have some basic intuition.
 	</aside>
 </section>
 <section>
@@ -116,34 +119,29 @@
 	</aside>
 </section>
 <section>
-	Revisiting "Decision making under unceratinty"
-	<br /><br />
-	<div class="fragment">"Decision making"?</div>
-	<br />
-	<div class="fragment">"Under unceratinty"?</div>
-	<aside class="notes">
-		So we did we say "decision making"? As f(x) is expensive, choosing where to try or evaluate the function next is an important decision. Why "under uncertainty"? First, noise-free observations of real life processes almost never exist. Secondly, our own beliefs aren't exact or precise. If we see f(x) in one point, it only gives us some idea of how f(x) may behave around this point. Hopefully this gives you some intuition about methods Emukit deals with.
-	</aside>
-</section>
-<section>
 	<div style="height: 99vh">
 		<div style="margin-bottom: 6vh;">Bayesian optimisation: <br/><img src="images/optimise.png"  style="height: 11vh"/></div>
 		<div style="margin-bottom: 6vh;">Bayesian quadrature: <br/><img src="images/integrate.png"  style="height: 17vh"/></div>
 		<div>Experiment design: <br/><img src="images/learn.png" style="height: 8vh" /></div>
 	</div>
 	<aside class="notes">
-		Depending on what you'd like to do, there are specific flavors of this general process. If you'd like to find an optimum, you are doing Bayesian optimisation. If you'd like to learn the function better in some part of the input domain, that's experimental design or active learning. Finally, Bayesian quadrature is how you integrate f(x).
+		Depending on what you'd like to do, there are specific flavors of this general process. If you'd like to find an optimum, you are doing Bayesian optimisation. If you'd like to learn the function better in some part of the input domain, that's experimental design or active learning. Finally, Bayesian quadrature is how you integrate f(x). But the key thing is that all these methods, despite having different names, different goals and separate communities working on them, all conform to the same high level algorithm. And that's the realisation upon which Emukit is built.
 	</aside>
 </section>
 <section>
-	<pre><code data-trim data-noescape>
-		while not stop:
-			use model to select next point
-			observe function at this point
-			update model
-	</code></pre>
+	Revisiting "Decision making under uncertainty"
+	<br /><br />
+	<div class="fragment">"Decision making"?</div>
+	<br />
+	<div class="fragment">"Under uncertainty"?</div>
 	<aside class="notes">
-		But the key thing is that all these methods, despite ahving different names, different goals and separate communities working on them, all conform to the same high level algorithm. And that's the realisation upon which Emukit is built.
+		So why did we say "decision making"? As f(x) is expensive, choosing where to try or evaluate the function next is an important decision. Why "under uncertainty"? First, noise-free observations of real life processes almost never exist. Secondly, our own beliefs aren't exact or precise. If we see f(x) in one point, it only gives us some idea of how f(x) may behave around this point.
+	</aside>
+</section>
+<section>
+	<h2>Part 2: Scope</h3>
+	<aside class="notes">
+		Hopefully this gives you some intuition about methods Emukit deals with. Now we can talk about Emukit's scope, what it does and does not do.
 	</aside>
 </section>
 <section>
@@ -151,7 +149,7 @@
 		<img src="images/models-methods-tasks.png" />
 	</div>
 	<aside class="notes">
-		We like to contextualise Emukit in the following way, The decision making process we just discussed can be seen as going from models to methods to tasks.
+		The decision making process we just discussed can be seen as going from models to methods to tasks.
 	</aside>
 </section>
 <section>
@@ -163,7 +161,7 @@
 		<li><b>Multi-fidelity</b></li>
 	</ul>
 	<aside class="notes">
-		Model is the belief we talked about. It is a data-driven representation of whatever data we have about the objective function, and our unceratinty about it. Usually a special type of models, known as Gaussian process, is used, but sometimes you can also see random forests, BNNs etc. Emukit is not a modeling framework, so we expect users to define the model in a framework of their choice, and plug it into Emukit. 
+		Model is the belief we talked about. It is a data-driven representation of whatever data we have about the objective function, and our uncertainty about it. Usually a special type of models, known as Gaussian process, is used, but sometimes you can also see random forests, BNNs etc. Emukit is not a modeling framework, so we expect users to define the model in a framework of their choice, and plug it into Emukit.
 	</aside>
 </section>
 <section>
@@ -189,11 +187,38 @@
 	</aside>
 </section>
 <section>
+	<h2>Part 3: Using the library</h3>
+	<aside class="notes">
+		Having defined the scope, let's talk about how to use Emukit and how it is built.
+	</aside>
+</section>
+<section>
+	<pre ><code  data-trim data-noescape>
+		model_gpy = GPy.models.GPRegression(X,Y)
+		model_emukit = GPyModelWrapper(model_gpy)
+		parameter_space = ParameterSpace([
+			ContinuousParameter('x1', -5, 10),
+			ContinuousParameter('x2', 0, 15)
+		])
+
+		model_variance_acquisition = ModelVariance(model = model_emukit)
+		experimental_design_loop = ExperimentalDesignLoop(
+			model = model_emukit,
+			space = parameter_space,
+			acquisition = model_variance_acquisition
+		)
+		experimental_design_loop.run(f, 10)
+	</code></pre>
+	<aside class="notes">
+		For the end user the flow looks something like this. The model definition is defined externally, and is wrapped into an interface Emukit understands. We provide wrappers for some libraries, and users can also implement their own. Next thing to define is the input domain. In this piece of code we also define the acquisition function, because that's the most common customisation, although this is not required as reasonable defaults are provided. Finally, we are ready to define and run the loop, in this case for 10 iterations. But if you are using the library this way you are barely scratching the surface, as Emukit's biggest forte is flexiblity!
+	</aside>
+</section>
+<section>
 	<div style="height: 99vh">
 		<img src="images/lego.jpeg" />
 	</div>
 	<aside class="notes">
-		Diving deeper into Emukit, all the methods we mentioned consist of the same set of components. To begin, there is an objective function. As we said, there is a model, our internal representation of data we have on objective function. Then there is an acquisition function, which is a mechanism to use the model to decide where to evaluate the function next. It also balances exploration and exploitation of the process. Finally, there is a stopping criterion telling us when to stop. With Emukit we wanted to give our users a lot of flexibility as to what implementations of these components they use, make it easy to swap and compare. Basic idea was "it would be nice to just replace an acquisition function leaving everything else intact"
+		 What do we mean by flexibility? All the methods we mentioned consist of the same set of components. To begin, there is an objective function. As we said, there is a model, our internal representation of data we have on objective function. Then there is an acquisition function, which is a mechanism to use the model to decide where to evaluate the function next. It also balances exploration and exploitation of the process. Finally, there is a stopping criterion telling us when to stop. With Emukit we give our users a lot of flexibility as to what implementations of these components they use, make it easy to swap and compare. Basic idea was "it would be nice to just replace an acquisition function leaving everything else intact"
 	</aside>
 </section>
 <section>
@@ -207,7 +232,7 @@
             self.loop_state.update(results)
 	</code></pre>
 	<aside class="notes">
-		And we achieved this sort of flexibility by simply following good engineering practices. We use SOLID principles a lot, and some parts of code may remind you of certain gang of four patterns. For instance, we have a common abstract loop, where we can plug things in if they implement an interface required by the loop.
+		And we achieved this sort of flexibility by simply following well-known engineering practices. For example, here we have a common abstract loop, where we can plug things in if they implement an interface required by the loop. As you can see, it only operates with high level abstract concepts defined by interfaces. And the loop does not know, or care, how these interface are being implemented. The only common ground is the data exchange format between the components, which in our case is the numpy array.
 	</aside>
 </section>
 <section>
@@ -225,7 +250,7 @@
 		...
 	</code></pre>
 	<aside class="notes">
-		Similarly, if a component needs to interact with another component, they can also do that through interfaces. For example here an acquisition expects certain functionality from the model. The functionality is declared via an interface that has a couple of functions returning numpy arrays. This approach completley decouples acquistion functions and models. It also means the models can be developed based on any framework of choice. TensorFlow, PyTorch - no matter, as long as it implements the given interface.
+		Similarly, if a component needs to interact with another component, they can also do that through interfaces. For example here an acquisition expects certain functionality from the model. The functionality is declared via an interface that has a couple of functions returning numpy arrays. This approach completley decouples acquistion functions and models. It also means the models can be developed based on any framework of choice. TensorFlow, PyTorch - no matter, as long as it implements the given interface. Emukit is comletely agnostic to the modeling frameworks.
 	</aside>
 </section>
 <section>
@@ -233,17 +258,17 @@
 		<img src="images/solid_principles.png" alt="Image source: https://blog.knoldus.com/why-we-need-solid-principles-and-its-types/" style="background-color: whitesmoke;" />
 	</div>
 	<aside class="notes">
-		Even from these two examples we can tell that there is no rocket science and crazy engineering trick here. Just applying basic principles allowed us to build an intuitive and flexible library.
+		Even from these two examples we can tell that there is no rocket science and crazy engineering trick here. Just applying basic practices, such as SOLID principles and GoF design patterns, allowed us to build an intuitive and flexible library.
 	</aside>
 </section>
 <section>
 	Wait!
 	<br /><br />
-	<div class="fragment">Numpy arrays...</div>
+	<div class="fragment">Numpy arrays ...</div>
 	<br />
-	<div class="fragment">Model framework agnostic...</div>
+	<div class="fragment">Agnostic of modeling framework ...</div>
 	<aside class="notes">
-		But hold on a second, let's consider what I just said. Numpy arrays... Backend agnostic... From the biggest virtues of Emukit also comes its biggest drawback - performance!
+		But hold on a second, let's consider what I just said. Numpy arrays... Agnostic to modeling framework... From the biggest virtues of Emukit also comes its biggest drawback - performance!
 	</aside>
 </section>
 <section>
@@ -260,12 +285,15 @@
 	</aside>
 </section>
 <section>
-	But why use Emukit then?
+	<h2>Part 4: But why use Emukit then?</h2>
 	<aside class="notes">
 		But if performance is not Emukit's forte, then what is? Let's talk about it.
 	</aside>
 </section>
 <section>
+	<div style="height: 99vh">
+		<img src="images/lego.jpeg" />
+	</div>
 	<aside class="notes">
 		First of all, rapid prototyping. Emukit's original goal was to support researchers in developing new methods for decision making under uncertainty. Hence all the thought put into flexibility. Quickly trying things out is the intended purpose of Emukit, and we have had lots of good feedback from resaerchers about it.
 	</aside>
@@ -317,418 +345,11 @@
 	<p>Website: <a href="https://emukit.github.io/">https://emukit.github.io/</a></p>
 	<p>Code: <a href="https://github.com/EmuKit/emukit">https://github.com/EmuKit/emukit</a></p>
 	<p>Speaker (and this talk's slides): <a href="https://paleyes.info/">https://paleyes.info/</a></p>
+	<br/>
+	Questions?
+	<p>Mic in the room! Slack!</p>
 	<p>&#9993; <a href="mailto:ap2169@cam.ac.uk">ap2169@cam.ac.uk</a></p>
-	<aside class="notes">
-		Thank you for your attention.
-	</aside>
 </section>
-<section>
-	Credit to the Emukit team (current team in <b style="color: #90EE90;">bold green</b>)
-	<div class="container">
-		<div class="col"><img src="images/andrei.jpg"/> <br/> <b style="color: #90EE90;">Andrei Paleyes</b></div>
-		<div class="col"><img src="images/maren.jpg"/> <br/> <b style="color: #90EE90;">Maren Mahsereci</b></div>
-		<div class="col"><img src="images/neil.jpg"/> <br/> <b style="color: #90EE90;">Neil Lawrence</b></div>
-		<div class="col"><img src="images/mark.jpg"/> <br/> Mark Pullin</div>
-		<div class="col"><img src="images/cliff.jpg"/> <br/> Cliff McCollum</div>
-		<div class="col"><img src="images/javi.jpg"/> <br/> Javier Gonzalez</div>
-	</div>
-	<aside class="notes">
-		That's all from me. Here are some credits for people actively involved in the package development, original dev team. Also some contact details. Questions here, on Slack or email are all welcome.
-	</aside>
-</section>
-
-
-<section>
-	most direct competition are BoTorch and Trieste. both use backends that can be GPU accelerated. emukit does not, although there are ideas
-</section>
-				<section>
-					
-				</section>
-				<section>
-					credits: original team, maren and myself
-				</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				<section>
-					<h3>Dataflow Architecture</h3>
-					<h4>
-						Revisiting the Classic Software Architecture Paradigm<br /> in the age of AI
-					</h4>
-					<p>
-						<small>Andrei Paleyes</small>
-					</p>
-					<p>
-						SAP Inspiration Sessions, 07.06.2023
-					</p>
-				</section>
-				<section>
-					<h3>Who is Andrei?</h3>
-					Last year PhD student at ML@CL (Cambridge Computer Lab) <br/> with lots of software engineering background
-				</section>
-				<section>
-					<h3>Who are you?</h3>
-					<p class="fragment">Software engineers?</p>
-					<p class="fragment">Data scientists?</p>
-					<p class="fragment">ML/data engineers?</p>
-					<p class="fragment">Other?</p>
-				</section>
-				<section>
-					<h4>ML deployment is hard!</h4>
-				</section>
-				<section>
-					<p>Venture Beat, 2019</p>
-					<blockquote cite="https://venturebeat.com/ai/why-do-87-of-data-science-projects-never-make-it-into-production/">
-						&ldquo;Why do 87% of data science projects never make it into production?&rdquo;
-					</blockquote>
-					<p>InfoWorld, 2021</p>
-					<blockquote cite="https://www.infoworld.com/article/3639028/why-ai-investments-fail-to-deliver.html">
-						&ldquo;85% of AI and machine learning projects fail to deliver, and only 53% of projects make it from prototypes to production.&rdquo;
-					</blockquote>
-					<p>Capital One and Forrester, 2022</p>
-					<blockquote cite="https://www.capitalone.com/tech/machine-learning/new-forrester-report-on-operationalizing-machine-learning/">
-						&ldquo;73% of respondents find transparency, traceability, and explainability of data flows challenging.&rdquo;
-					</blockquote>
-				</section>
-				<section>
-					<div style="height: 99vh">
-						<h4>But why?</h4>
-						<p>Many reasons</p>
-						<p class="fragment">e.g. model accuracy vs business value</p>
-						<p class="fragment">or computational and labour costs</p>
-						<p class="fragment">or skillset</p>
-						<p class="credit">
-							"150 Successful Machine Learning Models: 6 Lessons Learned at Booking.com", Bernardi et al., KDD 2019<br />
-							"Challenges in Deploying Machine Learning: A Survey of Case Studies", Paleyes et al., ACM Computing Surveys, 2022
-						</p>
-					</div>
-				</section>
-				<section>
-					<h4>One more reason</h4>
-					<p>Data management in modern software is often a mess</p>
-				</section>
-				<section>
-					<h4>Scaling Big Data Mining Infrastructure: The Twitter Experience
-						<small>J Lin, D Ryaboy; ACM SIGKDD Explorations Newsletter, 2013</small>
-					</h4>
-					<small>
-						<blockquote>
-							&ldquo;Effective big data mining at scale doesn't begin or end with what academics would consider data mining&rdquo;
-						</blockquote>
-						<blockquote>
-							&ldquo;Data scientists expend a large amount of effort to understand the data available to them, before they even begin any meaningful analysis&rdquo;
-						</blockquote>
-						<blockquote>
-							&ldquo;Exploratory data analysis always reveals data quality issues&rdquo;
-						</blockquote>
-					</small>
-				</section>
-				<section>
-					<h4>Who's to blame?</h4>
-					<img src="images/blame.jpg" />
-					<p class="fragment fade-in">Software Services</p>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>What is a service</h4>
-						A service is <span class="fragment">a piece of software,</span>
-						<p class="fragment">that provides a function, or many functions,</p>
-						<p class="fragment">known as interface or API,</p>
-						<p class="fragment">that clients* can reuse,</p>
-						<p class="fragment">together with policies to control its usage.</p>
-						<br/>
-						<p class="fragment">*A client can be anything: another software, a person, a hardware.</p>
-						<p class="credit">https://en.wikipedia.org/wiki/Service_(systems_architecture)</p>
-					</div>
-				</section>
-				<section>
-					<h4>Service oriented architecture is</h4>
-					<ul>
-						<li>Scalable</li>
-						<li>Flexible</li>
-						<li>Modular</li>
-						<li>Reliable</li>
-						<li>Encourages ownership</li>
-					</ul>
-					<p class="fragment">However...</p>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>Two services</h4>
-						<img src="images/two_services.png" style="height: 70vh" />
-					</div>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>Three services</h4>
-						<img src="images/three_services.png" style="height: 70vh" />
-					</div>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>Big ball of mud</h4>
-						<img src="images/ball-of-mud.jpg" style="height: 70vh" />
-						<p class="credit">Image credit: Ben Morris, https://www.ben-morris.com/microservices-rest-and-the-distributed-big-ball-of-mud/</p>
-					</div>
-				</section>
-				<section>
-					<h4>Scaling Big Data Mining Infrastructure: The Twitter Experience
-						<small>J Lin, D Ryaboy; ACM SIGKDD Explorations Newsletter, 2013</small>
-					</h4>
-					<small>
-						<blockquote>
-							&ldquo;Twitter is powered by many loosely-coordinated services.&rdquo;
-						</blockquote>
-						<blockquote>
-							&ldquo;Since a single user action may involve many services, a data scientist wishing to analyze user behavior must first identify all the disparate data sources involved.&rdquo;
-						</blockquote>
-						<blockquote>
-							&ldquo;Services are normally developed and operated by different teams, which may adopt different conventions for storing and organizing log data.&rdquo;
-						</blockquote>
-					</small>
-				</section>
-				<section>
-					<h4>What to do?</h4>
-					<img class="fragment" src="images/musk_twitter.PNG" />
-				</section>
-				<section>
-					<h4>What else to do?</h4>
-					<img class="fragment" src="images/monolith.png" />
-				</section>
-				<section>
-					<h4>What else else to do?</h4>
-					<p class="fragment">Build software with data as the first priority!</p>
-				</section>
-				<section>
-					<h4>How?</h4>
-					<ul>
-						<li>Prioritise data while designing services - Götz et al., 2018</li>
-						<li>Split data storage to encourage ownership - Data Meshes, Dehghani, 2019</li>
-						<li>Cluster services by data domains - Domain-Oriented Microservice Architecture, Uber, 2020</li>
-					</ul>
-				</section>
-				<section>
-					<p>
-						Or... <span class="fragment">roll on dataflow!</span>
-					</p>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>What is dataflow architecture?</h4>
-						<img src="images/dennis_dataflow.png" height="600px" />
-						<p class="credit">"Data flow schemas", Dennis et al., International Symposium on Theoretical Programming, 1974</p>
-					</div>
-				</section>
-				<section>
-					<h4>Boring slide</h4>
-					<p>Control flow: instructions are executed one after another, classic von Neumann architecture.</p>
-					<p>Dataflow: instruction is ready to execute as soon as all its inputs are available.</p>
-				</section>
-				<section>
-					<h4>Intuition behind the boring slide</h4>
-					<p>Control flow is about operations and their order</p>
-					<p>Dataflow is about data routes and transformations</p>
-				</section>
-				<section>
-					<h4>Examples of dataflow in action</h4>
-					<ul>
-						<li>Flow-based programming</li>
-						<li>MapReduce</li>
-						<li>Data streaming</li>
-					</ul>
-				</section>
-				<section>
-					<h4>You are likely familiar with dataflow already!</h4>
-					<table>
-						<tr>
-							<td><img src="images/TensorFlow_logo.png" style="background-color: white; height: 250px;" /></td>
-							<td><img src="images/Apache_kafka_logo.png" style="background-color: white; height: 250px;" /></td>
-							<td><img src="images/beam-logo.png"  style="background-color: white; height: 250px;" /></td>
-						</tr>
-						<tr>
-							<td><img src="images/luigi_logo.png"  style="background-color: white; height: 250px;" /></td>
-							<td><img src="images/apache_spark-logo.png"  style="background-color: white; height: 250px;"/></td>
-							<td><img src="images/node-red-logo.png"  style="background-color: white; height: 250px;" /></td>
-						</tr>
-					</table>
-				</section>
-				<section>
-					<img src="images/soa.png" />
-				</section>
-				<section>
-					<img src="images/fbp.png" />
-				</section>
-				<section>
-					<h4>Features of dataflow architecture</h4>
-					<ul>
-						<li>Separates data and logic</li>
-						<li>Data as a first class citizen</li>
-						<li>Complete dataflow graph</li>
-						<li>Decentralised</li>
-					</ul>
-				</section>
-				<section>
-					<h4>Benefits of dataflow architecture for ML system design</h4>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>Benefit 1: data discovery and collection</h4>
-						<img src="images/where_is_data.png" />
-						<p class="credit">
-							"Towards better data discovery and collection with flow-based programming", Paleyes et al., DCAI Workshop, NeurIPS 2021 <br/>
-							Image credit: Compex IT, https://www.compexit.co.uk/where-is-your-business-data-kept/
-						</p>
-					</div>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>Benefit 2: deployment of ML</h4>
-						<img src="images/ml-deployment.png" height="75%" />
-						<p class="credit">
-							"An empirical evaluation of flow based programming in the machine learning deployment context", Paleyes et al., CAIN 2022 <br />
-							"Assuring the machine learning lifecycle: Desiderata, methods, and challenges", Ashmore et al., ACM Computing Surveys, 2021
-						</p>
-					</div>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>Benefit 3: data governance</h4>
-						<img src="images/Data-Governance-Tasks.png" />
-						<p class="credit">
-							"Decision provenance: Harnessing data flow for accountable systems", Singh et al., IEEE Access, 2018<br/>
-							"Desiderata for next generation of ML model serving", Akoush et al., DMML Workshop, NeurIPS 2022<br/>
-							"A Primer on Provenance: Better understanding of data requires tracking its history and context.", Carata et al., ACM Queue, 2014<br/>
-							Image credit: redgate, https://www.red-gate.com/hub/product-learning/sql-data-catalog/improving-the-quality-of-data-governance-where-to-start
-						</p>
-					</div>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>This is a causal graph!</h4>
-						<div class="container">
-							<div class="col"><img src="images/fbp.png" /></div>
-							<div class="col">
-								<ul>
-									<li>Arrows show causal relationships</li>
-									<li>Complete by design</li>
-									<li>No post-hoc discovery</li>
-									<li>No expert knowledge</li>
-									<li>Interventions:
-										<ul>
-											<li>Software updates</li>
-											<li>Bugs</li>
-											<li>Input data shifts</li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<p class="credit">
-							"Dataflow graphs as complete causal graphs", Paleyes et al., CAIN 2023
-						</p>
-					</div>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>Benefit 3: causal fault localisation</h4>
-						<img src="images/fbp-many-nodes.png" />
-						<p class="credit">
-							"Causal fault localisation in dataflow systems", Paleyes et al., EuroMLSys 2023
-						</p>
-					</div>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>Benefit 3: causal fault localisation</h4>
-						<img src="images/fbp-many-streams.png" />
-						<p class="credit">
-							"Causal fault localisation in dataflow systems", Paleyes et al., EuroMLSys 2023
-						</p>
-					</div>
-				</section>
-				<section>
-					<h4>Benefit 4: experimentation</h4>
-					<img src="images/fbp-experimentation.png" />
-				</section>
-				<section>
-					<h4>Intellectual debt</h4>
-					<img src="images/intellectual-debt.png" height="600px"/>
-					<br />
-					<br />
-					<p class="credit">
-						"Intellectual Debt: With Great Power Comes Great Ignorance", Zittrain J, Medium: Berkman Klein Center Collection, 2019
-					</p>
-				</section>
-				<section>
-					<h4>So how do we build explainable AI systems?</h4>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<ul>
-							<li>Explicit dataflows</li>
-							<li>Data as a first priority</li>
-							<li>Causal reasoning</li>
-						</ul>
-						<p class="fragment">But also</p>
-						<p>
-							<ul class="fragment">
-								<li>Statistical emulation of systems</li>
-								<li>End-to-end system optimisation</li>
-								<li>Self-adaptive and continual learning systems</li>
-								<li>System FITness</li>
-								<li>Security and privacy</li>
-							</ul>
-						</p>
-						<p class="credit">
-							"Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective", Cabrera et al., 2023 <br/>
-							"Machine learning from innovation to deployment: A strategic research agenda for AutoAI", ML@CL, 2022
-						</p>
-					</div>
-				</section>
-				<section>
-					<h4>Summary</h4>
-					<ul>
-						<li>Services are good</li>
-						<li>But the world needs data as a priority</li>
-						<li>Dataflow architecture may help</li>
-						<li>Dataflow improves ML deployment</li>
-						<li>Dataflow enables causal inference on systems</li>
-						<li>Intellectual debt calls for a wide research agenda</li>
-					</ul>
-					<p>
-						<a href="https://mlatcl.github.io/">https://mlatcl.github.io/</a><br/>
-						<a href="https://paleyes.info/">https://paleyes.info/</a><br/>
-						&#9993; ap2169@cam.ac.uk
-					</p>
-				</section>
 			</div>
 		</div>
 
