@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Automated discovery of trade-off between accuracy, privacy and fairness in machine learning models
+		</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.full {
+				height: 100%;
+				width: 100%;
+			}
+			.credit {
+				bottom: 10px;
+				left: 0px;
+				position: absolute;
+				font-size: medium;
+				text-align: left;
+			}
+			.highlight-red {
+				color: #ff2c2d;
+			}
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<section>
+	<h3>Automated discovery of trade-off between accuracy, privacy and fairness in machine learning models</h3>
+	<p>
+		<small>Bogadn Ficiu, Neil D. Lawrence, <b>Andrei Paleyes</b></small><br/>
+		<small>Department of Computer Science and Technology, University of Cambridge</small>
+	</p>
+	<p>
+		BIAS workshop, ECML 2023
+	</p>
+	<aside class="notes">
+		Hi everyone! My name is Andrei, very happy to be a part of this workshop. I will be presenting the work done with my colleagues Bogdan and Neil.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<p>
+			<img src="images/fairness_vs_priv_vs_accuracy.png" />
+		</p>
+		<p class="credit">Image credit: Zhang et al. 2021 "Balancing Learning Model Privacy, Fairness, and Accuracy With Early Stopping Criteria"</p>
+	</div>
+	<aside class="notes">
+		Our work deals with the question of "How to find the perfect balance between utility, fairness and privacy of an ML model?" If you think about it, you realise that there is a hidden assumption here that these metrics affect each other.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<p>
+			<img src="images/tradeoff_doubt.png" />
+		</p>
+		<p>But... (Local) Differential Privacy has NO Disparate Impact on Fairness!</p>
+	</div>
+	<aside class="notes">
+		Now if you did not have your cup of coffee this morning (why would you miss on Italian coffee, it's awesome) and still haven't woke up for the previous talk, the speaker right before me just partially questioned of this very assumption. Seriously, please check out their paper, it's good and it shows how to doubt conventional wisdom. But it seems to be no doubt so far that the three-way trade-off is a thing, so the overall premise of our work holds, and I can continue this presentation without being laughed out. 
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<img src="images/us_census.jpg" />
+	</div>
+	<aside class="notes">
+		Before we answer the question of "how to find the balance" let's consider the question "why". The answer to this question is very practical, and I like to explain it leaning on the workthe US census bureau. The bureau collects data from every person in the US, and then they are supposed to assist government in making decisions, based on the data they've collected. They may train ML models on the collected data to make consequential decisions, e.g. funds allocation for schools. Therefore these models need to protect the data used for training, avoid descrimination, while also being efficient. This gives rise the the trade-off that the data scientists in the census bureau have to find.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		<div class="container">
+			<div class="col"><img src="images/privacy_constraints.png" style="height: 60vh" /></div>
+			<div class="col"><img src="images/fairness_constraints.png" style="height: 90vh" /></div>
+			<div class="credit">Sources: Xu et al. 2019 "Achieving Differential Privacy and Fairness in Logistic Regression", Chang and Shokri 2020 "On the Privacy Risks of Algorithmic Fairness"</div>
+		</div>
+	</div>
+	<aside class="notes">
+		So now that the motivation is hopefully clear, we can proceed to think about the "how" question. The most common approach we have seen so far is based on constraints. Basically the data scientist sets the level of fairness and privacy they'd like, and trains the ML model under these fixed constraints. This is not a bad idea, at the very least because it is relatively simple. But we argue that there is an approach that can lead to discovery of better trade-offs. The issue with constraint-setting is that it can leave optimal configurations unexplored. E.g. maybe you could have achieved the same accuracy of your model with a lower bound on privacy, but with a predefined constraint you will never be able to find this out.
+	</aside>
+</section>
+<section>
+	<div style="height: 99vh">
+		Find a set of Pareto optimal points <em>x</em> for:
+		<img src="images/optimisation.png" style="background-color: white; padding: 5px;" />
+	</div>
+	<aside class="notes">
+		Instead we propose to formulate this task as an optimisation problem. We have three objectives: utility, fairness and privacy. This means we have a 3D space of objectives, and we need to find a Pareto frontier in this space - a set of points that are Pareto optimal, meaning improving one objective at this point necessarily deteriorates at least one other.
+	</aside>
+</section>
+<section>
+	<span>f(x): PFairDP</span>
+	<div style="height: 89vh">
+		<img src="images/pipeline.png" />
+	</div>
+	<aside class="notes">
+		We have designed a modular pipeline, which we called PFairDP, to which one can plug in any definition of fairness or utility. The only requirement we have that whatever metric one uses, it needs to have at least one hyperparameter directly affecting this technique. For example for differential privacy we use clipping norm and noise multiplier for DP.
+	</aside>
+</section>
+<section>
+	<span>Bayesian optimisation</span>
+	<div style="height: 99vh">
+		<img src="images/bayesopt_ehvi.png" />
+		<p class="credit">Image source: Gaudrie 2019 "High-Dimensional Bayesian Multi-Objective Optimization"</p>
+	</div>
+	<aside class="notes">
+		Now, as you might be aware, ML models can be quite time consuming at training. Therefore simple optimisation techniques can be too long to run, and we need a technique that can efficiently deal with optimising expensive functions. Thus we use multi-objective Bayesian optimisation based on Hypervolume improvement of the Pareto front. This approach is very generic as it can work with many definitions of fairness, privacy and utility.
+	</aside>
+</section>
+<section>
+	<h3>Contributions</h3>
+	<ul>
+		<li>Description of full procedure</li>
+		<li>Better than grid search a.k.a. constraint setting</li>
+		<li>Replication of existing approaches</li>
+	</ul>
+	<aside class="notes">
+		As it turns out, Bayesian optimisation works better than grid search, which is what constraint setting essentially is. Which is the main result we put forth in our paper. Moreover, a nice side-effect is that using our pipeline we were able to automatically re-discover trade-offs described by previous works that used constrained-based approaches. Overall we describe an efficient tool for decision makers to identify the best possible trade-offs to aid their decisions.
+	</aside>
+</section>
+<section>
+	But wait! What about...<br/>
+	...visualisaiton of the fronts?<br/>
+	...choice of metrics of utility, fairness and privacy?<br/>
+	...computational efficiency?<br/>
+	...!?!?<br/>
+	<br/><br/>
+	<div class="fragment">
+		<p>Let's chat at the poster!</p>
+		<p>&#9993; <a href="mailto:ap2169@cam.ac.uk">ap2169@cl.cam.ac.uk</a></p>
+		<p>Thanks!</p>
+	</div>
+	<aside class="notes">
+		We have basically skipped all the technical details of our work, instead focusing on the intuition behind our work. There are interesting questions to discuss such as computational efficiency, visualisaiton of the fronts, choice of metrics of utility, fairness and privacy, and so on. Please come to our poster later today, or otherwise use the contact information on this slide to ask us questions. Thank you for your attention, and have a good day!
+	</aside>
+</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: "100%",
+				height:"100%",
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
