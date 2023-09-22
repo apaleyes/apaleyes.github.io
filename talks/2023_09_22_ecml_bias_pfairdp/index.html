@@ -57,7 +57,7 @@
 		<p>
 			<img src="images/fairness_vs_priv_vs_accuracy.png" />
 		</p>
-		<p class="credit">Image credit: Zhang et al. 2021 "Balancing Learning Model Privacy, Fairness, and Accuracy With Early Stopping Criteria"</p>
+		<p class="credit">Image source: Zhang et al. 2021 "Balancing Learning Model Privacy, Fairness, and Accuracy With Early Stopping Criteria"</p>
 	</div>
 	<aside class="notes">
 		Our work deals with the question of "How to find the perfect balance between utility, fairness and privacy of an ML model?" If you think about it, you realise that there is a hidden assumption here that these metrics affect each other.
@@ -80,7 +80,7 @@
 			<div class="col"><img src="images/privacy_constraints.png" style="height: 60vh;" /></div>
 			<div class="col"><img src="images/fairness_constraints.png" style="height: 90vh" /></div>
 		</div>
-		<div class="credit">Sources: Xu et al. 2019 "Achieving Differential Privacy and Fairness in Logistic Regression", Chang and Shokri 2020 "On the Privacy Risks of Algorithmic Fairness"</div>
+		<div class="credit">Table sources: Xu et al. 2019 "Achieving Differential Privacy and Fairness in Logistic Regression", Chang and Shokri 2020 "On the Privacy Risks of Algorithmic Fairness"</div>
 	</div>
 	<aside class="notes">
 		So how do people strike this balance? One common approache we have seen so far is based on constraints. Basically the data scientist sets the level of fairness and privacy they'd like, and trains the ML model under these fixed constraints. Another simple approach is to just try a few hyperparameter settings and choose the one that yields the best results. These ideas are not bad, at the very least because they are relatively simple. But there are two problems with them. For one, they can be very redundant and you may end up evaluating many unnecessary configurations. For two, you might miss good configurations. E.g. maybe you could have achieved the same accuracy of your model with a lower bound on privacy, but with a predefined constraint you will never be able to find this out.
