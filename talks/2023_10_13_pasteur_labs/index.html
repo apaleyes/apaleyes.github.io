@@ -1,0 +1,456 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Dataflow 
+		</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.full {
+				height: 100%;
+				width: 100%;
+			}
+			.credit {
+				bottom: 10px;
+				left: 0px;
+				position: absolute;
+				font-size: medium;
+				text-align: left;
+			}
+			.highlight-red {
+				color: #ff2c2d;
+			}
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<section>
+	<h3>Dataflow architecture for machine learning systems</h3>
+	<p>
+		Pasteur Labs, 13.10.2023
+	</p>
+</section>
+<section>
+	<div style="height: 99vh">
+		<h3>Two projects</h3>
+		<p>
+			<img src="images/two_towers.jpg" />
+		</p>
+	</div>
+</section>
+<section>
+	<div style="height: 99vh">
+		<h3>Amazon Supply Chain Optimization Technologies (SCOT)</h3>
+		<div class="container">
+			<div class="col"><img src="images/scot_piper.PNG" /></div>
+			<div class="col"><img src="images/Supply-Chain-Diagram.jpg" /></div>
+		</div>
+	</div>
+</section>
+<section>
+	<div style="height: 99vh">
+		<h3>Project 1: confirmation rate prediction</h3>
+		<div class="container">
+			<img src="images/confirmed_purchase_orders.png" alt="Source: https://www.reasonautomation.com/content/amazon-vendor-central-purchase-orders" />
+		</div>
+	</div>
+</section>
+<section>
+	<div style="height: 99vh">
+		<h3>Project 1: confirmation rate prediction</h3>
+
+		<p>Why did it fail?</p>
+		
+		<ul>
+			<li>Wrong data</li>
+			<li>How to measure utility?</li>
+		</ul>
+	</div>
+</section>
+<section>
+	<div style="height: 99vh">
+		<h3>Project 2: fulfil to promise</h3>
+		<img src="images/promise.PNG" />
+	</div>
+</section>
+<section>
+	<div style="height: 99vh">
+		<h3>Project 2: fulfil to promise</h3>
+
+		<p>What were the challenges?</p>
+		
+		<ul>
+			<li>Dataset collection</li>
+			<li>Infrastructure</li>
+		</ul>
+	</div>
+</section>
+<section>
+	<h4>Scaling Big Data Mining Infrastructure: The Twitter Experience
+		<small>J Lin, D Ryaboy; ACM SIGKDD Explorations Newsletter, 2013</small>
+	</h4>
+	<small>
+		<blockquote>
+			&ldquo;Effective big data mining at scale doesn't begin or end with what academics would consider data mining&rdquo;
+		</blockquote>
+		<blockquote>
+			&ldquo;Data scientists expend a large amount of effort to understand the data available to them, before they even begin any meaningful analysis&rdquo;
+		</blockquote>
+		<blockquote>
+			&ldquo;Exploratory data analysis always reveals data quality issues&rdquo;
+		</blockquote>
+	</small>
+</section>
+<section>
+	<h3>What's to blame?</h3>
+	<img src="images/blame.jpg" />
+	<p class="fragment fade-in">... software Services</p>
+</section>
+<section>
+	<h3>What's to blame?</h3>
+	<div style="height: 99vh">
+		... software services
+	</div>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>What is a service</h4>
+		A service is <span class="fragment">a piece of software,</span>
+		<p class="fragment">that provides a function, or many functions,</p>
+		<p class="fragment">known as interface or API,</p>
+		<p class="fragment">that clients* can reuse,</p>
+		<p class="fragment">together with policies to control its usage.</p>
+		<br/>
+		<p class="fragment">*A client can be anything: another software, a person, a hardware.</p>
+		<p class="credit">https://en.wikipedia.org/wiki/Service_(systems_architecture)</p>
+	</div>
+</section>
+<section>
+	<h4>Service oriented architecture is</h4>
+	<ul>
+		<li>Scalable</li>
+		<li>Flexible</li>
+		<li>Modular</li>
+		<li>Reliable</li>
+		<li>Encourages ownership</li>
+	</ul>
+	<p class="fragment">However...</p>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>Two services</h4>
+		<img src="images/two_services.png" style="height: 70vh" />
+	</div>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>Three services</h4>
+		<img src="images/three_services.png" style="height: 70vh" />
+	</div>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>Big ball of mud</h4>
+		<img src="images/ball-of-mud.jpg" style="height: 70vh" alt="Source: Ben Morris, https://www.ben-morris.com/microservices-rest-and-the-distributed-big-ball-of-mud/" />
+	</div>
+</section>
+<section>
+	<h4>Scaling Big Data Mining Infrastructure: The Twitter Experience
+		<small>J Lin, D Ryaboy; ACM SIGKDD Explorations Newsletter, 2013</small>
+	</h4>
+	<small>
+		<blockquote>
+			&ldquo;Twitter is powered by many loosely-coordinated services.&rdquo;
+		</blockquote>
+		<blockquote>
+			&ldquo;Since a single user action may involve many services, a data scientist wishing to analyze user behavior must first identify all the disparate data sources involved.&rdquo;
+		</blockquote>
+		<blockquote>
+			&ldquo;Services are normally developed and operated by different teams, which may adopt different conventions for storing and organizing log data.&rdquo;
+		</blockquote>
+	</small>
+</section>
+<section>
+	<h4>What to do?</h4>
+	<img class="fragment" src="images/musk_twitter.PNG" />
+</section>
+<section>
+	<h4>What else to do?</h4>
+	<img class="fragment" src="images/monolith.png" />
+</section>
+<section>
+	<h4>What else else to do?</h4>
+	<p class="fragment">Build software with data as the first priority!</p>
+</section>
+<section>
+	<h4>How?</h4>
+	<ul>
+		<li>Prioritise data while designing services - Götz et al., 2018</li>
+		<li>Split data storage to encourage ownership - Data Meshes, Dehghani, 2019</li>
+		<li>Cluster services by data domains - Domain-Oriented Microservice Architecture, Uber, 2020</li>
+	</ul>
+</section>
+<section>
+	<p>
+		Or... <span class="fragment">roll on dataflow!</span>
+	</p>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>What is dataflow architecture?</h4>
+		<img src="images/dennis_dataflow.png" height="600px" />
+		<p class="credit">"Data flow schemas", Dennis et al., International Symposium on Theoretical Programming, 1974</p>
+	</div>
+</section>
+<section>
+	<h4>Boring slide</h4>
+	<p>Control flow: instructions are executed one after another, classic von Neumann architecture.</p>
+	<p>Dataflow: instruction is ready to execute as soon as all its inputs are available.</p>
+</section>
+<section>
+	<h4>Intuition behind the boring slide</h4>
+	<p>Control flow is about operations and their order</p>
+	<p>Dataflow is about data routes and transformations</p>
+</section>
+<section>
+	<h4>Examples of dataflow in action</h4>
+	<ul>
+		<li>Flow-based programming</li>
+		<li>MapReduce</li>
+		<li>Data streaming</li>
+	</ul>
+</section>
+<section>
+	<h4>You are likely familiar with dataflow already!</h4>
+	<table>
+		<tr>
+			<td><img src="images/TensorFlow_logo.png" style="background-color: white; height: 250px;" /></td>
+			<td><img src="images/Apache_kafka_logo.png" style="background-color: white; height: 250px;" /></td>
+			<td><img src="images/beam-logo.png"  style="background-color: white; height: 250px;" /></td>
+		</tr>
+		<tr>
+			<td><img src="images/luigi_logo.png"  style="background-color: white; height: 250px;" /></td>
+			<td><img src="images/apache_spark-logo.png"  style="background-color: white; height: 250px;"/></td>
+			<td><img src="images/node-red-logo.png"  style="background-color: white; height: 250px;" /></td>
+		</tr>
+	</table>
+</section>
+<section>
+	<img src="images/soa.png" />
+</section>
+<section>
+	<img src="images/fbp.png" />
+</section>
+<section>
+	<h4>Features of dataflow architecture</h4>
+	<ul>
+		<li>Separates data and logic</li>
+		<li>Data as a first class citizen</li>
+		<li>Complete dataflow graph</li>
+		<li>Decentralised</li>
+	</ul>
+</section>
+<section>
+	<h4>Benefits of dataflow architecture for (AI) systems</h4>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>Benefit 1: data discovery and collection</h4>
+		<img src="images/where_is_data.png" />
+		<p class="credit">
+			"Towards better data discovery and collection with flow-based programming", Paleyes et al., DCAI Workshop, NeurIPS 2021 <br/>
+			Image credit: Compex IT, https://www.compexit.co.uk/where-is-your-business-data-kept/
+		</p>
+	</div>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>Benefit 2: deployment of ML</h4>
+		<img src="images/ml-deployment.png" height="75%" />
+		<p class="credit">
+			"An empirical evaluation of flow based programming in the machine learning deployment context", Paleyes et al., CAIN 2022 <br />
+			"Assuring the machine learning lifecycle: Desiderata, methods, and challenges", Ashmore et al., ACM Computing Surveys, 2021
+		</p>
+	</div>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>Benefit 3: data governance</h4>
+		<img src="images/Data-Governance-Tasks.png" />
+		<p class="credit">
+			"Decision provenance: Harnessing data flow for accountable systems", Singh et al., IEEE Access, 2018<br/>
+			"Desiderata for next generation of ML model serving", Akoush et al., DMML Workshop, NeurIPS 2022<br/>
+			"A Primer on Provenance: Better understanding of data requires tracking its history and context.", Carata et al., ACM Queue, 2014<br/>
+			Image credit: redgate, https://www.red-gate.com/hub/product-learning/sql-data-catalog/improving-the-quality-of-data-governance-where-to-start
+		</p>
+	</div>
+</section>
+
+<section>
+	Slide, or a few, about SCv2 go here
+</section>
+
+<section>
+	<div style="height:99vh">
+		<h4>This is a causal graph!</h4>
+		<div class="container">
+			<div class="col"><img src="images/fbp.png" /></div>
+			<div class="col">
+				<ul>
+					<li>Arrows show causal relationships</li>
+					<li>Complete by design</li>
+					<li>No post-hoc discovery</li>
+					<li>No expert knowledge</li>
+					<li>Interventions:
+						<ul>
+							<li>Software updates</li>
+							<li>Bugs</li>
+							<li>Input data shifts</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<p class="credit">
+			"Dataflow graphs as complete causal graphs", Paleyes et al., CAIN 2023
+		</p>
+	</div>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>Benefit 4: causal fault localisation</h4>
+		<img src="images/fbp-many-nodes.png" />
+		<p class="credit">
+			"Causal fault localisation in dataflow systems", Paleyes et al., EuroMLSys 2023
+		</p>
+	</div>
+</section>
+<section>
+	<div style="height:99vh">
+		<h4>Benefit 4: causal fault localisation</h4>
+		<img src="images/fbp-many-streams.png" />
+		<p class="credit">
+			"Causal fault localisation in dataflow systems", Paleyes et al., EuroMLSys 2023
+		</p>
+	</div>
+</section>
+<section>
+	<h4>Benefit 5: experimentation</h4>
+	<img src="images/fbp-experimentation.png" />
+</section>
+<section>
+	<h4>Benefit 5: experimentation</h4>
+	<img src="images/fbp-experimentation.png" />
+</section>
+<section>
+	<h4>Intellectual debt</h4>
+	<img src="images/intellectual-debt.png" height="600px"/>
+	<br />
+	<br />
+	<p class="credit">
+		"Intellectual Debt: With Great Power Comes Great Ignorance", Zittrain J, Medium: Berkman Klein Center Collection, 2019
+	</p>
+</section>
+<section>
+	<h4>So how do we build explainable (AI) systems?</h4>
+</section>
+<section>
+	<div style="height:99vh">
+		<ul>
+			<li>Explicit dataflows</li>
+			<li>Data as a first priority</li>
+			<li>Causal reasoning</li>
+		</ul>
+		<p class="fragment">But also</p>
+		<p>
+			<ul class="fragment">
+				<li>Statistical emulation of systems</li>
+				<li>End-to-end system optimisation</li>
+				<li>Self-adaptive and continual learning systems</li>
+				<li>System FITness</li>
+				<li>Security and privacy</li>
+			</ul>
+		</p>
+		<p class="credit">
+			"Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective", Cabrera et al., 2023 <br/>
+			"Machine learning from innovation to deployment: A strategic research agenda for AutoAI", ML@CL, 2022
+		</p>
+	</div>
+</section>
+
+
+
+
+<section>
+	<span>Discovery: Bayesian optimisation</span>
+	<div style="height: 89vh">
+		<img src="images/bayesopt_ehvi.png" />
+		<p class="credit">Image source: Gaudrie 2019 "High-Dimensional Bayesian Multi-Objective Optimization"</p>
+	</div>
+	<aside class="notes">
+		Now, as you might be aware, ML models can be quite time consuming at training. Therefore we need a technique that can efficiently deal with optimising expensive functions. We propose to use multi-objective Bayesian optimisation based on Hypervolume improvement of the Pareto front. This approach is very generic as it can work with many definitions of fairness, privacy and utility.
+	</aside>
+</section>
+<section>
+	<h3>Contributions</h3>
+	<ul>
+		<li>Description of full procedure</li>
+		<li>Better than grid search a.k.a. constraint setting</li>
+		<li>Replication of existing approaches</li>
+	</ul>
+	<aside class="notes">
+		To summarize our contributions. First, we describe and implemented the full procedure, including the complete training pipeline and the optimisation loop around it. Second, we demonstrate that it is to discover better fronts than grid, which is essentially a constraint setting. Third, we show how to use this procedure to automatically discover results previously described by other authors.
+	</aside>
+</section>
+<section>
+	But wait! What about...<br/>
+	...visualisation of the fronts?<br/>
+	...choice of metrics of utility, fairness and privacy?<br/>
+	...computational efficiency?<br/>
+	...!?!?<br/>
+	<br/><br/>
+	<div class="fragment">
+		<p>Let's chat at the poster!</p>
+		<p>&#9993; <a href="mailto:ap2169@cam.ac.uk">ap2169@cl.cam.ac.uk</a></p>
+		<p>Thanks!</p>
+	</div>
+	<aside class="notes">
+		We have basically skipped all the technical details of our work, instead focusing on the intuition behind our work. There are interesting questions to discuss such as computational efficiency, visualisaiton of the fronts, choice of metrics of utility, fairness and privacy, and so on. Please come to our poster later today, or otherwise use the contact information on this slide to ask us questions. Thank you for your attention, and have a good day!
+	</aside>
+</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: "100%",
+				height:"100%",
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
