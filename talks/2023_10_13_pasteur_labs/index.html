@@ -73,10 +73,12 @@
 <section>
 	<div style="height: 99vh">
 		<h3>Project 1: confirmation rate prediction</h3>
-
-		<p>Why did it fail?</p>
 		
-		<ul>
+		<img src="images/Fail_stamp.jpg" alt="Source: Wikipedia" height="50%" />
+
+		<p class="fragment">Why did it fail?</p>
+		
+		<ul class="fragment">
 			<li>Wrong data</li>
 			<li>How to measure utility?</li>
 		</ul>
@@ -92,9 +94,11 @@
 	<div style="height: 99vh">
 		<h3>Project 2: fulfil to promise</h3>
 
-		<p>What were the challenges?</p>
+		<img src="images/success_time.jpg" alt="Source: Quora" height="50%"/>
+
+		<p class="fragment">What were the challenges?</p>
 		
-		<ul>
+		<ul class="fragment">
 			<li>Dataset collection</li>
 			<li>Infrastructure</li>
 		</ul>
@@ -119,13 +123,7 @@
 <section>
 	<h3>What's to blame?</h3>
 	<img src="images/blame.jpg" />
-	<p class="fragment fade-in">... software Services</p>
-</section>
-<section>
-	<h3>What's to blame?</h3>
-	<div style="height: 99vh">
-		... software services
-	</div>
+	<p class="fragment fade-in">... software services</p>
 </section>
 <section>
 	<div style="height:99vh">
@@ -239,9 +237,9 @@
 	<h4>You are likely familiar with dataflow already!</h4>
 	<table>
 		<tr>
+			<td><img src="images/mapreduce_logo.jpg"  style="background-color: white; height: 250px;" /></td>
 			<td><img src="images/TensorFlow_logo.png" style="background-color: white; height: 250px;" /></td>
 			<td><img src="images/Apache_kafka_logo.png" style="background-color: white; height: 250px;" /></td>
-			<td><img src="images/beam-logo.png"  style="background-color: white; height: 250px;" /></td>
 		</tr>
 		<tr>
 			<td><img src="images/luigi_logo.png"  style="background-color: white; height: 250px;" /></td>
@@ -271,10 +269,9 @@
 <section>
 	<div style="height:99vh">
 		<h4>Benefit 1: data discovery and collection</h4>
-		<img src="images/where_is_data.png" />
+		<img src="images/where_is_data.png" alt="Source: Compex IT, https://www.compexit.co.uk/where-is-your-business-data-kept/" />
 		<p class="credit">
-			"Towards better data discovery and collection with flow-based programming", Paleyes et al., DCAI Workshop, NeurIPS 2021 <br/>
-			Image credit: Compex IT, https://www.compexit.co.uk/where-is-your-business-data-kept/
+			"Towards better data discovery and collection with flow-based programming", Paleyes et al., DCAI Workshop, NeurIPS 2021
 		</p>
 	</div>
 </section>
@@ -291,27 +288,59 @@
 <section>
 	<div style="height:99vh">
 		<h4>Benefit 3: data governance</h4>
-		<img src="images/Data-Governance-Tasks.png" />
+		<img src="images/Data-Governance-Tasks.png" alt="Source: redgate, https://www.red-gate.com/hub/product-learning/sql-data-catalog/improving-the-quality-of-data-governance-where-to-start" />
 		<p class="credit">
 			"Decision provenance: Harnessing data flow for accountable systems", Singh et al., IEEE Access, 2018<br/>
 			"Desiderata for next generation of ML model serving", Akoush et al., DMML Workshop, NeurIPS 2022<br/>
-			"A Primer on Provenance: Better understanding of data requires tracking its history and context.", Carata et al., ACM Queue, 2014<br/>
-			Image credit: redgate, https://www.red-gate.com/hub/product-learning/sql-data-catalog/improving-the-quality-of-data-governance-where-to-start
+			"A Primer on Provenance: Better understanding of data requires tracking its history and context.", Carata et al., ACM Queue, 2014
 		</p>
 	</div>
 </section>
 
 <section>
-	Slide, or a few, about SCv2 go here
+	<div style="height:99vh">
+		<img src="images/scv2_logo.png" height="50%" style="background-color: white;" />
+	</div>
 </section>
 
+<section>
+	<div style="height:99vh">
+		<h4>Seldon Core v2</h4>
+		<img src="images/scv2_inference_graph.png" />
+		<p class="credit">
+			"Dataflow for machine learning operations", Paleyes and Rakowski, Kafka Summit 2023
+		</p>
+	</div>
+</section>
+
+<section>
+	<div style="height:99vh">
+		<h4>Seldon Core v2</h4>
+		<img src="images/scv2_flow.png" height="50%" />
+		<p class="credit">
+			"Dataflow for machine learning operations", Paleyes and Rakowski, Kafka Summit 2023
+		</p>
+	</div>
+</section>
+
+<section>
+	<div style="height:99vh">
+		<img src="images/alex_kafka_summit.jpg" height="75%" />
+	</div>
+</section>
+
+<section>
+	<div style="height:99vh">
+		<img src="images/there_is_more.jpg" height="75%" />
+	</div>
+</section>
 <section>
 	<div style="height:99vh">
 		<h4>This is a causal graph!</h4>
 		<div class="container">
 			<div class="col"><img src="images/fbp.png" /></div>
 			<div class="col">
-				<ul>
+				<ul class="fragment">
 					<li>Arrows show causal relationships</li>
 					<li>Complete by design</li>
 					<li>No post-hoc discovery</li>
@@ -350,12 +379,10 @@
 	</div>
 </section>
 <section>
-	<h4>Benefit 5: experimentation</h4>
-	<img src="images/fbp-experimentation.png" />
-</section>
-<section>
-	<h4>Benefit 5: experimentation</h4>
-	<img src="images/fbp-experimentation.png" />
+	<div style="height:99vh">
+		<h4>Benefit 5: causal experimentation</h4>
+		<img src="images/fbp-experimentation.png" />
+	</div>
 </section>
 <section>
 	<h4>Intellectual debt</h4>
@@ -391,47 +418,6 @@
 			"Machine learning from innovation to deployment: A strategic research agenda for AutoAI", ML@CL, 2022
 		</p>
 	</div>
-</section>
-
-
-
-
-<section>
-	<span>Discovery: Bayesian optimisation</span>
-	<div style="height: 89vh">
-		<img src="images/bayesopt_ehvi.png" />
-		<p class="credit">Image source: Gaudrie 2019 "High-Dimensional Bayesian Multi-Objective Optimization"</p>
-	</div>
-	<aside class="notes">
-		Now, as you might be aware, ML models can be quite time consuming at training. Therefore we need a technique that can efficiently deal with optimising expensive functions. We propose to use multi-objective Bayesian optimisation based on Hypervolume improvement of the Pareto front. This approach is very generic as it can work with many definitions of fairness, privacy and utility.
-	</aside>
-</section>
-<section>
-	<h3>Contributions</h3>
-	<ul>
-		<li>Description of full procedure</li>
-		<li>Better than grid search a.k.a. constraint setting</li>
-		<li>Replication of existing approaches</li>
-	</ul>
-	<aside class="notes">
-		To summarize our contributions. First, we describe and implemented the full procedure, including the complete training pipeline and the optimisation loop around it. Second, we demonstrate that it is to discover better fronts than grid, which is essentially a constraint setting. Third, we show how to use this procedure to automatically discover results previously described by other authors.
-	</aside>
-</section>
-<section>
-	But wait! What about...<br/>
-	...visualisation of the fronts?<br/>
-	...choice of metrics of utility, fairness and privacy?<br/>
-	...computational efficiency?<br/>
-	...!?!?<br/>
-	<br/><br/>
-	<div class="fragment">
-		<p>Let's chat at the poster!</p>
-		<p>&#9993; <a href="mailto:ap2169@cam.ac.uk">ap2169@cl.cam.ac.uk</a></p>
-		<p>Thanks!</p>
-	</div>
-	<aside class="notes">
-		We have basically skipped all the technical details of our work, instead focusing on the intuition behind our work. There are interesting questions to discuss such as computational efficiency, visualisaiton of the fronts, choice of metrics of utility, fairness and privacy, and so on. Please come to our poster later today, or otherwise use the contact information on this slide to ask us questions. Thank you for your attention, and have a good day!
-	</aside>
 </section>
 			</div>
 		</div>
