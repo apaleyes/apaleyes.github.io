@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>The science of ML deployment and software systems</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.full {
+				height: 100%;
+				width: 100%;
+			}
+			.credit {
+				bottom: 10px;
+				left: 0px;
+				position: absolute;
+				font-size: large;
+				text-align: left;
+			}
+			.highlight-red {
+				color: #ff2c2d;
+			}
+			.highlight-green {
+				color: #3CB043;
+			}
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>The science of ML deployment and software systems</h3>
+					<p>
+						<small>Andrei Paleyes</small>
+					</p>
+					<p>PyData meetup</p>
+					<p>Cambridge, January 2024</p>
+				</section>
+				<section>
+					<img src="images/mlalcl_logo.svg" height="150px" style="margin-right: 70px;"/>
+					<img src="images/cambridge-university_logo.png" height="140px" />
+					<img src="images/neil.jpg" height="400px" />
+					<aside class="notes">
+						Introduce myself, the group, lab, Neil
+					</aside>
+				</section>
+				<section>
+					<h2>The History</h2>
+				</section>
+				<section>
+					Amazon logo here
+					<aside class="notes">
+						Started when Neil was director of ML at Amazon, and I was an engineer in his team. Talk about our team
+					</aside>
+				</section>
+				<section>
+					<img src="images/gandalf_delay.jpg" />
+					<aside class="notes">
+						Often we saw failures and delays. As expected in a big business, or any business really
+					</aside>
+				</section>
+				<section>
+					<ul>
+						<li>Training dataset incomplete</li>
+						<li>Inference and training data records are different</li>
+						<li>Special data processing pipeline is needed</li>
+						<li>Required data is not available and needs to be saved</li>
+						<li>Data is sensitive and requires special permissions</li>
+					</ul>
+					<aside class="notes">
+						Let's consider reasons behind some of these issues
+					</aside>
+				</section>
+				<section>
+					<ul>
+						<li>Training <b style="color: #ff2c2d">data</b>set incomplete</li>
+						<li>Inference and training <b style="color: #ff2c2d">data</b> records are different</li>
+						<li>Special <b style="color: #ff2c2d">data</b> processing pipeline is needed</li>
+						<li>Required <b style="color: #ff2c2d">data</b> is not available and needs to be saved</li>
+						<li><b style="color: #ff2c2d">Data</b> is sensitive and requires special permissions</li>
+					</ul>
+					<aside class="notes">
+						The point is, it is very often about data. Data in modern large software systems is almost an afterthought
+					</aside>
+				</section>
+				<section>
+					<h4>Scaling Big Data Mining Infrastructure: The Twitter Experience
+						<small>J Lin, D Ryaboy; ACM SIGKDD Explorations Newsletter, 2013</small>
+					</h4>
+					<small>
+						<blockquote>
+							&ldquo;Effective big data mining at scale doesn't begin or end with what academics would consider data mining&rdquo;
+						</blockquote>
+						<blockquote>
+							&ldquo;Data scientists expend a large amount of effort to understand the data available to them, before they even begin any meaningful analysis&rdquo;
+						</blockquote>
+						<blockquote>
+							&ldquo;Exploratory data analysis always reveals data quality issues&rdquo;
+						</blockquote>
+					</small>
+					<aside class="notes">
+						Not just us! Here is a paper detailing some very similar experiences at Twitter
+					</aside>
+				</section>
+				<section>
+					<h4>The Data Dichotomy: Rethinking the Way We Treat Data and Services
+						<small>B Stopford, Confluent, 2016</small>
+					</h4>
+					<small>
+						<blockquote>
+							&ldquo;A dichotomy: Data systems are about exposing data. Services are about hiding it.&rdquo;
+						</blockquote>
+						<blockquote>
+							&ldquo;The underlying issue is that data and services don't sing too sweetly together.&rdquo;
+						</blockquote>
+						<blockquote>
+							&ldquo;We need to consider [data] a first class citizen of the architectures we build.&rdquo;
+						</blockquote>
+					</small>
+					<aside class="notes">
+						And here is a blog post from Confluent on the issue
+					</aside>
+				</section>
+				<section>
+					<img src="images/research_business.jpg" />
+					<aside class="notes">
+						Business vs university for research freedom
+					</aside>
+				</section>
+				<section>
+					<h2>The Science</h2>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Is it just us?</h4>
+						<img src="images/workflow-all.png" style="height: 70vh" />
+						<p class="credit">"Challenges in Deploying Machine Learning: A Survey of Case Studies", ACM Computing Surveys, 2022</p>
+					</div>
+					<aside class="notes">
+						First thing - is it more than just anecdotes
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Data-oriented architectures</h4>
+						<img src="images/doa.png" style="height: 70vh" />
+						<p class="credit">
+							"Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective", Under review <br/>
+							https://mlatcl.github.io/news/2023-02-27-new-survey-on-doa.html
+						</p>
+					</div>
+					<aside class="notes">
+						Solution? DOA, first described in 2007
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Data coupling</h4>
+						<img src="images/data_coupling.svg" style="height: 70vh" />
+						<p class="credit">"DOA-Based Composition", https://github.com/cabrerac/doa-composition</p>
+					</div>
+					<aside class="notes">
+						Data coupling, data mediums, what tech to use
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Dataflow and flow-based programming</h4>
+						<img src="images/fbp.png" style="height: 70vh" />
+						<p class="credit">
+							"Towards better data discovery and collection with flow-based programming", DCAI, NeurIPS 2021 <br />
+							"An empirical evaluation of flow based programming in the machine learning deployment context", CAIN 2022
+						</p>
+					</div>
+					<aside class="notes">
+						How to implement DOA? Dataflow! From 1970s! Dataflow graph
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Causality on dataflow graphs!</h4>
+						<img src="images/node-red-complete-graph.png" style="height: 70vh" />
+						<p class="credit">
+							"Dataflow graphs as complete causal graphs", CAIN 2023 <br />
+							"Causal fault localisation in dataflow systems", EuroMLSys, EuroSys 2023<br />
+							"Can causality accelerate experimentation in software systems?", CAIN 2024
+						</p>
+					</div>
+					<aside class="notes">
+						We can apply causality to dataflow graphs. Fault localisation, experimentation
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Causality on dataflow graphs!</h4>
+						<img src="images/node-red-complete-graph.png" style="height: 70vh" />
+						<p class="credit">
+							"Dataflow graphs as complete causal graphs", CAIN 2023 <br />
+							"Causal fault localisation in dataflow systems", EuroMLSys, EuroSys 2023<br />
+							"Can causality accelerate experimentation in software systems?", CAIN 2024
+						</p>
+					</div>
+					<aside class="notes">
+						We can apply causality to dataflow graphs. Fault localisation, experimentation
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Self-sustaining Software Systems (S4)</h4>
+						<img src="images/s4.png" style="height: 70vh" />
+						<p class="credit">"Self-sustaining Software Systems (S4): Towards Improved Interpretability and Adaptation", SATrends 2024</p>
+					</div>
+					<aside class="notes">
+						A lot of the ideas combine in this concept of S4 we formulated last year... you can clearly see it's not hard to get carried away
+					</aside>
+				</section>
+				<section>
+					<h2>The Collaborations</h2>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Climate modeling</h4>
+						<img src="images/climate.jpg" style="height: 70vh" />
+						<p class="credit">"A locally time-invariant metric for climate model ensemble predictions of extreme risk", Environmental Data Science, 2023</p>
+					</div>
+					<aside class="notes">
+						We partner a lot with natural science researchers here in Cambridge. One example is the project that uses ensembling of climate simulations to predict rare climate events. Lots of data crunching
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Accelerate Science</h4>
+						<img src="images/bas.png" style="height: 70vh" />
+						<p class="credit">
+							"Multi-fidelity experimental design for ice-sheet simulation", GP Seminar Series, NeurIPS 2022 <br/>
+							"Calculating exposure to extreme sea level risk will require high resolution ice sheet models", Under review
+						</p>
+					</div>
+					<aside class="notes">
+						Another example is the work we do with BAS on simulating ice sheet melting in Antractica
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<!-- <h4>Seldon Core</h4> -->
+						<img src="images/scv2_logo.png" style="height: 20vh;"/> <br/>
+						<img src="images/scv2_data_plane.png" style="height: 40vh"/>
+						<p class="credit">
+							"Desiderata for next generation of ML model serving", DMML, NeurIPS 2022<br/>
+							"Dataflows for Machine Learning Operations", Kafka Summit, 2023
+						</p>
+					</div>
+					<aside class="notes">
+						Collab with Seldon
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<img src="images/dsa.jpg" style="height: 70vh;"/> <br/>
+						<p class="credit">https://www.datascienceafrica.org/</p>
+					</div>
+					<aside class="notes">
+						DSA
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Thanks!</h4>
+						<table>
+							<tr>
+								<td>
+									<img src="images/neil.jpg" style="width: 150px; display: block;"/>
+									Neil Lawrence
+								</td>
+								<td>
+									<img src="images/christian.jpg" style="width: 150px; display: block;"/>
+									Christian Cabrera
+								</td>
+								<td>
+									<img src="images/jess.jpg" style="width: 150px; display: block;"/>
+									Jessica Montgomery
+								</td>
+								<td>
+									<img src="images/eric.jpg" style="width: 150px; display: block;"/>
+									Eric Meissner
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<img src="images/pierre.jpg" style="width: 150px; display: block;"/>
+									Pierre Thodoroff
+								</td>
+								<td>
+									<img src="images/diana.jpg" style="width: 150px; display: block;"/>
+									Diana Robinson
+								</td>
+								<td>
+									<img src="images/markus.jpg" style="width: 150px; display: block;"/>
+									Markus Kaiser
+								</td>
+								<td>
+									<img src="images/mala_virdee.jpg" style="width: 150px; display: block;"/>
+									Mala Virdee
+								</td>
+							</tr>
+						</table>
+						<p>
+							Reach out! <br />
+							<a href="mailto:ap2169@cl.cam.ac.uk">ap2169@cl.cam.ac.uk</a> | <a href="https://paleyes.info">https://paleyes.info</a> <br />
+							<a href="https://mlatcl.github.io">https://mlatcl.github.io</a>
+						</p>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: "100%",
+				height:"100%",
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,30 @@
+"The science of ML deployment and software systems"
+
+Abstract:
+Why would challenges at work inspire someone to do a PhD? How can machine learning shine a new light on a classic software engineering technic known from 1970s? How can a barely noticed high level design paradigm be actually useful? What a London-based startup, climate modelling and data science school in Africa have in common? Find answers in this talk about ML@CL. ML@CL is a young research group based in the Computer Lab at the University of Cambridge. One of its primary areas of interest is an interplay between software systems design and machine learning deployment. In this talk we will explain why this kind of research matters, and discuss some of insights and results achieved by the group to date.
+
+Bio:
+Andrei Paleyes is a PhD candidate at the ML@CL research group. His research interests are split between ML system design and Bayesian optimisation applications. Before jumping into the world of academia he has spent more than a decade as a software engineer, developing everything from small webapps to data center network software.
+
+
+1. Introduce the group
+2. How to use the talk
+3. How it all started
+  3.1. Amazon projects
+  3.2. Failures and delays
+  3.3. Some reasons
+  3.4. Common motif: data in large systems
+  3.5. Confirmations: Twitter, Confluent
+  3.5. Businesses are for generating business, unis are for research
+4. Group
+5. Challenges project
+6. Solution? DOA
+7. Dataflow
+8. FBP
+9. Data composition
+9. real time benchmarking
+10. S4
+10. Causality in dataflow
+11. Climate ensembling
+12. Seldon Core
+13. DSA
