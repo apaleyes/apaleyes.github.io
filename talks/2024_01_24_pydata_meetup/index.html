@@ -146,6 +146,15 @@
 				<section>
 					<div style="height:99vh">
 						<h4>Is it just us?</h4>
+						<img src="images/workflow.PNG" style="height: 70vh" />
+					</div>
+					<aside class="notes">
+						First thing - is it more than just anecdotes
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Is it just us?</h4>
 						<img src="images/workflow-all.png" style="height: 70vh" />
 						<p class="credit">"Challenges in Deploying Machine Learning: A Survey of Case Studies", ACM Computing Surveys, 2022</p>
 					</div>
@@ -156,14 +165,25 @@
 				<section>
 					<div style="height:99vh">
 						<h4>Data-oriented architectures</h4>
-						<img src="images/doa.png" style="height: 70vh" />
+						<img src="images/joshi_doa.png" style="height: 70vh" />
 						<p class="credit">
-							"Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective", Under review <br/>
-							https://mlatcl.github.io/news/2023-02-27-new-survey-on-doa.html
+							"Data-Oriented Architecture: A Loosely-Coupled Real-Time SOA", Joshi, 2007
 						</p>
 					</div>
 					<aside class="notes">
-						Solution? DOA, first described in 2007
+						Solution? DOA, first described in 2007. Who has heard of it?
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Data-oriented architectures</h4>
+						<img src="images/doa.png" style="height: 70vh" />
+						<p class="credit">
+							"Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective", Under review
+						</p>
+					</div>
+					<aside class="notes">
+						Our work on DOA
 					</aside>
 				</section>
 				<section>
@@ -178,7 +198,28 @@
 				</section>
 				<section>
 					<div style="height:99vh">
-						<h4>Dataflow and flow-based programming</h4>
+						<h4>Dataflow architecture and flow-based programming</h4>
+						<div class="container">
+							<div class="col">
+								<img src="images/dennis_dataflow.png" />
+							</div>
+							<div class="col">
+								<img src="images/morrison_fbp.jpg" />
+							</div>
+						</div>
+						<p class="credit">
+							"A preliminary architecture for a basic data-flow processor", Dennis and Misunas, 1974 <br/>
+							"Data-flow computer architecture", Dennis, 1987 <br/>
+							"Flow-Based Programming: A new approach to application development", Morrison, 2010
+						</p>
+					</div>
+					<aside class="notes">
+						How to implement DOA? Dataflow! From 1970s! Functional programming. Who heard of it?
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<h4>Dataflow architecture and flow-based programming</h4>
 						<img src="images/fbp.png" style="height: 70vh" />
 						<p class="credit">
 							"Towards better data discovery and collection with flow-based programming", DCAI, NeurIPS 2021 <br />
@@ -186,21 +227,7 @@
 						</p>
 					</div>
 					<aside class="notes">
-						How to implement DOA? Dataflow! From 1970s! Dataflow graph
-					</aside>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<h4>Causality on dataflow graphs!</h4>
-						<img src="images/node-red-complete-graph.png" style="height: 70vh" />
-						<p class="credit">
-							"Dataflow graphs as complete causal graphs", CAIN 2023 <br />
-							"Causal fault localisation in dataflow systems", EuroMLSys, EuroSys 2023<br />
-							"Can causality accelerate experimentation in software systems?", CAIN 2024
-						</p>
-					</div>
-					<aside class="notes">
-						We can apply causality to dataflow graphs. Fault localisation, experimentation
+						Our initial work on dataflow,  Dataflow graph, data coupling
 					</aside>
 				</section>
 				<section>
@@ -232,6 +259,20 @@
 				</section>
 				<section>
 					<div style="height:99vh">
+						<!-- <h4>Seldon Core</h4> -->
+						<img src="images/scv2_logo.png" style="height: 20vh;"/> <br/>
+						<img src="images/scv2_data_plane.png" style="height: 40vh"/>
+						<p class="credit">
+							"Desiderata for next generation of ML model serving", DMML, NeurIPS 2022<br/>
+							"Dataflows for Machine Learning Operations", Kafka Summit, 2023
+						</p>
+					</div>
+					<aside class="notes">
+						Collab with Seldon
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
 						<h4>Climate modeling</h4>
 						<img src="images/climate.jpg" style="height: 70vh" />
 						<p class="credit">"A locally time-invariant metric for climate model ensemble predictions of extreme risk", Environmental Data Science, 2023</p>
@@ -251,20 +292,6 @@
 					</div>
 					<aside class="notes">
 						Another example is the work we do with BAS on simulating ice sheet melting in Antractica
-					</aside>
-				</section>
-				<section>
-					<div style="height:99vh">
-						<!-- <h4>Seldon Core</h4> -->
-						<img src="images/scv2_logo.png" style="height: 20vh;"/> <br/>
-						<img src="images/scv2_data_plane.png" style="height: 40vh"/>
-						<p class="credit">
-							"Desiderata for next generation of ML model serving", DMML, NeurIPS 2022<br/>
-							"Dataflows for Machine Learning Operations", Kafka Summit, 2023
-						</p>
-					</div>
-					<aside class="notes">
-						Collab with Seldon
 					</aside>
 				</section>
 				<section>
