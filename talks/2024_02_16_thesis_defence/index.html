@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>The science of ML deployment and software systems</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/serif.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.full {
+				height: 100%;
+				width: 100%;
+			}
+			.credit {
+				bottom: 10px;
+				left: 0px;
+				position: absolute;
+				font-size: large;
+				text-align: left;
+			}
+			.highlight-red {
+				color: #ff2c2d;
+			}
+			.highlight-green {
+				color: #3CB043;
+			}
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Towards Maintainable and Explainable AI Systems with Dataflow</h2>
+				</section>
+				<section>
+					<h3>Motivation</h3>
+					<ul>
+						<li>ML deployment challenges</li>
+						<li>Incident handling</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Question 1</h3>
+					<blockquote>
+						What are the challenges associated with deploying ML, and which parts of the deployment process are affected?
+					</blockquote>
+					<p><b>Objectives:</b> survey deployment case studies, "lessons learned", ML application reviews</p>
+					<br/>
+					<p><b>Results:</b> practitioners face issues at each stage of the ML deployment process</p>
+				</section>
+				<section>
+					<h3>Question 2</h3>
+					<blockquote>
+						Are there software architectures that can address or mitigate the ML deployment challenges?
+					</blockquote>
+					<p><b>Objectives:</b> analyse existing works about DOA, survey implicit adoption of DOA</p>
+					<br/>
+					<p>
+						<b>Results:</b>
+						<ul>
+							<li>Formulated high-level principles of DOA (data as a first class citizen, openness, decentralisation)</li>
+							<li>Mapped between previously identified challenges to DOA principles</li>
+							<li>A few systems fully adopt the DOA, most adopt partially</li>
+						</ul>
+					</p>
+					<p>We identify <b>dataflow architecture</b> as a fitting paradigm.</p>
+				</section>
+				<section>
+					<h3>Question 2, cont.</h3>
+					<p>
+						<b>Objectives:</b> evaluate of dataflow architecture in ML deployment context
+					</p>
+					<br/>
+					<p>
+						<b>Results:</b>
+						<ul>
+							<li>Main advantages of dataflow are illustrated with small-scale toy examples</li>
+							<li>Seldon Core v2, production-ready dataflow system for ML inference</li>
+						</ul>
+					</p>
+				</section>
+				<section>
+					<h3>Question 3</h3>
+					<blockquote>
+						How can software architectures aid developers' ability to apply causal reasoning to system components?
+					</blockquote>
+					<p>
+						<b>Objectives:</b> formulate connection between dataflow graphs and causal inference, demonstrate its benefits
+					</p>
+					<br/>
+					<p>
+						<b>Results:</b>
+						<ul>
+							<li>Formulated an approach to treat dataflow systems as graphical causal models</li>
+							<li>Demonstrated utility of the approach for fault localisation</li>
+						</ul>
+					</p>
+				</section>
+
+				<section>
+					<h2>Appendix</h2>
+				</section>
+				<section>
+					<img src="images/workflow.PNG" />
+				</section>
+				<section>
+					<img src="images/workflow-all.png" />
+				</section>
+				<section>
+					<img src="images/joshi_doa.png" />
+				</section>
+				<section>
+					<img src="images/doa.png" style="height: 90vh;" />
+				</section>
+				<section>
+					<img src="images/dennis_dataflow.png" />
+				</section>
+				<section>
+					<img src="images/morrison_fbp.jpg" />
+				</section>
+				<section>
+					<img src="images/two_services.png" />
+				</section>
+				<section>
+					<img src="images/three_services.png" />
+				</section>
+				<section>
+					<img src="images/big-ball-o-services.png" />
+				</section>
+				<section>
+					<img src="images/soa.png" />
+				</section>
+				<section>
+					<img src="images/fbp.png" />
+				</section>
+				<section>
+					<img src="images/scv2_logo.png" />
+				</section>
+				<section>
+					<img src="images/alex_kafka_summit.jpg" />
+				</section>
+				<section>
+					<img src="images/seldon-core-high-level.jpg" />
+				</section>
+				<section>
+					<img src="images/scv2_inference_graph.png" />
+				</section>
+				<section>
+					<img src="images/scv2_control_plane.png" />
+				</section>
+				<section>
+					<img src="images/scv2_data_plane.png" />
+				</section>
+				<section>
+					<img src="images/scv2_end2end_dataflow.drawio.png" />
+				</section>
+				<section>
+					<img src="images/scv2_end2end_inserver.drawio.png" />
+				</section>
+				<section>
+					<img src="images/fbp-one-stream.png" />
+				</section>
+				<section>
+					<img src="images/fbp-many-streams.png" />
+				</section>
+				<section>
+					<img src="images/scv2-insurance-claims.png" />
+				</section>
+				<section>
+					<img src="images/node-red-complete-graph.png" style="height: 90vh;" />
+				</section>
+				<section>
+					<img src="images/scipipe_graph.png" style="height: 90vh;" />
+				</section>
+				<section>
+					<img src="images/nodered-throughput-drop-results.png" style="height: 90vh;" />
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: "100%",
+				height:"100%",
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
