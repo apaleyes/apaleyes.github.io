@@ -1,0 +1,393 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Introduction to MLOps</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/beige.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.full {
+				height: 100%;
+				width: 100%;
+			}
+			.credit {
+				bottom: 0px;
+				left: 0px;
+				position: absolute;
+			}
+			.highlight-red {
+				color: #ff2c2d;
+			}
+			.highlight-green {
+				color: #3CB043;
+			}
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>Introduction to MLOps</h3>
+					<p>
+						<small>Andrei Paleyes and Daisy Kiptoo</small>
+					</p>
+					<p>Data Science Africa summer school</p>
+					<p>Nyeri, Kenya</p>
+					<p>June 2024</p>
+				</section>
+				<section>
+					<h4>Have you ever</h4>
+					<ul>
+						<li class="fragment">trained a ML model?</li>
+						<li class="fragment">fixed an issue in a model?</li>
+						<li class="fragment">gave the model you worked on to anyone else?</li>
+						<li class="fragment">created an app/website/service around a model?</li>
+						<li class="fragment">updated an existing model with a new dataset?</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Have you ever</h4>
+					<ul>
+						<li>trained a ML model?</li>
+						<li class="highlight-green">fixed an issue in a model?</li>
+						<li class="highlight-green">gave the model you worked on to anyone else?</li>
+						<li class="highlight-green">created an app/website/service around a model?</li>
+						<li class="highlight-green">updated an existing model with a new dataset?</li>
+					</ul>
+					<aside class="notes">
+						If yes to any question except first one - you already did MLOps!
+					</aside>
+				</section>
+				<section>
+					<img src="images/ml-vs-mlops.png" alt="Source: https://dlab.berkeley.edu/news/what-mlops-introduction-world-machine-learning-operations"/>
+					<aside class="notes">
+						The first question was about just creating an ML model. Every other question was about creating a model that is reliable, accurate, usable, reproducible, etc. That's the "additional" amount of work you need to put ML into real life, to make important decisions.
+					</aside>
+				</section>
+				<section>
+					<h4>What is MLOps?</h4>
+					<blockquote>
+						&ldquo;MLOps is a collection of processes, practices, technologies and tools to deploy and maintain machine learning models in production reliably and efficiently.&rdquo;
+					</blockquote>
+					<aside class="notes">
+						This may seem like a lot of heavy words that are quite unnecessary. Maybe oblivious academics came up with that to sound smart? Kind of yes, they did! But in this talk we'll try to show why most of that is actually natural, reasonable things to do, and at some point become a necessity.
+					</aside>
+				</section>
+				<section>
+					<h4>Cassava Leaf Disease Classification</h4>
+					<img src="images/cassava.png" />
+					<aside class="notes">
+						Let's gradually work our way through MLOps with an example of an app that identifies sick cassava leafs. So let's say we spoke to local farmers and decided to build an app for their phones to determine, with a photo, if a cassave plant is healthy or not.
+					</aside>
+				</section>
+				<section>
+					<h4>Kudos!</h4>
+					<div class="container">
+
+						<div class="col">
+							<img src="images/sunbird-ai.png">
+						</div>
+						
+						<div class="col">
+							<img src="images/ernest.jpg">
+							Ernest Mwebaze
+						</div>
+
+						<div class="col">
+							<img src="images/makerere.png" />
+						</div>
+						
+					</div>
+					
+					<aside class="notes">
+						Big shoutout, both for the talk and for the practical.
+					</aside>
+				</section>
+				<section>
+					<h4>Train a model</h4>
+					<img src="images/CNN-Architecture.png" height="600px" alt="Source: https://towardsdatascience.com/applied-deep-learning-part-4-convolutional-neural-networks-584bc134c1e2" />
+					<aside class="notes">
+						For a start, of course, we would want to build a model, to see if we can do it at all. We find a dataset online, pick some sort of image classification model e.g. a CNN, train and test until we are satisfied. Thanks goodness we only need to be it once. We are done with ML bit, yay! But are we done? Not yet!
+					</aside>
+				</section>
+				<section>
+					<h4>Data collection</h4>
+					<img src="images/cassava_different_diseases.png" height="650px" />
+					<aside class="notes">
+						First thing to realise is that cassava illnesses are numerous. The dataset we've got is a generic one, or worse built in a specific region. We need our own. For that we need to go around and ask people to send us photos of good and bad leaves. That's data collection.
+					</aside>
+				</section>
+				<section>
+					<h4>Data enginering</h4>
+					<div class="container">
+
+						<div class="col">
+							<img src="images/cassava-not-leaf.jpg" />
+							Not a leaf!
+						</div>
+						
+						<div class="col">
+							<img src="images/Banana-leaf-not-cassava.JPG" height="70%" />
+							Banana is not cassava!
+						</div>
+
+						<div class="col">
+							<img src="images/cassava-leaf-soup.jpg" style="display: block;" />
+							Leaf soup is not leaf!
+						</div>
+						
+					</div>
+					<aside class="notes">
+						Next we need to sift through the photos. Some sent us banana leafs, some sent us cassava itself. We need to adjust brightness (different time of day), scale (pictures taken far and close) and so on. And finally we need to annotate the photos to have training and test labels. So we mixed a lot of activities here: labelling, data clearning, feature engineering, etc. We can call all of that collectively data engineering.
+					</aside>
+				</section>
+				<section>
+					<h4>Train a model (2)</h4>
+					<img src="images/CNN-Architecture.png" height="600px" alt="Source: https://towardsdatascience.com/applied-deep-learning-part-4-convolutional-neural-networks-584bc134c1e2" />
+					<aside class="notes">
+						Next we train our model on this new dataset specific to our local region. Perhaps experiment, adjust hyper-parameters such as the number of layers. Turns out we weren't done with ML after all! Thanks goodness we only need to do it twice.
+					</aside>
+				</section>
+				<section>
+					<h4>Model evaluation and analysis</h4>
+					<div class="container">
+
+						<div class="col">
+							<img src="images/Roc_curve.svg.png" />
+						</div>
+						
+						<div class="col">
+							<img src="images/blight_leaf_spot.jpg" height="83%" />
+						</div>
+						
+					</div>
+					<aside class="notes">
+						Now we need to make sure the model works. Run it on unseen data, measure metrics, understand if there are uncovered edge cases. For example does it pick the sickness that only shows on the edge of the leaf (literal edge case). We make a decision about what is an acceptable quality, and acknowledge that the model will never work quite perfectly. This is model evaluation and analysis.
+					</aside>
+				</section>
+				<section>
+					<h4>Train a model (3)</h4>
+					<img src="images/CNN-Architecture.png" height="600px" alt="Source: https://towardsdatascience.com/applied-deep-learning-part-4-convolutional-neural-networks-584bc134c1e2" />
+					<aside class="notes">
+						It may so happen that our training procedure needs to be adjusted at this point, beause while it worked well overall, there might be cases which we want to resolve better. Thank goodness we only need to do it three times.
+					</aside>
+				</section>
+				<section>
+					<h4>From training to inference</h4>
+					<img src="images/training_vs_inference.drawio.png" height="600px" />
+					<aside class="notes">
+						So far the way we interacted with our model was, most likely, something known as "batch mode": we throw a lot of inputs at the model, all at once, and receive one list of all outputs. Obviously this is not how our users will interact with it, as they are only interested in one image at a time. This is usually known as "prediction" or "inference". What's more, would be nice to wrap into a nice interface, so we can interact with this model same way we can interact with other software modules. Even nicer would be to put it inside a Docker container.
+					</aside>
+				</section>
+				<section>
+					<h4>Wait for a demo from Daisy!</h4>
+					<aside class="notes">
+						You will see this part in action later today demonstrated by Daisy, so I shall say no more.
+					</aside>
+				</section>
+				<section>
+					<h4>Where to run the model</h4>
+					<div class="container">
+
+						<div class="col">
+							<img src="images/cloud-hosting.jpg" alt="Source: https://unsplash.com/images/nature/cloud" />
+						</div>
+						
+						<div class="col">
+							<img src="images/toy-phone.jpg" alt="Source: https://www.pixelsquid.com/png/toy-phone-pink-2648062784222270660" />
+						</div>
+						
+					</div>
+					<aside class="notes">
+						Make a decision where to run the model:
+						- In a cloud or on a server, behind some sort of interface that you can call. More powerful hardware but requires internet connectivity to use. 
+						- Or on the phone itself. No constant connectivity required, but different phones might run different hardware, so there will be compute andmemory limitations, as well as compatibility questions.
+					</aside>
+				</section>
+				<section>
+					<h4>Where to run the model: orchestration</h4>
+					<img src="images/Nomad-vs-kubernetes.png" height="600px" alt="Source: https://www.imaginarycloud.com/blog/nomad-vs-kubernetes/" />
+					<aside class="notes">
+						Moreover, if you decide to go with the server-side hosting of your model, it is now quite common to deploy to so call container orchestration platforms. Two of them are worth mentioning: Kubernetes and Nomad. That is quite advanced topic, so we won't go deep into it. But essentially this provides a layer between your app and hosting environment, allowing you to be independent of the cloud provider.
+					</aside>
+				</section>
+				<section>
+					<h4>Mobile app</h4>
+					<img src="images/mobile_apps.jpeg" alt="Source: https://blog.starcompliance.com/four-ways-to-know-you-need-a-mobile-compliance-app" />
+					<aside class="notes">
+						Now we create a mobile app that either wraps around our model or calls our API, and allows a farmer to take a photo and classifies it. Creating mobile apps is kinda out of scope of MLOps, but i do not want to belittle this work, as it's far from easy:
+						- Create an app - totally separate and non-trivial effort
+						- Design a UI that would make sense for non-ML and non-tech people, who will be the main users.
+					</aside>
+				</section>
+				<section>
+					<h4>Deployment</h4>
+					<img src="images/data-preprocessing.jpg" alt="Source: https://medium.com/@suneet.bhopal/data-preprocessing-using-python-1bfee9268fb3" />
+					<aside class="notes">
+						Previous two steps are actual deployment, or model hosting, or model serving. Regardless of which way we go, server or mobile, there will be data tasks, like:
+						- Same data preprocessing, lighting, brightness, distance etc.
+						- Filter out banana leafs, cassava fruit(?), ets.
+						
+						Remember those? But this time we actually need to write code for all of that, because it has to run independently, right?
+					</aside>
+				</section>
+				<section>
+					<h4>And we are done!</h4>
+					<div style="height: 100px; width: 100%; display: block;"> </div>
+					<h4 class="fragment">Or are we?</h4>
+					<aside class="notes">
+						At this point we can hand out the app to the farmers and let them use it.
+
+						Phew, we are done! We have achieved something known as Level-0 MLOps, meaning we have full deployment, but everything is done manually.
+						
+						But our job isn't done! Why?
+					</aside>
+				</section>
+				<section>
+					<h4>Monitoring</h4>
+					<img src="images/task_failed.jpg" alt="Source: https://www.redbubble.com/i/art-board-print/Task-failed-successfully-by-dhyman/42512359.5E8EA"/>
+					<aside class="notes">
+						Monitoring! We need to make sure our model works as we thought it would. What can go wrong?
+						- Different data distribution, e.g. different disease, or different kind of plants
+						- Actual performance lower than we wanted
+						- People not understanding/not trusting the output
+						- Failures: errors, misses
+						- Latency issues
+						... list goes on ...
+					</aside>
+				</section>
+				<section>
+					<h4>Monitoring</h4>
+					<div class="container">
+
+						<div class="col">
+							<img src="images/monitoring-dashboard.png" alt="Source: https://www.metricfire.com/blog/introduction-to-performance-monitoring-metrics/" />
+						</div>
+						
+						<div class="col">
+							<img src="images/logs.png" />
+						</div>
+						
+					</div>
+					<aside class="notes">
+						What do you do? You collect metrics, meaning you save some metadata for each prediction we do, and analyse it. Also, if problems are detected, you need to debug them. Meaning you need logging in place. As well as the way to transfer metrics and logs from the app or service to your own machine where you can analyse them.
+					</aside>
+				</section>
+				<section>
+					<h4>Train a model (4)</h4>
+					<img src="images/CNN-Architecture.png" height="600px" alt="Source: https://towardsdatascience.com/applied-deep-learning-part-4-convolutional-neural-networks-584bc134c1e2" />
+					<aside class="notes">
+						And then you need a way to update your model - maybe retrain with new data, maybe fix a bug in preprocessing, etc. Thank goodness we only need to do it four times!
+					</aside>
+				</section>
+				<section>
+					<h4>And we are done!</h4>
+					<div style="height: 100px; width: 100%; display: block;"> </div>
+					<h4 class="fragment">For real this time</h4>
+					<div style="height: 100px; width: 100%; display: block;"> </div>
+					<h4 class="fragment">Kind of done, anyway</h4>
+				</section>
+				<section>
+					<h4>Tools!</h4>
+					<div class="container">
+
+						<div class="col">
+							<img src="images/Scissor.JPG" alt="Source: https://en.wiktionary.org/wiki/scissor" />
+						</div>
+						
+						<div class="col">
+							<img src="images/CI-CD-infinity.jpg" alt="Source: https://snyk.io/learn/what-is-ci-cd-pipeline-and-tools-explained/" />
+						</div>
+						
+					</div>
+					<aside class="notes">
+						Doing this manually would be a hard task, so we shall employ tools to automate the process where possible. The amount of tools depends on your needs, resources and time. That is, you can just use a few tool a few tools, e.g. one to simplify labelling and one to store metrics. Or you can go all the way to a full CI/CD pipeline, completely hands free, where the your infra will detect a drift in your data by itself, download relevant data, retrain the model, upload it back to the service - all without human intervention. I'd like to believe these pipelines exist, although I never saw one personally.
+					</aside>
+				</section>
+				<section>
+					<h4>Tools landscape 2012</h4>
+					<img src="images/tools-2012.png" height="600px" />
+					<aside class="notes">
+						There are many different activities we covered: data collection, data clearning, labelling, feature engineering, trainig, validation, monitoring, updating, so on. COnsequently there is quite a number of tools for MLOps. Many people these days busy themselves with building so called "Tools landscapes" - sort of images that include logos of all tools and companies involved in a particular space. For example here is one compiled by Matt Turck, a VC investor from US, and his team. This was the landscape in 2012, first time they compiled such an image.
+					</aside>
+				</section>
+				<section>
+					<h4>Tools landscape 2024</h4>
+					<img src="images/tools-2024.png" height="600px" />
+					<aside class="notes">
+						And here is the one from 2024 by the same team. Big, isn't it? The landscape we saw before, from 2012, had 139 logos. This one has 2011, and they add over 500 this year alone. The point is: MLOps tools space grows insanly fast. So perhaps the best thing to do here is to go by feeling. If you feel like something your are doing needs automation - research corresponding tools. No point in trying to embrace all of this vast space ta once.
+					</aside>
+				</section>
+				<section>
+					<h4>Advanced topics</h4>
+					<ul>
+						<li>Multiple models, model registry</li>
+						<li>Data and model versioning</li>
+						<li>Experiment tracking</li>
+						<li>Live experiments e.g A/B testing</li>
+						<li>...</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Resources</h4>
+					<small>
+					<ul>
+						<li><a href="https://towardsdatascience.com/a-gentle-introduction-to-mlops-7d64a3e890ff"><em>A Gentle Introduction to MLOps</em></a>, by Yashaswi Nayak</li>
+						<li><a href="https://ml-ops.org/"><em>ml-ops.org</em></a></li>
+						<li><a href="https://learn.microsoft.com/en-us/azure/architecture/example-scenario/mlops/mlops-maturity-model"><em>Azure MLOps levels</em></a></li>
+						<li><a href="https://www.kaggle.com/c/cassava-leaf-disease-classification"><em>Cassava Leaf Disease Classification</em></a>, by Makerere AI Lab</li>
+						<li><a href="https://ethical.institute/mle.html"><em>The Machine Learning Engineer Newsletter</em></a>, The Institute for Ethical AI & ML</li>
+						<li><a href="https://www.coursera.org/specializations/mlops-machine-learning-duke"><em>Machine Learning Engineering for Production (MLOps) Specialization</em></a>, Coursera</li>
+						<li><a href="https://medium.com/softwareydata/my-mlops-bookshelf-c27f6e29370d"><em>MLOps bookshelf</em></a>, by Antonio Feregrino</li>
+						<li><a href="https://huyenchip.com/blog/"><em>Chip Huyen blog</em></a></li>
+						<li>Papers!
+							<ul>
+								<li><em>Scaling Big Data Mining Infrastructure — The Twitter Experience</em>, Lin and Ryaboy, ACM SIGKDD Explorations Newsletter 2013</li>
+								<li><em>Monitoring and explainability of models in production</em>, Klaise et al., ICML DMML workshop 2020</li>
+								<li><em>Challenges in Deploying Machine Learning: a Survey of Case Studies</em>, Paleyes et al, ACM Computing Surveys 2022</li>
+							</ul>
+						</li>
+					</ul>
+					</small>
+				</section>
+				
+				<section>
+					<h4>Demo time!</h4>
+					<aside class="notes">
+						And now to the demo, presented by one and only Daisy!
+					</aside>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: "100%",
+				height:"100%",
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
