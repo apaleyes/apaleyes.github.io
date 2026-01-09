@@ -98,21 +98,21 @@
 					<p class="fragment">Multi-objective Bayesian Optimisation (MOBO)</p>
 					<p class="fragment">Step-by-step guide!</p>
 					<aside class="notes">
-						But of course today's talk will be different. Here are the highlights. First, we'll talk not only about one objective, but three: fairness, privacy, energy efficiency. Second, we'll be using multi-objective Bayesian optimisation as the discovery mechanism. And third, in the end I will give you a step by step recipe that you can use to discover the trade-offs that matter the most in your context. This might include privacy, robustness, speed, or anything else you fancy.
+						But of course today's talk will be different. Here are the highlights. First, we'll talk not about only one objective, but three: fairness, privacy, energy efficiency. Second, we'll be using multi-objective Bayesian optimisation as the discovery mechanism. And third, in the end I will give you a step by step recipe that you can use to discover the trade-offs that matter the most in your context. This might include privacy, robustness, speed, or anything else you fancy.
 					</aside>
 				</section>
 				<section>
 					<h3>Two models dilemma</h3>
 					<div class="container">
 						<div class="col">
-							<b>Model 1</b>
+							<b>Model A</b>
 							<ul>
 								<li>96% accuracy</li>
 								<li>15 samples per juole</li>
 							</ul>
 						</div>
 						<div class="col">
-							<b>Model 2</b>
+							<b>Model B</b>
 							<ul>
 								<li>89% accuracy</li>
 								<li>21 samples per juole</li>
@@ -120,9 +120,50 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Let's consider a situation. We have two models, one is a bit more accurate, another is more energy efficient. Which do you deploy? Which one is better?
+						Let's consider a situation. We have two models, one is a bit more accurate, another consumes less energy. Which do you deploy? Which one is better?
 
 						The right answer is "it depends". Depending on the circumstances, such as regulations, or customer requirements, or budgets, answer might be different. Which means it is crucial to have this sort of information readily at hand. Yet more often than not it is not available at all.
+					</aside>
+				</section>
+				<section>
+					grid or random search image
+					<aside class="notes">
+						What do people normally do when they want to discover these options? They do a grid search, or random search, or a bayesian optimisation run, optimising for one objective, say accuracy, and then afterwards they measure other properties of the models that were evaluated during the search. This is better than nothing, but it has several drawbacks. First, since the search was optimising for one objective only, the discovered models are likely to be suboptimal in terms of other objectives. Second, since the search was not aware of multiple objectives, it is likely to waste a lot of resources exploring areas of the search space that are not interesting.
+					</aside>
+				</section>
+				<section>
+					<div style="height: 99vh">
+						<div class="container">
+							<div class="col"><img src="images/privacy_constraints.png" style="height: 60vh;" /></div>
+							<div class="col"><img src="images/fairness_constraints.png" style="height: 90vh" /></div>
+						</div>
+						<div class="credit">Table sources: Xu et al. 2019 "Achieving Differential Privacy and Fairness in Logistic Regression", Chang and Shokri 2020 "On the Privacy Risks of Algorithmic Fairness"</div>
+					</div>
+					<aside class="notes">
+						Another approach is to do a constraint training. For example, you can try to maximise accuracy while constraining energy consumption to be below a certain threshold. For exampl here we can see two examples from academic papers. On the left researchers have set the constraint on differential privacy measure, and on the right the constraint is on fairness. Both papers then proceed to train models under these constraints, and report training results, which I've clipped here for clarity. This is better than the previous approach, since the search is now aware of multiple objectives. However, it has its own drawbacks. First, you need to know the constraints beforehand, which is not always possible. Second, you don't know if the constraints you set are too tight or too loose, which may lead to suboptimal results.
+					</aside>
+				</section>
+				<section>
+					entire trade off surface. how?
+					<aside class="notes">
+						Of course the best approach is to understand the entire trade-off surface, and then pick the model that best suits your needs. But how does it look like, and how to discover it efficiently?
+					</aside>
+				</section>
+				<section>
+					<div style="height:99vh">
+						<img src="images/us-census-pareto-front.png" style="height: 70vh" />
+						<p class="credit">
+							"Disclosure avoidance for block level data and protection of confidentiality in public tabulations.", John M. Abowd, Census Scientific Advisory Committee (Fall Meeting), 2018
+						</p>
+					</div>
+					<aside class="notes">
+						As for "how does it look like", in most cases it looks like this: a set of optimal trade-offs, known as Pareto front, where improving one objective necessarily leads to degradation in another objective. Our goal is to discover this front as efficiently as possible. However you can see a slide from a talk from John M. Abowd, Chief Scientist at the US Census Bureau, where he discusses trade-offs between privacy and accuracy in the context of census data.
+					</aside>
+				</section>
+				<section>
+					MOBO
+					<aside class="notes">
+						So how do we discover this Pareto front efficiently? The answer I propose is multi-objective Bayesian optimisation, or MOBO for short.
 					</aside>
 				</section>
 			</div>
