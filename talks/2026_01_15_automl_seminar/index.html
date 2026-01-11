@@ -166,6 +166,81 @@
 						So how do we discover this Pareto front efficiently? The answer I propose is multi-objective Bayesian optimisation, or MOBO for short.
 					</aside>
 				</section>
+				<section>
+					1 dim BO recap
+					<aside class="notes">
+						I am going to assume most people watching live or on the channel are familiar with single-objective BayesOpt, so just a one-slide refresher here. Bayesian Optimisation is an optimisation method for expensive black-box functions. We model the function with a probabilistic model, typically a Gaussian process, and use this model to construct an acquisition function. Acquisition function is used to guide out evaluations of the objective. The hope is that by balancing exploration of the input space with exploitation of the most promising regions we will eventually arrive at a global extremum.
+					</aside>
+				</section>
+				<section>
+					ref: https://www.sciencedirect.com/science/article/pii/S0167947315001991#s000015
+					<aside class="notes">
+						Now let's move on to the multi-objective case, which presumably less people are familiar with. So what are the major differences? Again we have an objective function, but now it is vector output, not a scalar. For simplicity let's assume the vector is of length 2, meaning we have 2 competing measures to optimise. Again we want to model our objective with a GP. Two approaches are possible: either a single multi-output GP, or two separate single output GPs. We chose the latter as it was shown to be fairly competitive while much simpler to compute. And again we use an acquisition function to guide our evaluations. But the acquisition function needs to be a scalar. And this leads us to what i believe is the key idea of MOBO - hypervolume.
+					</aside>
+				</section>
+				<section>
+					pareto front illustration
+					<aside class="notes">
+						Here is a simple example. Suppose we have these few evaluations of our objective, depicted in the objective space. We can build a Pareto front around these points - that's our current best. What we would like to do is to extend this frontier as much as possible. This point does not extend the frontier, as it dominated by other points. But this one does, and so does that one. Which one if better? Well, if we consider our objectives to have equal scales, we can posit that the better point is the one that increases the area covered by the Pareto front more.
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						How to calculate this area? We need to pick a reference, or an anti-ideal, point first - a point somewhere in space that is guaranteed to be pretty bad in both objectives. This allows us to calculate the area and pick the point that covers more. THat's the intuition for a hypervolume.
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						In our projects we used two acqusition functions that build on the ideal of hypervolume. Hypervolume Probability of Improvement (HVPoI) clearly aims to maximise the probability the chosen point increases the HV. Expected Hypervolume Improvement (EHVI) maximises the expectated improvement. Both are directly inspired by their single-objective counterparts.
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						Few keys points to remember about MOBO.
+						1. Keep scales comparable, normalise objective's values if necessary
+						2. Reference point matters
+						3. EHVI is a good practical choice
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						Hopefully this gives everyone some MOBO intuition. Now let's move on to the exciting part - case studies!
+					</aside>
+				</section>
+				<section>
+					Case study 1: DPareto - Utility vs privacy 
+					<aside class="notes">
+						The context of this first case study is training ML models on sensitive data. So we really want to protect our models against memberhsip attacks. A standard mechanism for this is differential privacy. Intuitively we distort our training data which makes it harder to identify individuals from inference outputs. But of course the more distrotion we introduce the less accurately we are modelling the training data. Hence the trade-off!
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						To quantify this trade-off we picked a metric to measure model performance, and used epsilon as a common way to measuing the level of privacy achieved. We also defined a space of hyperparameters, including some common ones (batch size, number of epochs) and some DP-specific (clipping norm, noise level).
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						This was the first time we were trying this mechanism, so the main question was "Will it all work?". It did, and ...
+					</aside>
+				</section>
+				<section>
+					Case study 2: PFairDP - utility vs privacy vs fairness
+					<aside class="notes">
+						3d fronts, exciting! This second study is a natural extension of the first, were we added one more objective to the optimisation problem: algorithmic fairness. You might be aware of the fact that there are over 20 definitions of fairness, and we managed to build a pipeline that would work with any of these that can be tuned with a hyperparameter.
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						
+					</aside>
+				</section>
 			</div>
 		</div>
 
