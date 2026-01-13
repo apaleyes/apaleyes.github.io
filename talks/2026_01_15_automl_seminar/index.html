@@ -82,7 +82,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:99vh">
+					<div style="height:90vh">
 						<img src="images/jan-talk.png" style="height: 70vh" />
 						<p class="credit">
 							"Multi-Objective AutoML: Towards Accurate and Robust models", Jan van Rijn, AutoML seminar, 16 Oct 2025
@@ -93,7 +93,7 @@
 					</aside>
 				</section>
 				<section>
-					<h3>Today's highlights</h3>
+					<h4>Today's highlights</h4>
 					<p class="fragment">3 objectives: fairness, privacy, energy efficiency</p>
 					<p class="fragment">Multi-objective Bayesian Optimisation (MOBO)</p>
 					<p class="fragment">Step-by-step guide!</p>
@@ -102,7 +102,7 @@
 					</aside>
 				</section>
 				<section>
-					<h3>Two models dilemma</h3>
+					<h4>Two models dilemma</h4>
 					<div class="container">
 						<div class="col">
 							<b>Model A</b>
@@ -127,19 +127,19 @@
 				</section>
 				<section>
 					<div style="height:99vh">
-						<h3>Option 1: grid or random search</h3>
-						<img src="images/grid-vs-random.png" style="height: 70vh" />
+						<h4>Option 1: grid or random search</h4>
+						<img src="images/grid-vs-random.png" />
 					</div>
 					<aside class="notes">
 						What do people normally do when they want to discover these options? They do a grid search or random search in the hyperparameter space, train the model for each poitn, and pick whatever option seems to satisfy the requirements best. Of course this is a very naive approach, but it is nonetheless possible and can sometimes yield decent results. Its major drawback is that it compeltely ignores the objectives we set out to optimise. Also, it is likely to waste a lot of resources exploring areas of the search space that are not interesting.
 					</aside>
 				</section>
 				<section>
-					<div style="height: 99vh">
-						<h3>Option 2: constrainted optimisation</h3>
+					<div style="height: 90vh">
+						<h4>Option 2: constrained optimisation</h4>
 						<div class="container">
 							<div class="col"><img src="images/privacy_constraints.png" style="height: 60vh;" /></div>
-							<div class="col"><img src="images/fairness_constraints.png" style="height: 90vh" /></div>
+							<div class="col"><img src="images/fairness_constraints.png" style="height: 70vh" /></div>
 						</div>
 						<div class="credit">Table sources: Xu et al. 2019 "Achieving Differential Privacy and Fairness in Logistic Regression", Chang and Shokri 2020 "On the Privacy Risks of Algorithmic Fairness"</div>
 					</div>
@@ -154,8 +154,9 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:99vh">
-						<img src="images/us-census-pareto-front.png" style="height: 70vh" />
+					<div style="height:90vh">
+						<h4>Pareto front</h4>
+						<img src="images/us-census-pareto-front.png" style="height: 60vh" />
 						<p class="credit">
 							"Disclosure avoidance for block level data and protection of confidentiality in public tabulations.", John M. Abowd, Census Scientific Advisory Committee (Fall Meeting), 2018
 						</p>
@@ -165,37 +166,95 @@
 					</aside>
 				</section>
 				<section>
-					MOBO
+					<div style="height:90vh">
+						<h4>Option 3: Multi-objective Bayesian optimisation (MOBO)</h4>
+						<img src="images/mobo_intro.png" style="height: 60vh" />
+						<p class="credit">
+							Image source: "High-Dimensional Bayesian Multi-Objective Optimization", Gaudrie, 2019
+						</p>
+					</div>
 					<aside class="notes">
 						So how do we discover this Pareto front efficiently? The answer I propose is multi-objective Bayesian optimisation, or MOBO for short.
 					</aside>
 				</section>
 				<section>
-					1 dim BO recap
+					<div style="height:90vh">
+						<h4>Bayesian optimisation recap</h4>
+						<img src="images/1d-bayes-opt.png" style="height: 60vh" />
+						<p class="credit">
+							Image source: "Bayesian Optimization and Active Learning Cookbook", Sam Lishak, Physics X, 2025
+						</p>
+					</div>
 					<aside class="notes">
 						I am going to assume most people watching live or on the channel are familiar with single-objective BayesOpt, so just a one-slide refresher here. Bayesian Optimisation is an optimisation method for expensive black-box functions. We model the function with a probabilistic model, typically a Gaussian process, and use this model to construct an acquisition function. Acquisition function is used to guide out evaluations of the objective. The hope is that by balancing exploration of the input space with exploitation of the most promising regions we will eventually arrive at a global extremum.
 					</aside>
 				</section>
 				<section>
-					ref: https://www.sciencedirect.com/science/article/pii/S0167947315001991#s000015
+					<div style="height:90vh">
+						<h4>MOBO: differences</h4>
+						Assuming 2 objectives
+						<ul>
+							<li>f(x) = (y<sub>1</sub>, y<sub>2</sub>)</li>
+							<li>Model: multi-output GPs or 2 single-output GPs</li>
+							<li>Hypervolume-based acquisition function</li>
+						</ul>
+						<p class="credit">
+							"Multiobjective optimization of expensive-to-evaluate deterministic computer simulator models", Svenson and Santner, Computational Statistics & Data Analysis, 2016
+						</p>
+					</div>
 					<aside class="notes">
-						Now let's move on to the multi-objective case, which presumably less people are familiar with. So what are the major differences? Again we have an objective function, but now it is vector output, not a scalar. For simplicity let's assume the vector is of length 2, meaning we have 2 competing measures to optimise. Again we want to model our objective with a GP. Two approaches are possible: either a single multi-output GP, or two separate single output GPs. We chose the latter as it was shown to be fairly competitive while much simpler to compute. And again we use an acquisition function to guide our evaluations. But the acquisition function needs to be a scalar. And this leads us to what i believe is the key idea of MOBO - hypervolume.
+						Now let's move on to the multi-objective case, which presumably less people are familiar with. What are the major differences? Again we have an objective function, but now it is vector output, not a scalar. For simplicity let's assume the vector is of length 2, meaning we have 2 competing measures to optimise. Again we want to model our objective with a GP. Two approaches are possible: either a single multi-output GP, or two separate single output GPs. We chose the latter as it was shown to be fairly competitive while much simpler to compute. And again we use an acquisition function to guide our evaluations. But the acquisition function needs to be a scalar. And this leads us to what i believe is the key idea of MOBO - hypervolume.
 					</aside>
 				</section>
 				<section>
-					pareto front illustration
+					<div style="height:90vh">
+						<img src="images/pareto-1.png" />
+					</div>
 					<aside class="notes">
-						Here is a simple example. Suppose we have these few evaluations of our objective, depicted in the objective space. We can build a Pareto front around these points - that's our current best. What we would like to do is to extend this frontier as much as possible. This point does not extend the frontier, as it dominated by other points. But this one does, and so does that one. Which one if better? Well, if we consider our objectives to have equal scales, we can posit that the better point is the one that increases the area covered by the Pareto front more.
+						Here is a simple example. Suppose we have these few evaluations of our objective, depicted in the objective space.
 					</aside>
 				</section>
 				<section>
+					<div style="height:90vh">
+						<img src="images/pareto-2.png" />
+					</div>
+					<aside class="notes">
+						We can build a Pareto front around these points - that's our current best. What we would like to do is to extend this frontier as much as possible.
+					</aside>
+				</section>
+				<section>
+					<div style="height:90vh">
+						<img src="images/pareto-3.png" />
+					</div>
+					<aside class="notes">
+						Point 3 does not extend the frontier, as it dominated by other points. But points 1 and 2 can are not dominated. Which one is better? Well, if we consider our objectives to have equal scales, we can posit that the better point is the one that increases the area covered by the Pareto front more.
+					</aside>
+				</section>
+				<section>
+					<div style="height:90vh">
+						<img src="images/pareto-4.png" />
+					</div>
+					<aside class="notes">
+						How to calculate this area? We need to pick a reference, or an anti-ideal, point first - a point somewhere in space that is guaranteed to be pretty bad in both objectives. Here it is denoted with R.From this point we can calculate the area covered by the Pareto front.This allows us to calculate the area and pick the point that covers more. That's the intuition for a hypervolume.
+					</aside>
+				</section>
+				<section>
+					<div style="height:90vh">
+						<img src="images/pareto-5.png" />
+					</div>
+					<aside class="notes">
+						Whichever point adds larger area to is better for us. That's the intuition for a hypervolume-based optimisation.
+					</aside>
+				</section>
+				<section>
+					TODO:
+					HVPoI
+					\boxed{
+\alpha_{\mathrm{HV\text{-}PI}}(\mathbf{x}) = \mathbb{P}\left(\mathrm{HVI}(\mathbf{Y}) > 0\right) = \int_{\mathcal{R}_{\mathrm{HVI}>0}}p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}) , d\mathbf{y}}
 
-					<aside class="notes">
-						How to calculate this area? We need to pick a reference, or an anti-ideal, point first - a point somewhere in space that is guaranteed to be pretty bad in both objectives. This allows us to calculate the area and pick the point that covers more. THat's the intuition for a hypervolume.
-					</aside>
-				</section>
-				<section>
-
+EHVI
+\boxed{
+\alpha_{\mathrm{EHVI}}(\mathbf{x}) = \mathbb{E}\left[ \mathrm{HVI}(\mathbf{Y}) \right] = \int_{\mathbb{R}^M}\mathrm{HVI}(\mathbf{y}) ,p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}), d\mathbf{y}}
 					<aside class="notes">
 						In our projects we used two acqusition functions that build on the ideal of hypervolume. Hypervolume Probability of Improvement (HVPoI) clearly aims to maximise the probability the chosen point increases the HV. Expected Hypervolume Improvement (EHVI) maximises the expectated improvement. Both are directly inspired by their single-objective counterparts.
 					</aside>
