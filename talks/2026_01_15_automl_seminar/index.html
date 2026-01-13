@@ -36,6 +36,9 @@
 			.col{
 				flex: 1;
 			}
+			.katex-display {
+				font-size: 0.8em
+			}
 		</style>
 	</head>
 	<body>
@@ -247,29 +250,36 @@
 					</aside>
 				</section>
 				<section>
-					TODO:
+					<div>
 					HVPoI
-					\boxed{
-\alpha_{\mathrm{HV\text{-}PI}}(\mathbf{x}) = \mathbb{P}\left(\mathrm{HVI}(\mathbf{Y}) > 0\right) = \int_{\mathcal{R}_{\mathrm{HVI}>0}}p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}) , d\mathbf{y}}
 
-EHVI
-\boxed{
-\alpha_{\mathrm{EHVI}}(\mathbf{x}) = \mathbb{E}\left[ \mathrm{HVI}(\mathbf{Y}) \right] = \int_{\mathbb{R}^M}\mathrm{HVI}(\mathbf{y}) ,p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}), d\mathbf{y}}
+					\[\boxed{
+\alpha_{\mathrm{HVPoI}}(\mathbf{x}) = \mathbb{P}\left(\mathrm{HVI}(\mathbf{Y}) > 0\right) = \int_{\mathcal{R}_{\mathrm{HVI}>0}}p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}) , d\mathbf{y}}\]
+
+					EHVI
+					\[\boxed{
+\alpha_{\mathrm{EHVI}}(\mathbf{x}) = \mathbb{E}\left[ \mathrm{HVI}(\mathbf{Y}) \right] = \int_{\mathbb{R}^M}\mathrm{HVI}(\mathbf{y}) ,p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}), d\mathbf{y}}\]
+					</div>
 					<aside class="notes">
-						In our projects we used two acqusition functions that build on the ideal of hypervolume. Hypervolume Probability of Improvement (HVPoI) clearly aims to maximise the probability the chosen point increases the HV. Expected Hypervolume Improvement (EHVI) maximises the expectated improvement. Both are directly inspired by their single-objective counterparts.
+						In our projects we used two acqusition functions that build on the ideal of hypervolume. Hypervolume Probability of Improvement (HVPoI) clearly aims to maximise the probability the chosen point increases the HV. Expected Hypervolume Improvement (EHVI) maximises the expectated improvement. These days EHVI is more widespread and considered more universal. Both are directly inspired by their single-objective counterparts.
 					</aside>
 				</section>
 				<section>
-
+					<h4>Key points</h4>
+					<ul>
+						<li>Keep scales comparable</li>
+						<li>Reference point matters</li>
+						<li>EHVI is a good practical choice</li>
+					</ul>
 					<aside class="notes">
-						Few keys points to remember about MOBO.
+						Few keys points to remember
 						1. Keep scales comparable, normalise objective values if necessary
 						2. Reference point matters
 						3. EHVI is a good practical choice
 					</aside>
 				</section>
 				<section>
-
+					<h3>Case Studies</h3>
 					<aside class="notes">
 						Hopefully this gives everyone some MOBO intuition. Now let's move on to the exciting part - case studies!
 					</aside>
@@ -406,15 +416,15 @@ EHVI
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
 		<script>
 			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-
 				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
 			});
 		</script>
 	</body>
