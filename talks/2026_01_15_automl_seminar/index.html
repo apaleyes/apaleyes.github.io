@@ -126,13 +126,17 @@
 					</aside>
 				</section>
 				<section>
-					grid or random search image
+					<div style="height:99vh">
+						<h3>Option 1: grid or random search</h3>
+						<img src="images/grid-vs-random.png" style="height: 70vh" />
+					</div>
 					<aside class="notes">
-						What do people normally do when they want to discover these options? They do a grid search, or random search, or a bayesian optimisation run, optimising for one objective, say accuracy, and then afterwards they measure other properties of the models that were evaluated during the search. This is better than nothing, but it has several drawbacks. First, since the search was optimising for one objective only, the discovered models are likely to be suboptimal in terms of other objectives. Second, since the search was not aware of multiple objectives, it is likely to waste a lot of resources exploring areas of the search space that are not interesting.
+						What do people normally do when they want to discover these options? They do a grid search or random search in the hyperparameter space, train the model for each poitn, and pick whatever option seems to satisfy the requirements best. Of course this is a very naive approach, but it is nonetheless possible and can sometimes yield decent results. Its major drawback is that it compeltely ignores the objectives we set out to optimise. Also, it is likely to waste a lot of resources exploring areas of the search space that are not interesting.
 					</aside>
 				</section>
 				<section>
 					<div style="height: 99vh">
+						<h3>Option 2: constrainted optimisation</h3>
 						<div class="container">
 							<div class="col"><img src="images/privacy_constraints.png" style="height: 60vh;" /></div>
 							<div class="col"><img src="images/fairness_constraints.png" style="height: 90vh" /></div>
@@ -140,11 +144,11 @@
 						<div class="credit">Table sources: Xu et al. 2019 "Achieving Differential Privacy and Fairness in Logistic Regression", Chang and Shokri 2020 "On the Privacy Risks of Algorithmic Fairness"</div>
 					</div>
 					<aside class="notes">
-						Another approach is to do a constraint training. For example, you can try to maximise accuracy while constraining energy consumption to be below a certain threshold. For exampl here we can see two examples from academic papers. On the left researchers have set the constraint on differential privacy measure, and on the right the constraint is on fairness. Both papers then proceed to train models under these constraints, and report training results, which I've clipped here for clarity. This is better than the previous approach, since the search is now aware of multiple objectives. However, it has its own drawbacks. First, you need to know the constraints beforehand, which is not always possible. Second, you don't know if the constraints you set are too tight or too loose, which may lead to suboptimal results.
+						Another approach is to do a constraint training. We maximise accuracy while constraining other objectives to be below a certain threshold. Here we can see two examples from academic papers. On the left researchers have set the constraint on differential privacy measure, and on the right the constraint is on fairness. Both papers then proceed to train models under these constraints, and report training results, which I've clipped here for clarity. This is better than the previous approach, since the search is now aware of multiple objectives. However, it has its own drawbacks. First, you need to know the constraints beforehand, which is not always possible. Second, you don't know if the constraints you set are too tight or too loose, which may lead to suboptimal results.
 					</aside>
 				</section>
 				<section>
-					entire trade off surface. how?
+					<h2>Can we discover an entire trade-off surface?</h2>
 					<aside class="notes">
 						Of course the best approach is to understand the entire trade-off surface, and then pick the model that best suits your needs. But how does it look like, and how to discover it efficiently?
 					</aside>
@@ -200,7 +204,7 @@
 
 					<aside class="notes">
 						Few keys points to remember about MOBO.
-						1. Keep scales comparable, normalise objective's values if necessary
+						1. Keep scales comparable, normalise objective values if necessary
 						2. Reference point matters
 						3. EHVI is a good practical choice
 					</aside>
@@ -220,13 +224,18 @@
 				<section>
 
 					<aside class="notes">
-						To quantify this trade-off we picked a metric to measure model performance, and used epsilon as a common way to measuing the level of privacy achieved. We also defined a space of hyperparameters, including some common ones (batch size, number of epochs) and some DP-specific (clipping norm, noise level).
+						To quantify this trade-off we picked a metric to measure model performance, and used epsilon as a common way to measuing the level of privacy achieved. We also defined a space of hyperparameters, including some common ones (batch size, number of epochs) and some DP-specific (clipping norm, noise variance).
 					</aside>
 				</section>
 				<section>
 
 					<aside class="notes">
-						This was the first time we were trying this mechanism, so the main question was "Will it all work?". It did, and ...
+						This was the first time we were trying this mechanism, so the main question was "Will it all work?". It did! We were able to construct Pareto fronts using different DP algorithms, on different classification tasks and datasets.
+					</aside>
+				</section>
+				<section>
+					<aside class="notes">
+						Some of the technology choices here are interesting! This project was done some years ago, so it's fun to look at it in retrospective and reflect on the choices we made. We used GPFlowOpt (now defunct) with HVPoI acquisition function. The models were implemented using Apache MXNet and Gluon API. Plus we implemented DP versions of SGD and Adam by hand. I think it's fair to say that none of that has stood the test of time, and we will see a proof of that in the very next case study.
 					</aside>
 				</section>
 				<section>
@@ -238,7 +247,97 @@
 				<section>
 
 					<aside class="notes">
+						Specifically, we tried statistical parity difference (SPD) and disparate impact (DI)
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						Again, we were able to build Pareto fronts to quantify the trade-off here. Interestingly enough, visualising a 3D pareto front is a challenge. Our observations are that our procedure yielded quite sparse fronts, and 3D surfaces need many data points before they become comprehensible when rendered. However giving users interactive 3D render that they can turn and inspect at various angles works pretty good.
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						But that's not even what excites me the most about this work. Personally, I am mostly excited about the fact that we managed to reproduce, augment and even correct some of the earlier published results. What's important is that those results were achieved manually with constraint setting, and we managed to identify the same trade-offs in the course of one fully automated procedure.
+					</aside>
+				</section>
+				<section>
+
+					<aside class="notes">
+						Evolution of tech stack, as promised. This project uses PyTorch tools, including GPyTorch fom modelling, BoTorch for optimisation, and Opacus for differentially private algorithms. Algorithmic fairness definitions are taken from AIF360. We used EHVI as an acquisition function.
+					</aside>
+				</section>
+				<section>
+					Case study 3: ECOPt - utility vs energy efficiency
+					<aside class="notes">
+						Finally, the most recent case study, just finished last year. This time we are back to 2-way trade-offs, matching utility and energy efficiency of ML models. Specifically, the focus of this work is on ML inference, because we felt training is already covered well, while inference is mostly neglected in the literature.
+					</aside>
+				</section>
+				<section>
+					
+					<aside class="notes">
+						This project is a good illustration of the main challenge of setting up these optimisation pipelines. As a community, we are pretty good at training an ML model and measuring its accuracy. But designing for a accurate measurement of other objectives is trickier, and usually takes the majority of time. For example here we had to sift through a large variety of ways of measuring energy consumption, choose from many tools, work around limitations, etc. This is natural of course, but still something to keep in mind.
+					</aside>
+				</section>
+				<section>
+					
+					<aside class="notes">
+						Anyway, we managed to prove that ECOpt is capable of building reasonable Pareto fronts, as for example here. Each of these black points represents a Pareto-optimal trade-off in performance and energy efficiency.
+					</aside>
+				</section>
+				<section>
+					
+					<aside class="notes">
+						Along the way we have shown that number of parameters isn't necessarily a reliable proxy for energy consumption, and got to play with LLMs a bit on different hardwares, to prove our method translates well between platforms.
+					</aside>
+				</section>
+				<section>
+					Guide
+					<aside class="notes">
+						Now, moving on to the final part of the talk. I promised to give you all an advice on how to approach similar trade-offs quantification questions in your domain. So, here are my tips
+					</aside>
+				</section>
+				<section>
+					<aside class="notes">
+						First, understand what do you really care about. Think about your current project - what trade-off keeps you up at night?
 						
+						Second, ensure you have a good scalar-valued metric for each of the objectives you are interested in. Remember to normalise them to keep the scales comparable, otherwise one of your metrics will have more weight than the other.
+					</aside>
+				</section>
+				<section>
+					<aside class="notes">
+						Also on that note, make sure you have enough hyperparameters to actually tune both objectives. It seems obvious, but might be easily overlooked.
+					</aside>
+				</section>
+				<section>
+					<aside class="notes">
+						Next, implementation of MOBO pipeline. I am not associated with PyTorch ecosystem in any way, but I recommend PyTorch and BoTorch for implementing your experiments. Even though API can be quite awkward at times, I simply haven't found a better library for MOBO.
+					</aside>
+				</section>
+				<section>
+					<aside class="notes">
+						Third, use EHVI as an acquisition function, unless you have very specific requirements, such as very noise objectives. Recently it was shown that LogEHVI can be used as a stand-in replacement, so perhaps consider using that too.
+					</aside>
+				</section>
+				<section>
+					<aside class="notes">
+						Of course, prototypes are everything. Run something simple first, where you can find the true Pareto front by just running a very fine grid on the entire HP space. Only after that move on to true experiments.
+					</aside>
+				</section>
+				<section>
+					<aside class="notes">
+						Run the optimisation, analyse the discovered frontier.
+					</aside>
+				</section>
+				<section>
+					<aside class="notes">
+						Finally, consider how you might use the discovered front. Is it for compliance, to inform decision making, or simply to confirm your existing thresholds cannot be improved upon?
+					</aside>
+				</section>
+				<section>
+					<aside class="notes">
+						Thanks, questions
 					</aside>
 				</section>
 			</div>
