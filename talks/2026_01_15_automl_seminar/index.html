@@ -253,12 +253,16 @@
 					<div>
 					HVPoI
 
-					\[\boxed{
-\alpha_{\mathrm{HVPoI}}(\mathbf{x}) = \mathbb{P}\left(\mathrm{HVI}(\mathbf{Y}) > 0\right) = \int_{\mathcal{R}_{\mathrm{HVI}>0}}p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}) , d\mathbf{y}}\]
+					<!-- \[\boxed{\alpha_{\mathrm{HVPoI}}(\mathbf{x}) = \mathbb{P}\left(\mathrm{HVI}(\mathbf{Y}) > 0\right) = \int_{\mathcal{R}_{\mathrm{HVI}>0}}p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}) , d\mathbf{y}}\] -->
+					 \[\boxed{\alpha_{\mathrm{HVPoI}}(x) = \mathbb{P}\left(\mathrm{HVI}(\mathcal{P}, x) > 0\right)}\]
 
 					EHVI
-					\[\boxed{
-\alpha_{\mathrm{EHVI}}(\mathbf{x}) = \mathbb{E}\left[ \mathrm{HVI}(\mathbf{Y}) \right] = \int_{\mathbb{R}^M}\mathrm{HVI}(\mathbf{y}) ,p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}), d\mathbf{y}}\]
+					<!-- \[\boxed{\alpha_{\mathrm{EHVI}}(\mathbf{x}) = \mathbb{E}\left[ \mathrm{HVI}(\mathbf{Y}) \right] = \int_{\mathbb{R}^M}\mathrm{HVI}(\mathbf{y}) ,p(\mathbf{y} \mid \mathbf{x}, \mathcal{D}), d\mathbf{y}}\] -->
+					\[\boxed{\alpha_{\mathrm{EHVI}}(x) = \mathbb{E}\left[ \mathrm{HVI}(\mathcal{P},x) \right]}\]
+
+					where
+
+					\[\mathrm{HVI}(\mathcal{P},x) = \mathrm{HV}(\mathcal{P} \cup x) - \mathrm{HV}(\mathcal{P})\]
 					</div>
 					<aside class="notes">
 						In our projects we used two acqusition functions that build on the ideal of hypervolume. Hypervolume Probability of Improvement (HVPoI) clearly aims to maximise the probability the chosen point increases the HV. Expected Hypervolume Improvement (EHVI) maximises the expectated improvement. These days EHVI is more widespread and considered more universal. Both are directly inspired by their single-objective counterparts.
@@ -285,128 +289,178 @@
 					</aside>
 				</section>
 				<section>
-					Case study 1: DPareto - Utility vs privacy 
+					<div style="height:70vh">
+						<h4>Case study 1: DPareto - utility vs privacy</h4>
+						<ul>
+							<li>Sensitive data</li>
+							<li>ε-Differential privacy (DP)</li>
+							<li>Increased privacy decreases performance</li>
+							<li>Hyperparameters:
+								<ul>
+									<li>Training: batch size, number of epochs</li>
+									<li>DP: clipping norm, noise variance</li>
+								</ul>
+							</li>
+						</ul>
+						<p class="credit">
+							"Automatic discovery of privacy-utility pareto fronts", Brendan Avent, Javier Gonzalez, Tom Diethe, AP, Borja Balle, PETS 2020
+						</p>
+					</div>
 					<aside class="notes">
-						The context of this first case study is training ML models on sensitive data. So we really want to protect our models against memberhsip attacks. A standard mechanism for this is differential privacy. Intuitively we distort our training data which makes it harder to identify individuals from inference outputs. But of course the more distrotion we introduce the less accurately we are modelling the training data. Hence the trade-off!
-					</aside>
-				</section>
-				<section>
+						The context of this first case study is training ML models on sensitive data. So we really want to protect our models against memberhsip attacks. A standard mechanism for this is differential privacy. Intuitively we distort our training data which makes it harder to identify individuals from inference outputs. But of course the more distortion we introduce the less accurately we are modelling the training data. Hence the trade-off!
 
-					<aside class="notes">
 						To quantify this trade-off we picked a metric to measure model performance, and used epsilon as a common way to measuing the level of privacy achieved. We also defined a space of hyperparameters, including some common ones (batch size, number of epochs) and some DP-specific (clipping norm, noise variance).
 					</aside>
 				</section>
 				<section>
-
+					pareto graph goes here
 					<aside class="notes">
-						This was the first time we were trying this mechanism, so the main question was "Will it all work?". It did! We were able to construct Pareto fronts using different DP algorithms, on different classification tasks and datasets.
+						This was the first time we were trying this mechanism, so the main question was "Will it all work?". It did! We were able to construct Pareto fronts using different DP algorithms on two different classification tasks.
 					</aside>
 				</section>
 				<section>
+					mxnet, gluon, HVPoI, handwriting, all as images, go here
 					<aside class="notes">
 						Some of the technology choices here are interesting! This project was done some years ago, so it's fun to look at it in retrospective and reflect on the choices we made. We used GPFlowOpt (now defunct) with HVPoI acquisition function. The models were implemented using Apache MXNet and Gluon API. Plus we implemented DP versions of SGD and Adam by hand. I think it's fair to say that none of that has stood the test of time, and we will see a proof of that in the very next case study.
 					</aside>
 				</section>
 				<section>
-					Case study 2: PFairDP - utility vs privacy vs fairness
+					<div style="height:70vh">
+						<h4>Case study 2: PFairDP - utility vs privacy vs fairness</h4>
+						<ul>
+							<li>&#128293;3D fronts&#128293;</li>
+							<li>Extension of DPareto</li>
+							<li>New objective: algorithmic fairness</li>
+							<li>Two fairness methods
+								<ul>
+									<li>Statistical parity difference (SPD)</li>
+									<li>Disparate impact (DI)</li>
+								</ul>
+							</li>
+						</ul>
+						<p class="credit">
+						"Automated discovery of trade-off between utility, privacy and fairness in machine learning models", Bogdan Ficiu, Neil Lawrence, AP, BIAS@ECML 2023
+						</p>
+					</div>
 					<aside class="notes">
-						3d fronts, exciting! This second study is a natural extension of the first, were we added one more objective to the optimisation problem: algorithmic fairness. You might be aware of the fact that there are over 20 definitions of fairness, and we managed to build a pipeline that would work with any of these that can be tuned with a hyperparameter.
+						3d fronts, exciting! This second study is a natural extension of the first, were we added one more objective to the optimisation problem: algorithmic fairness. You might be aware of the fact that there are over 20 definitions of fairness, and we managed to build a pipeline that would work with any of these that can be tuned with a hyperparameter. Specifically, we tried SPD and DI.
 					</aside>
 				</section>
 				<section>
-
+					<img src="images/pfairdp_hypervolume_improvements_combined.png" style="height: 40vh; background-color: white;" />
 					<aside class="notes">
-						Specifically, we tried statistical parity difference (SPD) and disparate impact (DI)
+						Again, we were able to build Pareto fronts to quantify the trade-off here. Here you can see the evolution of Hypervolume at different steps of optimisation on two tasks. Why do show you this instead of the actual Pareto frontiers? 
 					</aside>
 				</section>
 				<section>
-
+					<img src="images/pfairdp_ADULT_and_MEPS_in_3D.png" style="height: 35vh;" />
+					<img src="images/pfairdp_3d_surface.PNG" style="height: 35vh;" />
 					<aside class="notes">
-						Again, we were able to build Pareto fronts to quantify the trade-off here. Interestingly enough, visualising a 3D pareto front is a challenge. Our observations are that our procedure yielded quite sparse fronts, and 3D surfaces need many data points before they become comprehensible when rendered. However giving users interactive 3D render that they can turn and inspect at various angles works pretty good.
+						Here is why. It turns out, because these fronts are quite sparse, visualising a 3D pareto front so that is possible to interpret is a challenge. Our observations are that our procedure yielded quite sparse fronts, and 3D surfaces need many data points before they become comprehensible when rendered. However giving users interactive 3D render that they can turn and inspect at various angles works pretty good.
 					</aside>
 				</section>
 				<section>
-
+					<div style="height:70vh">
+						<img src="images/pfairdp_repl_1.png" />
+						<p class="credit">
+							"Investigating Trade-offs in Utility, Fairness and Differential Privacy in Neural Networks", Pannekoek and Spigler, arxiv, 2021
+						</p>
+					</div>
 					<aside class="notes">
-						But that's not even what excites me the most about this work. Personally, I am mostly excited about the fact that we managed to reproduce, augment and even correct some of the earlier published results. What's important is that those results were achieved manually with constraint setting, and we managed to identify the same trade-offs in the course of one fully automated procedure.
+						But building fronts themselves is not what mostly excites me about this work. Thanks to previous case study we knew we could actually do it. Personally, I am mostly excited about the fact that we managed to reproduce, augment and even correct some of the earlier published results. What's important is that those results were achieved manually with constraint setting, and we managed to identify the same trade-offs in the course of one fully automated procedure.
 					</aside>
 				</section>
 				<section>
-
+					<div style="height:70vh">
+						<img src="images/pfairdp_repl_2.png" />
+						<p class="credit">
+							"Achieving Differential Privacy and Fairness in Logistic Regression", Xu, and Yuan, and Wu, WWW, 2019
+						</p>
+					</div>
+					<aside class="notes">
+						Second paper that we replicated in our study.
+					</aside>
+				</section>
+				<section>
+					Torch, BoTorch, Opacus, GPyTorch, AIF360, EHVI, all as images, go here
 					<aside class="notes">
 						Evolution of tech stack, as promised. This project uses PyTorch tools, including GPyTorch fom modelling, BoTorch for optimisation, and Opacus for differentially private algorithms. Algorithmic fairness definitions are taken from AIF360. We used EHVI as an acquisition function.
 					</aside>
 				</section>
 				<section>
-					Case study 3: ECOPt - utility vs energy efficiency
+					<div style="height:70vh">
+						<h4>Case study 3: ECOpt - utility vs energy efficiency</h4>
+						<ul>
+							<li>Performance vs energy efficiency</li>
+							<li>Focus on ML inference</li>
+						</ul>
+						<p class="credit">
+						"Optimising for Energy Efficiency and Performance in Machine Learning", Emile Ferreira, Neil Lawrence, AP, CAIN 2026
+						</p>
+					</div>
+					
 					<aside class="notes">
 						Finally, the most recent case study, just finished last year. This time we are back to 2-way trade-offs, matching utility and energy efficiency of ML models. Specifically, the focus of this work is on ML inference, because we felt training is already covered well, while inference is mostly neglected in the literature.
 					</aside>
 				</section>
 				<section>
-					
+					some hard work image, or maybe list all candidates for measures
 					<aside class="notes">
 						This project is a good illustration of the main challenge of setting up these optimisation pipelines. As a community, we are pretty good at training an ML model and measuring its accuracy. But designing for a accurate measurement of other objectives is trickier, and usually takes the majority of time. For example here we had to sift through a large variety of ways of measuring energy consumption, choose from many tools, work around limitations, etc. This is natural of course, but still something to keep in mind.
 					</aside>
 				</section>
 				<section>
-					
+					<img src="images/ecopt_pareto.png" />
 					<aside class="notes">
-						Anyway, we managed to prove that ECOpt is capable of building reasonable Pareto fronts, as for example here. Each of these black points represents a Pareto-optimal trade-off in performance and energy efficiency.
+						Anyway, we managed to prove that ECOpt is capable of building reasonable Pareto fronts, as for example here. Each of these black points represents a Pareto-optimal trade-off in performance and energy efficiency. Here we performed architecture search for a CNN on CIFAR-10 dataset.
 					</aside>
 				</section>
 				<section>
-					
+					<img src="images/ecopt_metrics.png" />
 					<aside class="notes">
 						Along the way we have shown that number of parameters isn't necessarily a reliable proxy for energy consumption, and got to play with LLMs a bit on different hardwares, to prove our method translates well between platforms.
 					</aside>
 				</section>
 				<section>
-					Guide
+					<img src="images/ecopt_hardware.png" />
+					<aside class="notes">
+						And we got to play with LLMs a bit on different hardwares, to prove our method translates well between platforms.
+					</aside>
+				</section>
+				<section>
+					<h3>Guide</h3>
 					<aside class="notes">
 						Now, moving on to the final part of the talk. I promised to give you all an advice on how to approach similar trade-offs quantification questions in your domain. So, here are my tips
 					</aside>
 				</section>
 				<section>
+					<ul>
+						<li>Define objectives</li>
+						<li>Define metrics</li>
+						<li>Normalise metrics if necessary</li>
+						<li>Define hyperparameter space</li>
+						<li>Implement MOBO pipeline (BoTorch)</li>
+						<li>Choose acquisition function (EHVI)</li>
+						<li>Prototype small first</li>
+						<li>Run optimisation, analyse frontier</li>
+						<li>Consider use of discovered front</li>
+					</ul>
 					<aside class="notes">
-						First, understand what do you really care about. Think about your current project - what trade-off keeps you up at night?
+						1. Understand what do you really care about. Think about your current project - what trade-off keeps you up at night?
 						
-						Second, ensure you have a good scalar-valued metric for each of the objectives you are interested in. Remember to normalise them to keep the scales comparable, otherwise one of your metrics will have more weight than the other.
-					</aside>
-				</section>
-				<section>
-					<aside class="notes">
-						Also on that note, make sure you have enough hyperparameters to actually tune both objectives. It seems obvious, but might be easily overlooked.
-					</aside>
-				</section>
-				<section>
-					<aside class="notes">
-						Next, implementation of MOBO pipeline. I am not associated with PyTorch ecosystem in any way, but I recommend PyTorch and BoTorch for implementing your experiments. Even though API can be quite awkward at times, I simply haven't found a better library for MOBO.
-					</aside>
-				</section>
-				<section>
-					<aside class="notes">
-						Third, use EHVI as an acquisition function, unless you have very specific requirements, such as very noise objectives. Recently it was shown that LogEHVI can be used as a stand-in replacement, so perhaps consider using that too.
-					</aside>
-				</section>
-				<section>
-					<aside class="notes">
-						Of course, prototypes are everything. Run something simple first, where you can find the true Pareto front by just running a very fine grid on the entire HP space. Only after that move on to true experiments.
-					</aside>
-				</section>
-				<section>
-					<aside class="notes">
-						Run the optimisation, analyse the discovered frontier.
-					</aside>
-				</section>
-				<section>
-					<aside class="notes">
-						Finally, consider how you might use the discovered front. Is it for compliance, to inform decision making, or simply to confirm your existing thresholds cannot be improved upon?
-					</aside>
-				</section>
-				<section>
-					<aside class="notes">
-						Thanks, questions
+						2. ensure you have a good scalar-valued metric for each of the objectives you are interested in. Remember to normalise them to keep the scales comparable, otherwise one of your metrics will have more weight than the other.
+
+						3. Also on that note, make sure you have enough hyperparameters to actually tune both objectives. It seems obvious, but might be easily overlooked.
+
+						4. Next, implementation of MOBO pipeline. I am not associated with PyTorch ecosystem in any way, but I recommend PyTorch and BoTorch for implementing your experiments. Even though API can be quite awkward at times, I simply haven't found a better library for MOBO. Code for all our case studies is available online, so you can use it as a starting point.
+
+						5. Use EHVI as an acquisition function, unless you have very specific requirements, such as very noise objectives. Recently it was shown that LogEHVI can be used as a stand-in replacement, so perhaps consider using that too.
+
+						6. Of course, prototypes are everything. Run something simple first, where you can find the true Pareto front by just running a very fine grid on the entire HP space. Only after that move on to true experiments.
+
+						7. Run the optimisation, analyse the discovered frontier.
+
+						8. Finally, consider how you might use the discovered front. Is it for compliance, to inform decision making, or simply to confirm your existing thresholds cannot be improved upon?
 					</aside>
 				</section>
 			</div>
