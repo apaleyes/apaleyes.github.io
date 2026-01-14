@@ -51,9 +51,6 @@
 					</p>
 					<p>AutoML Seminar</p>
 					<p>January 2026</p>
-					<aside class="notes">
-						Hi! Thanks for the intro, it's great being here and presenting at this amazing seminar series.
-					</aside>
 				</section>
 				<section>
 					<table>
@@ -157,7 +154,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:90vh">
+					<div style="height:85vh">
 						<h4>Pareto front</h4>
 						<img src="images/us-census-pareto-front.png" style="height: 60vh" />
 						<p class="credit">
@@ -169,7 +166,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:90vh">
+					<div style="height:85vh">
 						<h4>Option 3: Multi-objective Bayesian optimisation (MOBO)</h4>
 						<img src="images/mobo_intro.png" style="height: 60vh" />
 						<p class="credit">
@@ -181,7 +178,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:90vh">
+					<div style="height:85vh">
 						<h4>Bayesian optimisation recap</h4>
 						<img src="images/1d-bayes-opt.png" style="height: 60vh" />
 						<p class="credit">
@@ -193,7 +190,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:90vh">
+					<div style="height:85vh">
 						<h4>MOBO: differences</h4>
 						Assuming 2 objectives
 						<ul>
@@ -210,7 +207,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:90vh">
+					<div style="height:70vh">
 						<img src="images/pareto-1.png" />
 					</div>
 					<aside class="notes">
@@ -218,7 +215,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:90vh">
+					<div style="height:70vh">
 						<img src="images/pareto-2.png" />
 					</div>
 					<aside class="notes">
@@ -226,7 +223,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:90vh">
+					<div style="height:70vh">
 						<img src="images/pareto-3.png" />
 					</div>
 					<aside class="notes">
@@ -234,7 +231,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:90vh">
+					<div style="height:70vh">
 						<img src="images/pareto-4.png" />
 					</div>
 					<aside class="notes">
@@ -242,7 +239,7 @@
 					</aside>
 				</section>
 				<section>
-					<div style="height:90vh">
+					<div style="height:70vh">
 						<img src="images/pareto-5.png" />
 					</div>
 					<aside class="notes">
@@ -313,13 +310,16 @@
 					</aside>
 				</section>
 				<section>
-					pareto graph goes here
+					<img src="images/dpareto-front.png" style="height: 70vh;" />
 					<aside class="notes">
 						This was the first time we were trying this mechanism, so the main question was "Will it all work?". It did! We were able to construct Pareto fronts using different DP algorithms on two different classification tasks.
 					</aside>
 				</section>
 				<section>
-					mxnet, gluon, HVPoI, handwriting, all as images, go here
+					<table>
+						<tr><td><img src="images/mxnet.png" /></td><td><img src="images/gpflowopt.png" /></td></tr>
+						<tr><td style="text-align: center; vertical-align: middle;">HVPoI</td><td><img src="images/cat-dp-algos.jpg" /></td></tr>
+					</table>
 					<aside class="notes">
 						Some of the technology choices here are interesting! This project was done some years ago, so it's fun to look at it in retrospective and reflect on the choices we made. We used GPFlowOpt (now defunct) with HVPoI acquisition function. The models were implemented using Apache MXNet and Gluon API. Plus we implemented DP versions of SGD and Adam by hand. I think it's fair to say that none of that has stood the test of time, and we will see a proof of that in the very next case study.
 					</aside>
@@ -374,7 +374,7 @@
 					<div style="height:70vh">
 						<img src="images/pfairdp_repl_2.png" />
 						<p class="credit">
-							"Achieving Differential Privacy and Fairness in Logistic Regression", Xu, and Yuan, and Wu, WWW, 2019
+							"Achieving Differential Privacy and Fairness in Logistic Regression", Xu, Yuan, and Wu, WWW, 2019
 						</p>
 					</div>
 					<aside class="notes">
@@ -382,7 +382,18 @@
 					</aside>
 				</section>
 				<section>
-					Torch, BoTorch, Opacus, GPyTorch, AIF360, EHVI, all as images, go here
+					<table style="height: 75vh;">
+						<tr>
+							<td><img src="images/pytorch.png" style="height: 20vh;" /></td>
+							<td><img src="images/BoTorch.png" style="background-color: white; height: 20vh; display:block; margin-left:auto; margin-right:auto;" /></td>
+						</tr>
+						<tr>
+							<td><img src="images/gpytorch.png" style="height: 20vh;" /></td><td><img src="images/Opacus.jpg" style="height: 20vh;"/></td>
+						</tr>
+						<tr>
+							<td style="text-align: center; vertical-align: middle;">EHVI</td><td><img src="images/aif360.png" style="height: 20vh;" /></td>
+						</tr>
+					</table>
 					<aside class="notes">
 						Evolution of tech stack, as promised. This project uses PyTorch tools, including GPyTorch fom modelling, BoTorch for optimisation, and Opacus for differentially private algorithms. Algorithmic fairness definitions are taken from AIF360. We used EHVI as an acquisition function.
 					</aside>
@@ -398,13 +409,12 @@
 						"Optimising for Energy Efficiency and Performance in Machine Learning", Emile Ferreira, Neil Lawrence, AP, CAIN 2026
 						</p>
 					</div>
-					
 					<aside class="notes">
 						Finally, the most recent case study, just finished last year. This time we are back to 2-way trade-offs, matching utility and energy efficiency of ML models. Specifically, the focus of this work is on ML inference, because we felt training is already covered well, while inference is mostly neglected in the literature.
 					</aside>
 				</section>
 				<section>
-					some hard work image, or maybe list all candidates for measures
+					<img src="images/hard-work.jpg" style="height: 70vh;" />
 					<aside class="notes">
 						This project is a good illustration of the main challenge of setting up these optimisation pipelines. As a community, we are pretty good at training an ML model and measuring its accuracy. But designing for a accurate measurement of other objectives is trickier, and usually takes the majority of time. For example here we had to sift through a large variety of ways of measuring energy consumption, choose from many tools, work around limitations, etc. This is natural of course, but still something to keep in mind.
 					</aside>
@@ -437,30 +447,30 @@
 					<ul>
 						<li>Define objectives</li>
 						<li>Define metrics</li>
-						<li>Normalise metrics if necessary</li>
+						<li>Keep metric values on similar scales</li>
 						<li>Define hyperparameter space</li>
-						<li>Implement MOBO pipeline (BoTorch)</li>
-						<li>Choose acquisition function (EHVI)</li>
+						<li>Implement MOBO pipeline (just use BoTorch)</li>
+						<li>Choose acquisition function (just use EHVI)</li>
 						<li>Prototype small first</li>
-						<li>Run optimisation, analyse frontier</li>
-						<li>Consider use of discovered front</li>
+						<li>Run optimisation</li>
+						<li>How will you use your discovered trade-off surface?</li>
 					</ul>
 					<aside class="notes">
-						1. Understand what do you really care about. Think about your current project - what trade-off keeps you up at night?
+						* Understand what do you really care about. Think about your current project - what trade-off keeps you up at night?
 						
-						2. ensure you have a good scalar-valued metric for each of the objectives you are interested in. Remember to normalise them to keep the scales comparable, otherwise one of your metrics will have more weight than the other.
+						* Ensure you have a good scalar-valued metric for each of the objectives you are interested in.
+						
+						* Remember to normalise them to keep the scales comparable, otherwise one of your metrics will have more weight than the other.
 
-						3. Also on that note, make sure you have enough hyperparameters to actually tune both objectives. It seems obvious, but might be easily overlooked.
+						* Also on that note, make sure you have enough hyperparameters to actually tune both objectives. It seems obvious, but might be easily overlooked.
 
-						4. Next, implementation of MOBO pipeline. I am not associated with PyTorch ecosystem in any way, but I recommend PyTorch and BoTorch for implementing your experiments. Even though API can be quite awkward at times, I simply haven't found a better library for MOBO. Code for all our case studies is available online, so you can use it as a starting point.
+						* Next, implementation of MOBO pipeline. I am not associated with PyTorch ecosystem in any way, but I recommend PyTorch and BoTorch for implementing your experiments. Even though API can be quite awkward at times, I simply haven't found a better library for MOBO. Code for all our case studies is available online, so you can use it as a starting point.
 
-						5. Use EHVI as an acquisition function, unless you have very specific requirements, such as very noise objectives. Recently it was shown that LogEHVI can be used as a stand-in replacement, so perhaps consider using that too.
+						* Use EHVI as an acquisition function, unless you have very specific requirements, such as very noise objectives. Recently it was shown that LogEHVI can be used as a stand-in replacement, so perhaps consider using that too.
 
-						6. Of course, prototypes are everything. Run something simple first, where you can find the true Pareto front by just running a very fine grid on the entire HP space. Only after that move on to true experiments.
+						* Of course, prototypes are everything. Run something simple first, where you can find the true Pareto front by just running a very fine grid on the entire HP space. Only after that move on to true experiments.
 
-						7. Run the optimisation, analyse the discovered frontier.
-
-						8. Finally, consider how you might use the discovered front. Is it for compliance, to inform decision making, or simply to confirm your existing thresholds cannot be improved upon?
+						* Finally, consider how you might use the discovered front. Is it for compliance, to inform decision making, or simply to confirm your existing thresholds cannot be improved upon?
 					</aside>
 				</section>
 			</div>
